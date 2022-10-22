@@ -13,8 +13,8 @@ import com.badlogic.gdx.math.MathUtils;
 public class Nave4 {
 	private final int DIRECTION_POSITIVE = 1;
 	private final int DIRECTION_NEGATIVE = -1;
-	private final float maxVel = 20;
-	private final float accel = 7f;
+	private final float maxVel = 300;
+	private final float accel = 300f;
 	
     private float velX = 0;
     private float velY = 0;
@@ -36,19 +36,47 @@ public class Nave4 {
     	spr.setPosition(x, y);
     	//spr.setOriginCenter();
     	spr.setBounds(x, y, 45, 45);
-
     }
     
     private float acelerar(float vel, int direction) {
     	vel = vel + accel * direction * Gdx.graphics.getDeltaTime();
-    	if(vel > maxVel) vel = maxVel;
+    	if(Math.abs(vel) > Math.abs(maxVel)) 
+    		vel = maxVel * direction;
+    	
     	return vel;
     }
     
-    public void draw(SpriteBatch batch, PantallaJuego juego){
-        float x = spr.getX();
-        float y = spr.getY();
+    private float calcularPosicionX() {
+    	float x = spr.getX() + velX * Gdx.graphics.getDeltaTime();
+    	
+        if (x + spr.getWidth() > Gdx.graphics.getWidth()) {
+        	x = Gdx.graphics.getWidth() - spr.getWidth();
+        	velX = 0;
+        }
+        else if (x < 0) {
+        	x = 0;
+        	velX = 0;
+        }
         
+        return x;
+    }
+    
+    private float calcularPosicionY() {
+    	float y = spr.getY() + velY * Gdx.graphics.getDeltaTime();
+    	
+        if (y + spr.getHeight() > Gdx.graphics.getHeight()) {
+        	y = Gdx.graphics.getHeight() - spr.getHeight();
+        	velY = 0;
+        }
+        else if (y < 0) {
+        	y = 0;
+        	velY = 0;
+        }
+        
+        return y;
+    }
+    
+    public void draw(SpriteBatch batch, PantallaJuego juego) {        
         if (!herido) {
 	        // Mover nave con teclado
 	        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) 
@@ -60,7 +88,7 @@ public class Nave4 {
 	        if (Gdx.input.isKeyPressed(Input.Keys.UP))
 	        	velY = acelerar(velY, DIRECTION_POSITIVE);
         	
-	     /* if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) spr.setRotation(++rotacion);
+		    /* if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) spr.setRotation(++rotacion);
 	        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) spr.setRotation(--rotacion);
 	        
 	        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
@@ -74,19 +102,14 @@ public class Nave4 {
 	        	     
 	        }*/
 	        
-	        // que se mantenga dentro de los bordes de la ventana
-	        if (x+velX < 0 || x+velX+spr.getWidth() > Gdx.graphics.getWidth())
-	        	velX*=-1;
-	        if (y+velY < 0 || y+velY+spr.getHeight() > Gdx.graphics.getHeight())
-	        	velY*=-1;
+	        float x = calcularPosicionX();
+	        float y = calcularPosicionY(); 
+	        spr.setPosition(x, y);
+	        spr.draw(batch);
 	        
-	        spr.setPosition(x+velX, y+velY);   
-         
- 		    spr.draw(batch);
         } else {
            spr.setX(spr.getX()+MathUtils.random(-2,2));
  		   spr.draw(batch); 
- 		  spr.setX(x);
  		   tiempoHerido--;
  		   if (tiempoHerido<=0) herido = false;
  		 }
