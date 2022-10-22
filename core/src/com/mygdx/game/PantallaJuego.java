@@ -39,6 +39,7 @@ public class PantallaJuego implements Screen {
 		this.score = score;
 		this.velXAsteroides = velXAsteroides;
 		this.velYAsteroides = velYAsteroides;
+		cantAsteroides = 1;
 		this.cantAsteroides = cantAsteroides;
 		
 		batch = game.getBatch();

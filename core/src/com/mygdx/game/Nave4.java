@@ -11,11 +11,15 @@ import com.badlogic.gdx.math.MathUtils;
 
 
 public class Nave4 {
+	private final int DIRECTION_POSITIVE = 1;
+	private final int DIRECTION_NEGATIVE = -1;
+	private final float maxVel = 20;
+	private final float accel = 7f;
 	
-	private boolean destruida = false;
+    private float velX = 0;
+    private float velY = 0;
     private int vidas = 3;
-    private float xVel = 0;
-    private float yVel = 0;
+	private boolean destruida = false;
     private Sprite spr;
     private Sound sonidoHerido;
     private Sound soundBala;
@@ -34,37 +38,49 @@ public class Nave4 {
     	spr.setBounds(x, y, 45, 45);
 
     }
+    
+    private float acelerar(float vel, int direction) {
+    	vel = vel + accel * direction * Gdx.graphics.getDeltaTime();
+    	if(vel > maxVel) vel = maxVel;
+    	return vel;
+    }
+    
     public void draw(SpriteBatch batch, PantallaJuego juego){
-        float x =  spr.getX();
-        float y =  spr.getY();
+        float x = spr.getX();
+        float y = spr.getY();
+        
         if (!herido) {
-	        // que se mueva con teclado
-	        if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) xVel--;
-	        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) xVel++;
-        	if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) yVel--;     
-	        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) yVel++;
+	        // Mover nave con teclado
+	        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) 
+	        	velX = acelerar(velX, DIRECTION_NEGATIVE);
+	        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+	        	velX = acelerar(velX, DIRECTION_POSITIVE);
+        	if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) 
+        		velY = acelerar(velY, DIRECTION_NEGATIVE);
+	        if (Gdx.input.isKeyPressed(Input.Keys.UP))
+	        	velY = acelerar(velY, DIRECTION_POSITIVE);
         	
-	     /*   if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) spr.setRotation(++rotacion);
+	     /* if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) spr.setRotation(++rotacion);
 	        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) spr.setRotation(--rotacion);
 	        
 	        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-	        	xVel -=Math.sin(Math.toRadians(rotacion));
-	        	yVel +=Math.cos(Math.toRadians(rotacion));
+	        	velX -=Math.sin(Math.toRadians(rotacion));
+	        	velY +=Math.cos(Math.toRadians(rotacion));
 	        	System.out.println(rotacion+" - "+Math.sin(Math.toRadians(rotacion))+" - "+Math.cos(Math.toRadians(rotacion))) ;    
 	        }
 	        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-	        	xVel +=Math.sin(Math.toRadians(rotacion));
-	        	yVel -=Math.cos(Math.toRadians(rotacion));
+	        	velX +=Math.sin(Math.toRadians(rotacion));
+	        	velY -=Math.cos(Math.toRadians(rotacion));
 	        	     
 	        }*/
 	        
 	        // que se mantenga dentro de los bordes de la ventana
-	        if (x+xVel < 0 || x+xVel+spr.getWidth() > Gdx.graphics.getWidth())
-	        	xVel*=-1;
-	        if (y+yVel < 0 || y+yVel+spr.getHeight() > Gdx.graphics.getHeight())
-	        	yVel*=-1;
+	        if (x+velX < 0 || x+velX+spr.getWidth() > Gdx.graphics.getWidth())
+	        	velX*=-1;
+	        if (y+velY < 0 || y+velY+spr.getHeight() > Gdx.graphics.getHeight())
+	        	velY*=-1;
 	        
-	        spr.setPosition(x+xVel, y+yVel);   
+	        spr.setPosition(x+velX, y+velY);   
          
  		    spr.draw(batch);
         } else {
@@ -86,19 +102,19 @@ public class Nave4 {
     public boolean checkCollision(Ball2 b) {
         if(!herido && b.getArea().overlaps(spr.getBoundingRectangle())){
         	// rebote
-            if (xVel ==0) xVel += b.getXSpeed()/2;
-            if (b.getXSpeed() ==0) b.setXSpeed(b.getXSpeed() + (int)xVel/2);
-            xVel = - xVel;
+            if (velX ==0) velX += b.getXSpeed()/2;
+            if (b.getXSpeed() ==0) b.setXSpeed(b.getXSpeed() + (int)velX/2);
+            velX = - velX;
             b.setXSpeed(-b.getXSpeed());
             
-            if (yVel ==0) yVel += b.getySpeed()/2;
-            if (b.getySpeed() ==0) b.setySpeed(b.getySpeed() + (int)yVel/2);
-            yVel = - yVel;
+            if (velY ==0) velY += b.getySpeed()/2;
+            if (b.getySpeed() ==0) b.setySpeed(b.getySpeed() + (int)velY/2);
+            velY = - velY;
             b.setySpeed(- b.getySpeed());
             // despegar sprites
       /*      int cont = 0;
-            while (b.getArea().overlaps(spr.getBoundingRectangle()) && cont<xVel) {
-               spr.setX(spr.getX()+Math.signum(xVel));
+            while (b.getArea().overlaps(spr.getBoundingRectangle()) && cont<velX) {
+               spr.setX(spr.getX()+Math.signum(velX));
             }   */
         	//actualizar vidas y herir
             vidas--;
