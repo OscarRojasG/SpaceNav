@@ -14,6 +14,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
 public class PantallaJuego implements Screen {
+	private final int ASTEROID_MIN_ANGLE = 20;
+	private final int ASTEROID_MAX_ANGLE = 70;
 
 	private SpaceNav game;
 	private OrthographicCamera camera;	
@@ -22,8 +24,7 @@ public class PantallaJuego implements Screen {
 	private Music gameMusic;
 	private int score;
 	private int ronda;
-	private int velXAsteroides; 
-	private int velYAsteroides; 
+	private int velAsteroides; 
 	private int cantAsteroides;
 	
 	private Nave4 nave;
@@ -33,12 +34,11 @@ public class PantallaJuego implements Screen {
 
 
 	public PantallaJuego(SpaceNav game, int ronda, int vidas, int score,  
-			int velXAsteroides, int velYAsteroides, int cantAsteroides) {
+			int velAsteroides, int cantAsteroides) {
 		this.game = game;
 		this.ronda = ronda;
 		this.score = score;
-		this.velXAsteroides = velXAsteroides;
-		this.velYAsteroides = velYAsteroides;
+		this.velAsteroides = velAsteroides;
 		this.cantAsteroides = cantAsteroides;
 		
 		batch = game.getBatch();
@@ -64,8 +64,14 @@ public class PantallaJuego implements Screen {
         generarAsteroides();
 	}
 	
-	private void generarAsteroides() {
+	private void generarAsteroides() {	
 	    for (int i = 0; i < cantAsteroides; i++) {
+			float angle = Util.generateRandomInt(ASTEROID_MIN_ANGLE, ASTEROID_MAX_ANGLE);
+			angle = (float)Math.toRadians(angle);
+			
+			float velXAsteroides = velAsteroides * (float)Math.cos(angle);
+			float velYAsteroides = velAsteroides * (float)Math.sin(angle);
+			
 	        Asteroide asteroide = new Asteroide(
 	        		Util.generateRandomInt(0, Gdx.graphics.getWidth() - 50),
 	        		Util.generateRandomInt(0, Gdx.graphics.getHeight() - 50),
@@ -157,8 +163,8 @@ public class PantallaJuego implements Screen {
 	      batch.end();
 	      //nivel completado
 	      if (balls1.size()==0) {
-			Screen ss = new PantallaJuego(game,ronda+1, nave.getVidas(), score, 
-					velXAsteroides+3, velYAsteroides+3, cantAsteroides+10);
+			Screen ss = new PantallaJuego(game,ronda+1, nave.getVidas(), score,
+					velAsteroides + 5, cantAsteroides+10);
 			ss.resize(1200, 800);
 			game.setScreen(ss);
 			dispose();
