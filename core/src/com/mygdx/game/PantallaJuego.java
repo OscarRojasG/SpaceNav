@@ -31,8 +31,7 @@ public class PantallaJuego implements Screen {
 	private int cantAsteroides;
 	
 	private Nave nave;
-	private ArrayList<Asteroide> balls1 = new ArrayList<>();
-	private ArrayList<Asteroide> balls2 = new ArrayList<>();
+	private ArrayList<Asteroide> asteroides = new ArrayList<>();
 	private ArrayList<Bala> balas = new ArrayList<>();
 	private ArrayList<Consumible> consumibles = new ArrayList<>();
 
@@ -85,8 +84,7 @@ public class PantallaJuego implements Screen {
 	        		velYAsteroides,
 	  	            new Texture(Gdx.files.internal("aGreyMedium4.png")));
 	        
-	  	    balls1.add(asteroide);
-	  	    balls2.add(asteroide);
+	  	    asteroides.add(asteroide);
 	  	}
 	}
 	
@@ -116,8 +114,7 @@ public class PantallaJuego implements Screen {
 	
 	private void destruirAsteroide(Asteroide asteroide) {
 		explosionSound.play();
-		balls1.remove(asteroide);
-		balls2.remove(asteroide);
+		asteroides.remove(asteroide);
 		score += 10;
 		
 		// Probabilidad 1/10 de generar un PowerUp aleatorio
@@ -145,8 +142,8 @@ public class PantallaJuego implements Screen {
 	    	for (int i = 0; i < balas.size(); i++) {
 	    		Bala bala = balas.get(i);
 	    		bala.actualizar();
-	    		for (int j = 0; j < balls1.size(); j++) {
-	    			Asteroide asteroide = balls1.get(j);
+	    		for (int j = 0; j < asteroides.size(); j++) {
+	    			Asteroide asteroide = asteroides.get(j);
 	    			if (asteroide.verificarColision(bala)) {
 	    				destruirAsteroide(asteroide);
 	    				destruirBala(bala);
@@ -166,14 +163,14 @@ public class PantallaJuego implements Screen {
 	    	}
 	    	
 		    // Actualizar movimiento de asteroides dentro del area
-	    	for (Asteroide asteroide : balls1) 
+	    	for (Asteroide asteroide : asteroides) 
 	    		asteroide.actualizar();
 	    	
 		    // Colisiones entre asteroides y sus rebotes  
-	    	for (int i = 0; i < balls1.size(); i++) {
-	    		Asteroide ball1 = balls1.get(i);   
-		        for (int j = 0; j < balls2.size(); j++) {
-		        	Asteroide ball2 = balls2.get(j); 
+	    	for (int i = 0; i < asteroides.size(); i++) {
+	    		Asteroide ball1 = asteroides.get(i);   
+		        for (int j = 0; j < asteroides.size(); j++) {
+		        	Asteroide ball2 = asteroides.get(j); 
 		        	if (i < j) 
 		        		ball1.verificarColision(ball2); 
 		        }
@@ -199,14 +196,13 @@ public class PantallaJuego implements Screen {
 	    nave.dibujar(batch);
 	    
 	    // Dibujar asteroides y manejar colision con nave
-	    for (int i = 0; i < balls1.size(); i++) {
-	    	Asteroide asteroide = balls1.get(i);
+	    for (int i = 0; i < asteroides.size(); i++) {
+	    	Asteroide asteroide = asteroides.get(i);
 	    	asteroide.dibujar(batch);
 	    	
 	    	if (asteroide.verificarColision(nave)) {
 	    		nave.herir();
-	    		balls1.remove(i);
-	    		balls2.remove(i);
+	    		asteroides.remove(i);
 	    		i--;
 	    	}   	  
 	    }
@@ -222,7 +218,7 @@ public class PantallaJuego implements Screen {
 	    batch.end();
 	    
 	    // Nivel completado
-	    if (balls1.size() == 0) {
+	    if (asteroides.size() == 0) {
 	    	Screen ss = new PantallaJuego(game,ronda+1, nave.getVidas(), score,
 	    			velAsteroides + 5, cantAsteroides+10);
 			ss.resize(1200, 800);
