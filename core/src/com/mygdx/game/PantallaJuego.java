@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.consumibles.Supernave;
 import com.mygdx.game.consumibles.VidaExtra;
 
 
@@ -90,7 +91,18 @@ public class PantallaJuego implements Screen {
 	}
 	
 	public void generarPowerUp(float x, float y, float velX, float velY) {
-		Consumible consumible = new VidaExtra(x, y, 40, 40, velX, velY, new Texture(Gdx.files.internal("health.png")));
+		int n = Util.generateRandomInt(0, 1);
+		Consumible consumible = null;
+		
+		switch(n) {
+		case 0:
+			consumible = new VidaExtra(x, y, 40, 40, velX, velY, new Texture(Gdx.files.internal("health.png")));
+			break;
+		case 1:
+			consumible = new Supernave(x, y, 35, 42.24f, velX, velY, new Texture(Gdx.files.internal("supernave.png")));
+			 break;
+		} 
+		
 		consumibles.add(consumible);
 	}
     
@@ -100,15 +112,6 @@ public class PantallaJuego implements Screen {
 		game.getFont().draw(batch, str, 10, 30);
 		game.getFont().draw(batch, "Score:" + this.score, Gdx.graphics.getWidth()-150, 30);
 		game.getFont().draw(batch, "HighScore:" + game.getHighScore(), Gdx.graphics.getWidth()/2-100, 30);
-	}
-	
-	private void crearBala(Nave nave) {
-		float x = nave.getX() + nave.getAncho() / 2;
-		float y = nave.getY() + nave.getAlto();
-		float vel = 125;
-		
-		Bala bala = new Bala(x, y, vel, new Texture(Gdx.files.internal("rocket2.png")));
-		balas.add(bala);
 	}
 	
 	private void destruirAsteroide(Asteroide asteroide) {
@@ -177,7 +180,8 @@ public class PantallaJuego implements Screen {
 		    }
 	    	
 	    	if (nave.disparar()) {
-	    		crearBala(nave);
+	    		Bala bala = nave.generarBala(new Texture(Gdx.files.internal("rocket2.png")));
+	    		balas.add(bala);
 	    	}
 	    }
 	    

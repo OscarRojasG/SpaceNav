@@ -6,10 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 
 
 public class Bala extends ObjetoMovil {
-	private final static float ancho = 5;
-	private final static float alto = 20;
 	    
-    public Bala(float x, float y, float vel, Texture tx) {
+    public Bala(float x, float y, float ancho, float alto, float vel, Texture tx) {
     	super(x, y, ancho, alto, 0, vel, tx);
     }
     

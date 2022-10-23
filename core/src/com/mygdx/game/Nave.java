@@ -8,8 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 
 
 public class Nave extends ObjetoMovil {
-	private final static float ancho = 45;
-	private final static float alto = 45;
+	private final static float anchoNave = 45;
+	private final static float altoNave = 45;
 	
 	private final int DIRECCION_POSITIVA = 1;
 	private final int DIRECCION_NEGATIVA = -1;
@@ -17,12 +17,23 @@ public class Nave extends ObjetoMovil {
 	private final float maxVel = 300;
 	private final float accel = 300f;
 	
+	private final float anchoBala = 5;
+	private final float altoBala = 20;
+	private final float velBala = 150;
+	private final float velDisparoSupernave = 8.5f;
+	private final float anchoBalaSupernave = 10f;
+	private final float altoBalaSupernave = 40;
+	private final float velBalaSupernave = 350;
+	
     private int vidas = 3;
     private float tiempoHerido;
     private Sound sonidoHerido;
     
+    private float tiempoSupernave;
+    private float tiempoUltimoDisparo;
+    
     public Nave(int x, int y, Texture tx, Sound sonidoHerido) {
-    	super(x, y, ancho, alto, 0, 0, tx);
+    	super(x, y, anchoNave, altoNave, 0, 0, tx);
     	this.sonidoHerido = sonidoHerido;
     }
     
@@ -76,6 +87,9 @@ public class Nave extends ObjetoMovil {
     		return;
     	}
     	
+    	if (esSupernave())
+    		tiempoSupernave -= Gdx.graphics.getDeltaTime();
+    	
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) 
         	setVelocidadX(acelerar(getVelocidadX(), DIRECCION_NEGATIVA));
         
@@ -94,13 +108,36 @@ public class Nave extends ObjetoMovil {
     }
     
     public boolean disparar() {
+    	if(esSupernave()) {
+    		if ((tiempoUltimoDisparo - tiempoSupernave) > (1 / velDisparoSupernave)) {
+    			tiempoUltimoDisparo = tiempoSupernave;
+    			return true;
+    		}
+    		return false;
+    	}
+    	
         return Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
+    }
+    
+    public Bala generarBala(Texture tx) {
+		float x = getX() + getAncho() / 2;
+		float y = getY() + getAlto();
+		
+    	if (esSupernave())
+    		return new Bala(x, y, anchoBalaSupernave, altoBalaSupernave, velBalaSupernave, tx);
+    	
+    	return new Bala(x, y, anchoBala, altoBala, velBala, tx);
     }
     
     public void herir() {
     	tiempoHerido = tiempoHeridoMax;
     	sonidoHerido.play();
     	quitarVida();
+    }
+    
+    public void mejorar(float tiempo) {
+    	tiempoSupernave = tiempo;
+    	tiempoUltimoDisparo = tiempo;
     }
     
     public boolean estaDestruida() {
@@ -113,6 +150,14 @@ public class Nave extends ObjetoMovil {
  	   
  	   tiempoHerido = 0;
  	   return false;
+    }
+    
+    public boolean esSupernave() {
+  	   if (tiempoSupernave > 0)
+ 		   return true;
+ 	   
+ 	   tiempoSupernave = 0;
+ 	   return false;    	
     }
     
 	public void agregarVida() {
