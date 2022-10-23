@@ -1,5 +1,5 @@
 package com.mygdx.game;
 
 public interface Consumible {
-	public void agregarEfecto(Nave4 nave);
+	public void agregarEfecto(Nave nave);
 }
