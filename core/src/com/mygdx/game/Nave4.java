@@ -122,18 +122,18 @@ public class Nave4 {
        
     }
       
-    public boolean checkCollision(Ball2 b) {
+    public boolean checkCollision(Asteroide b) {
         if(!herido && b.getArea().overlaps(spr.getBoundingRectangle())){
         	// rebote
-            if (velX ==0) velX += b.getXSpeed()/2;
-            if (b.getXSpeed() ==0) b.setXSpeed(b.getXSpeed() + (int)velX/2);
+            if (velX ==0) velX += b.getVelocityX()/2;
+            if (b.getVelocityX() ==0) b.setVelocityY(b.getVelocityX() + (int)velX/2);
             velX = - velX;
-            b.setXSpeed(-b.getXSpeed());
+            b.setVelocityX(-b.getVelocityX());
             
-            if (velY ==0) velY += b.getySpeed()/2;
-            if (b.getySpeed() ==0) b.setySpeed(b.getySpeed() + (int)velY/2);
+            if (velY ==0) velY += b.getVelocityY()/2;
+            if (b.getVelocityY() ==0) b.setVelocityY(b.getVelocityY() + (int)velY/2);
             velY = - velY;
-            b.setySpeed(- b.getySpeed());
+            b.setVelocityX(- b.getVelocityY());
             // despegar sprites
       /*      int cont = 0;
             while (b.getArea().overlaps(spr.getBoundingRectangle()) && cont<velX) {
