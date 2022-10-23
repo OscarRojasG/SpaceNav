@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -16,6 +15,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class PantallaJuego implements Screen {
 	private final int ASTEROID_MIN_ANGLE = 20;
 	private final int ASTEROID_MAX_ANGLE = 70;
+	private final int ASTEROID_MIN_SIZE = 40;
+	private final int ASTEROID_MAX_SIZE = 60;
 
 	private SpaceNav game;
 	private OrthographicCamera camera;	
@@ -72,10 +73,12 @@ public class PantallaJuego implements Screen {
 			float velXAsteroides = velAsteroides * (float)Math.cos(angle);
 			float velYAsteroides = velAsteroides * (float)Math.sin(angle);
 			
+			int size = Util.generateRandomInt(ASTEROID_MIN_SIZE, ASTEROID_MAX_SIZE);
+			
 	        Asteroide asteroide = new Asteroide(
-	        		Util.generateRandomInt(0, Gdx.graphics.getWidth() - 50),
-	        		Util.generateRandomInt(0, Gdx.graphics.getHeight() - 50),
-	        		50,
+	        		Util.generateRandomInt(0, Gdx.graphics.getWidth() - size),
+	        		Util.generateRandomInt(0, Gdx.graphics.getHeight() - size),
+	        		size,
 	        		velXAsteroides,
 	        		velYAsteroides,
 	  	            new Texture(Gdx.files.internal("aGreyMedium4.png")));	
@@ -92,6 +95,7 @@ public class PantallaJuego implements Screen {
 		game.getFont().draw(batch, "Score:"+this.score, Gdx.graphics.getWidth()-150, 30);
 		game.getFont().draw(batch, "HighScore:"+game.getHighScore(), Gdx.graphics.getWidth()/2-100, 30);
 	}
+	
 	@Override
 	public void render(float delta) {
 		  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

@@ -15,6 +15,8 @@ public class Asteroide {
     public Asteroide(int x, int y, int size, float velX, float velY, Texture tx) {
     	spr = new Sprite(tx);
         spr.setPosition(x, y);
+        spr.setSize(size, size);
+        
         this.setVelocityX(velX);
         this.setVelocityY(velY);
     }
@@ -57,30 +59,26 @@ public class Asteroide {
     	
         if (!r1.overlaps(r2)) return;
         
-        float distanceX = Math.abs(r1.x - r2.x);
-        float distanceY = Math.abs(r1.y - r2.y);
+        float intersectionX = Math.min(r1.x + r1.width, r2.x + r2.width) - Math.max(r1.x, r2.x);
+        float intersectionY = Math.min(r1.y + r1.height, r2.y + r2.height) - Math.max(r1.y, r2.y);
      
-        if (distanceX < spr.getWidth() && distanceX > distanceY) {
-        	float intersectionX = a2.getArea().getWidth() - distanceX;
-        	
-	        if (r1.x < r2.x)
-	        	this.setX(r1.x - intersectionX - 0.1f);
-	        else
-	        	this.setX(r1.x + intersectionX + 0.1f);
-	        
-	        velX *= -1;
-	        a2.setVelocityX(a2.getVelocityX() * -1);
-        }
-        else {
-        	float intersectionY = a2.getArea().getHeight() - distanceY;
-        	
+        if (intersectionX > intersectionY) { 	
 	        if (r1.y < r2.y)
 	        	this.setY(r1.y - intersectionY - 0.1f);
 	        else
 	        	this.setY(r1.y + intersectionY + 0.1f);
 	        
 	        velY *= -1;
-	        a2.setVelocityY(a2.getVelocityY() * -1);        	
+	        a2.setVelocityY(a2.getVelocityY() * -1);  
+        }
+        else {
+	        if (r1.x < r2.x)
+	        	this.setX(r1.x - intersectionX - 0.1f);
+	        else
+	        	this.setX(r1.x + intersectionX + 0.1f);
+	        
+	        velX *= -1;
+	        a2.setVelocityX(a2.getVelocityX() * -1);    	
         }
     }
     
