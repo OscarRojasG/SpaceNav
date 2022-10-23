@@ -2,58 +2,41 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 
-public class Asteroide {
-    private float velX;
-    private float velY;
-    private Sprite spr;
+public class Asteroide extends ObjetoEspacial {
 
     public Asteroide(int x, int y, int size, float velX, float velY, Texture tx) {
-    	spr = new Sprite(tx);
-        spr.setPosition(x, y);
-        spr.setSize(size, size);
-        
-        this.setVelocityX(velX);
-        this.setVelocityY(velY);
+    	super(x, y, velX, velY, size, size, tx);
     }
     
     public void update() {
-        float x = spr.getX() + getVelocityX() * Gdx.graphics.getDeltaTime();
-        float y = spr.getY() + getVelocityY() * Gdx.graphics.getDeltaTime();
+        float x = getX() + getVelocityX() * Gdx.graphics.getDeltaTime();
+        float y = getY() + getVelocityY() * Gdx.graphics.getDeltaTime();
 
-        if (x + spr.getWidth() > Gdx.graphics.getWidth()) {
-        	x = Gdx.graphics.getWidth() - spr.getWidth();
-        	velX *= -1;
+        if (x + getWidth() > Gdx.graphics.getWidth()) {
+        	x = Gdx.graphics.getWidth() - getWidth();
+        	setVelocityX(getVelocityX() * -1);
         }
         else if (x < 0) {
         	x = 0;
-        	velX *= -1;
+        	setVelocityX(getVelocityX() * -1);
         }
         
-        if (y + spr.getHeight() > Gdx.graphics.getHeight()) {
-        	y = Gdx.graphics.getHeight() - spr.getHeight();
-        	velY *= -1;
+        if (y + getHeight() > Gdx.graphics.getHeight()) {
+        	y = Gdx.graphics.getHeight() - getHeight();
+        	setVelocityY(getVelocityY() * -1);
         }
         else if (y < 0) {
         	y = 0;
-        	velY *= -1;
+        	setVelocityY(getVelocityY() * -1);
         }
         
-        spr.setPosition(x, y);
+        setPosition(x,y);
     }
     
-    public Rectangle getArea() {
-    	return spr.getBoundingRectangle();
-    }
-    public void draw(SpriteBatch batch) {
-    	spr.draw(batch);
-    }
-    
-    public void checkCollision(Asteroide a2) {
+    public void revisarColision(Asteroide a2) {
     	Rectangle r1 = this.getArea();
     	Rectangle r2 = a2.getArea();
     	
@@ -64,11 +47,11 @@ public class Asteroide {
      
         if (intersectionX > intersectionY) { 	
 	        if (r1.y < r2.y)
-	        	this.setY(r1.y - intersectionY - 0.1f);
+	        	setY(r1.y - intersectionY - 0.1f);
 	        else
-	        	this.setY(r1.y + intersectionY + 0.1f);
+	        	setY(r1.y + intersectionY + 0.1f);
 	        
-	        velY *= -1;
+	        setVelocityY(getVelocityY() * -1);
 	        a2.setVelocityY(a2.getVelocityY() * -1);  
         }
         else {
@@ -77,32 +60,13 @@ public class Asteroide {
 	        else
 	        	this.setX(r1.x + intersectionX + 0.1f);
 	        
-	        velX *= -1;
+	        setVelocityX(getVelocityX() * -1);
 	        a2.setVelocityX(a2.getVelocityX() * -1);    	
         }
     }
     
-    public void setX(float x) {
-    	spr.setX(x);
-    }
-    
-    public void setY(float y) {
-    	spr.setY(y);
-    }
-    
-	public void setVelocityX(float velX) {
-		this.velX = velX;
-	}
-	
-	public void setVelocityY(float velY) {
-		this.velY = velY;
-	}
-	
-	public float getVelocityX() {
-		return velX;
-	}
-	
-	public float getVelocityY() {
-		return velY;
+    @Override
+	public void enColision(Nave4 nave) {
+		nave.quitarVida();
 	}
 }

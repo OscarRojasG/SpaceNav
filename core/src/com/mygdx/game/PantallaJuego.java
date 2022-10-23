@@ -132,7 +132,7 @@ public class PantallaJuego implements Screen {
 		        for (int j=0;j<balls2.size();j++) {
 		          Asteroide ball2 = balls2.get(j); 
 		          if (i<j) {
-		        	  ball1.checkCollision(ball2);
+		        	  ball1.revisarColision(ball2);
 		     
 		          }
 		        }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 
 
 
@@ -121,6 +122,10 @@ public class Nave4 {
         }
        
     }
+    
+    public Rectangle getArea() {
+    	return spr.getBoundingRectangle();
+    }
       
     public boolean checkCollision(Asteroide b) {
         if(!herido && b.getArea().overlaps(spr.getBoundingRectangle())){
@@ -157,6 +162,10 @@ public class Nave4 {
     public boolean estaHerido() {
  	   return herido;
     }
+    
+	public void quitarVida() {
+		this.vidas--;
+	}
     
     public int getVidas() {return vidas;}
     //public boolean isDestruida() {return destruida;}
