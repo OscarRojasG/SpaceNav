@@ -21,6 +21,8 @@ public abstract class ObjetoEspacial {
     
     public abstract void enColision(Nave4 nave);
     
+    public abstract void update();
+    
 	public boolean existeColision(Nave4 nave) {
 		return this.getArea().overlaps(nave.getArea());
 	}

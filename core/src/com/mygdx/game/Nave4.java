@@ -163,6 +163,10 @@ public class Nave4 {
  	   return herido;
     }
     
+	public void agregarVida() {
+		this.vidas++;
+	}
+    
 	public void quitarVida() {
 		this.vidas--;
 	}

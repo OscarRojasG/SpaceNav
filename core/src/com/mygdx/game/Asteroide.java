@@ -7,10 +7,11 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class Asteroide extends ObjetoEspacial {
 
-    public Asteroide(int x, int y, int size, float velX, float velY, Texture tx) {
+    public Asteroide(float x, float y, int size, float velX, float velY, Texture tx) {
     	super(x, y, velX, velY, size, size, tx);
     }
     
+    @Override
     public void update() {
         float x = getX() + getVelocityX() * Gdx.graphics.getDeltaTime();
         float y = getY() + getVelocityY() * Gdx.graphics.getDeltaTime();
