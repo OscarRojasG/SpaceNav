@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 
@@ -11,12 +13,16 @@ public class PantallaGameOver implements Screen {
 
 	private SpaceNav game;
 	private OrthographicCamera camera;
-
+	private Texture screen;
+	private SpriteBatch batch;
+	
 	public PantallaGameOver(SpaceNav game) {
 		this.game = game;
         
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 1200, 800);
+		camera.setToOrtho(false, 1000, 600);
+		screen = new Texture(Gdx.files.internal("FondoGameOver.png"));
+		batch = game.getBatch();
 	}
 
 	@Override
@@ -24,17 +30,18 @@ public class PantallaGameOver implements Screen {
 		ScreenUtils.clear(0, 0, 0.2f, 1);
 
 		camera.update();
-		game.getBatch().setProjectionMatrix(camera.combined);
+		batch.setProjectionMatrix(camera.combined);
 
-		game.getBatch().begin();
+		batch.begin();
+		batch.draw(screen, 0, 0);
 		game.getFont().draw(game.getBatch(), "Game Over !!! ", 120, 400,400,1,true);
-		game.getFont().draw(game.getBatch(), "Pincha en cualquier lado para reiniciar ...", 100, 300);
+		game.getFont().draw(game.getBatch(), "Presione cualquier tecla o haga click para reiniciar ...", 100, 300);
 	
-		game.getBatch().end();
+		batch.end();
 
 		if (Gdx.input.isTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) {
 			Screen ss = new PantallaJuego(game,1,3,0,100,10);
-			ss.resize(1200, 800);
+			ss.resize(1000, 600);
 			game.setScreen(ss);
 			dispose();
 		}

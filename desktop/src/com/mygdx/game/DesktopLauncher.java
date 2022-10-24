@@ -9,8 +9,8 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
-		config.setTitle("SpaceNavigation");
-		config.setWindowedMode(1200, 800);
+		config.setTitle("Space Navigation");
+		config.setWindowedMode(1000, 600);
 		new Lwjgl3Application(new SpaceNav(), config);
 	}
 }

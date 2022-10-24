@@ -23,6 +23,7 @@ public class PantallaJuego implements Screen {
 	private SpaceNav game;
 	private OrthographicCamera camera;	
 	private SpriteBatch batch;
+	private Texture font;
 	private Sound explosionSound;
 	private Music gameMusic;
 	private int score;
@@ -50,6 +51,7 @@ public class PantallaJuego implements Screen {
 		explosionSound = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
 		explosionSound.setVolume(1,0.5f);
 		gameMusic = Gdx.audio.newMusic(Gdx.files.internal("piano-loops.wav")); //
+		font = new Texture(Gdx.files.internal("FondoGame.png"));
 		
 		gameMusic.setLooping(true);
 		gameMusic.setVolume(0.5f);
@@ -135,6 +137,7 @@ public class PantallaJuego implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
+		batch.draw(font, 0, 0);
 		dibujaEncabezado();
 		
 	    if (!nave.estaHerida()) {
@@ -211,7 +214,7 @@ public class PantallaJuego implements Screen {
 	    	if (score > game.getHighScore())
 	    		game.setHighScore(score);
 	    	Screen ss = new PantallaGameOver(game);
-  			ss.resize(1200, 800);
+  			ss.resize(1000, 600);
   			game.setScreen(ss);
   			dispose();
 	    }
@@ -221,7 +224,7 @@ public class PantallaJuego implements Screen {
 	    if (asteroides.size() == 0) {
 	    	Screen ss = new PantallaJuego(game,ronda+1, nave.getVidas(), score,
 	    			velAsteroides + 5, cantAsteroides+10);
-			ss.resize(1200, 800);
+			ss.resize(1000, 600);
 			game.setScreen(ss);
 			dispose();
 	    } 	 

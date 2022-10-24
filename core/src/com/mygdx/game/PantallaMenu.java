@@ -4,37 +4,45 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 
-public class PantallaMenu implements Screen {
-
+public class PantallaMenu implements Screen{
+	
 	private SpaceNav game;
 	private OrthographicCamera camera;
+	private Texture screen;
+	private SpriteBatch batch;
 
 	public PantallaMenu(SpaceNav game) {
 		this.game = game;
-        
+		
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 1200, 800);
+		camera.setToOrtho(false, 1000, 600);
+		screen = new Texture(Gdx.files.internal("Fondo.png"));
+		batch = game.getBatch();
+		
 	}
 
 	@Override
 	public void render(float delta) {
 		ScreenUtils.clear(0, 0, 0.2f, 1);
-
 		camera.update();
-		game.getBatch().setProjectionMatrix(camera.combined);
-
-		game.getBatch().begin();
-		game.getFont().draw(game.getBatch(), "Bienvenido a Space Navigation !", 140, 400);
-		game.getFont().draw(game.getBatch(), "Pincha en cualquier lado o presiona cualquier tecla para comenzar ...", 100, 300);
-	
-		game.getBatch().end();
+		batch.setProjectionMatrix(camera.combined);
+		
+		batch.begin();
+		batch.draw(screen, 0, 0);
+		game.getFont().draw(batch, "Bienvenido a Space Navigation !", 140, 400);
+		game.getFont().draw(batch, "Presione cualquier tecla o haga click para comenzar ...", 100, 300);
+        batch.end();
 
 		if (Gdx.input.isTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) {
 			Screen ss = new PantallaJuego(game,1,3,0,100,10);
-			ss.resize(1200, 800);
+			ss.resize(1000, 600);
 			game.setScreen(ss);
 			dispose();
 		}
@@ -76,5 +84,4 @@ public class PantallaMenu implements Screen {
 		// TODO Auto-generated method stub
 		
 	}
-   
 }
