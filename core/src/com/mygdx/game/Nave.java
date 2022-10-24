@@ -5,17 +5,27 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+
 
 
 public class Nave extends ObjetoMovil {
 	private final static float anchoNave = 45;
 	private final static float altoNave = 45;
 	
+    private float aceleracion;
+    Vector3 collider;
+    int rotacion = 0;
+
+
 	private final int DIRECCION_POSITIVA = 1;
 	private final int DIRECCION_NEGATIVA = -1;
+	private final float VELOCIDAD = 60.f;
 	private final float tiempoHeridoMax = 0.8f;
 	private final float maxVel = 300;
-	private final float accel = 300f;
+
+	private final float accel = 3f;
 	
 	private final float anchoBala = 5;
 	private final float altoBala = 20;
@@ -31,22 +41,19 @@ public class Nave extends ObjetoMovil {
     
     private float tiempoSupernave;
     private float tiempoUltimoDisparo;
+
+
+    private Texture tex;
     
     public Nave(int x, int y, Texture tx, Sound sonidoHerido) {
     	super(x, y, anchoNave, altoNave, 0, 0, tx);
     	this.sonidoHerido = sonidoHerido;
+        this.tex = tx;
     }
     
-    private float acelerar(float vel, int direction) {
-    	vel = vel + accel * direction * Gdx.graphics.getDeltaTime();
-    	if(Math.abs(vel) > Math.abs(maxVel)) 
-    		vel = maxVel * direction;
-    	
-    	return vel;
-    }
     
     private float calcularPosicionX() {
-    	float x = getX() + getVelocidadX() * Gdx.graphics.getDeltaTime();
+    	float x = getX() + getVelocidadX() * aceleracion * accel * Gdx.graphics.getDeltaTime();
     	
         if (x + getAncho() > Gdx.graphics.getWidth()) {
         	x = Gdx.graphics.getWidth() - getAncho();
@@ -61,7 +68,7 @@ public class Nave extends ObjetoMovil {
     }
     
     private float calcularPosicionY() {
-    	float y = getY() + getVelocidadY() * Gdx.graphics.getDeltaTime();
+    	float y = getY() + getVelocidadY() * aceleracion * accel *  Gdx.graphics.getDeltaTime();
     	
         if (y + getAlto() > Gdx.graphics.getHeight()) {
         	y = Gdx.graphics.getHeight() - getAlto();
@@ -87,23 +94,37 @@ public class Nave extends ObjetoMovil {
     		return;
     	}
     	
+        setVelocidadX((float)Math.sin(Math.toRadians(this.rotacion))* VELOCIDAD);
+        setVelocidadY((float)Math.cos(Math.toRadians(this.rotacion))* VELOCIDAD);
+
+        System.out.println("velocidad:" + getVelocidadX() + "," + getVelocidadY());
+        System.out.println("accel:" + aceleracion);
+        System.out.println("rotacion:" + rotacion);
+        
     	if (esSupernave())
     		tiempoSupernave -= Gdx.graphics.getDeltaTime();
     	
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) 
-        	setVelocidadX(acelerar(getVelocidadX(), DIRECCION_NEGATIVA));
-        
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-        	setVelocidadX(acelerar(getVelocidadX(), DIRECCION_POSITIVA));
-        
-    	if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) 
-    		setVelocidadY(acelerar(getVelocidadY(), DIRECCION_NEGATIVA));
-    	
-        if (Gdx.input.isKeyPressed(Input.Keys.UP))
-        	setVelocidadY(acelerar(getVelocidadY(), DIRECCION_POSITIVA));  
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+        	if (this.aceleracion < 1) this.aceleracion += .04f;
+
+        }
+        else {
+            if (this.aceleracion > 0) this.aceleracion -= .02f;
+            else if (this.aceleracion < 0) this.aceleracion = 0;
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            this.rotacion -=5;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            this.rotacion +=5;
+        }
+
         
         float x = calcularPosicionX();
         float y = calcularPosicionY(); 
+
+
         setPosition(x, y);
     }
     
