@@ -29,7 +29,6 @@ public class Nave extends ObjetoMovil {
 	
 	private final float anchoBala = 5;
 	private final float altoBala = 20;
-	private final float velBala = 150;
 	private final float velDisparoSupernave = 8.5f;
 	private final float anchoBalaSupernave = 10f;
 	private final float altoBalaSupernave = 40;
@@ -115,9 +114,11 @@ public class Nave extends ObjetoMovil {
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             this.rotacion -=5;
+            this.setRotation(-this.rotacion);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             this.rotacion +=5;
+            this.setRotation(-this.rotacion);
         }
 
         
@@ -141,13 +142,22 @@ public class Nave extends ObjetoMovil {
     }
     
     public Bala generarBala(Texture tx) {
-		float x = getX() + getAncho() / 2;
-		float y = getY() + getAlto();
+		float x = getX() + getAlto()/2 * (float)Math.sin(Math.toRadians(this.rotacion));
+		float y = getY() + getAlto()/2 *  (float)Math.cos(Math.toRadians(-this.rotacion));
 		
+        float ballvelx = 3f * VELOCIDAD;
+        float ballvely = 3f * VELOCIDAD;
+
     	if (esSupernave())
-    		return new Bala(x, y, anchoBalaSupernave, altoBalaSupernave, velBalaSupernave, tx);
+    		return new Bala(x, y, anchoBalaSupernave, altoBalaSupernave,
+                        ballvelx * (float)Math.sin(Math.toRadians(this.rotacion)),
+                        ballvely * (float)Math.cos(Math.toRadians(-this.rotacion)),
+                        tx);
     	
-    	return new Bala(x, y, anchoBala, altoBala, velBala, tx);
+    	return new Bala(x, y, anchoBala, altoBala,
+                        ballvelx * (float)Math.sin(Math.toRadians(this.rotacion)),
+                        ballvely * (float)Math.cos(Math.toRadians(-this.rotacion)),
+                        tx);
     }
     
     public void herir() {
