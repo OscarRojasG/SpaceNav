@@ -20,7 +20,7 @@ public class PantallaGameOver implements Screen {
 		this.game = game;
         
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 1000, 600);
+		Util.setOtrhoCam(camera);
 		screen = new Texture(Gdx.files.internal("FondoGameOver.png"));
 		batch = game.getBatch();
 	}
@@ -41,7 +41,6 @@ public class PantallaGameOver implements Screen {
 
 		if (Gdx.input.isTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) {
 			Screen ss = new PantallaJuego(game,1,3,0,100,10);
-			ss.resize(1000, 600);
 			game.setScreen(ss);
 			dispose();
 		}

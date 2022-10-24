@@ -10,7 +10,8 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("Space Navigation");
-		config.setWindowedMode(1000, 600);
+		config.setWindowedMode(1200, 800);
+		config.setResizable(false);
 		new Lwjgl3Application(new SpaceNav(), config);
 	}
 }

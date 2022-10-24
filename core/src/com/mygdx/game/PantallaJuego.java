@@ -46,7 +46,7 @@ public class PantallaJuego implements Screen {
 		
 		batch = game.getBatch();
 		camera = new OrthographicCamera();	
-		camera.setToOrtho(false, 800, 640);
+		Util.setOtrhoCam(camera);
 		//inicializar assets; musica de fondo y efectos de sonido
 		explosionSound = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
 		explosionSound.setVolume(1,0.5f);
@@ -214,7 +214,6 @@ public class PantallaJuego implements Screen {
 	    	if (score > game.getHighScore())
 	    		game.setHighScore(score);
 	    	Screen ss = new PantallaGameOver(game);
-  			ss.resize(1000, 600);
   			game.setScreen(ss);
   			dispose();
 	    }
@@ -224,7 +223,6 @@ public class PantallaJuego implements Screen {
 	    if (asteroides.size() == 0) {
 	    	Screen ss = new PantallaJuego(game,ronda+1, nave.getVidas(), score,
 	    			velAsteroides + 5, cantAsteroides+10);
-			ss.resize(1000, 600);
 			game.setScreen(ss);
 			dispose();
 	    } 	 
