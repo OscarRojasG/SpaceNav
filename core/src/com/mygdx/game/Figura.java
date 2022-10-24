@@ -36,6 +36,10 @@ public class Figura {
     public void setSize(float ancho, float alto) {
     	sprite.setSize(ancho, alto);
     }
+
+    public void setRotation(float angle) {
+        sprite.setRotation(angle);
+    }
 	
 	public float getX() {
 		return sprite.getX();
