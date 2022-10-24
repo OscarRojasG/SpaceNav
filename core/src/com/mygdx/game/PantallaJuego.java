@@ -180,7 +180,7 @@ public class PantallaJuego implements Screen {
 		    }
 	    	
 	    	if (nave.disparar()) {
-	    		Bala bala = nave.generarBala(new Texture(Gdx.files.internal("rocket2.png")));
+	    		Bala bala = nave.generarBala(new Texture(Gdx.files.internal("Rocket2.png")));
 	    		balas.add(bala);
 	    	}
 	    }
