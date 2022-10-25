@@ -91,16 +91,18 @@ public class PantallaJuego implements Screen {
 	}
 	
 	public void generarPowerUp(float x, float y, float velX, float velY) {
-		int n = Util.generateRandomInt(0, 1);
+		int n = Util.generateRandomInt(1, 32);
 		Consumible consumible = null;
 		
-		switch(n) {
-		case 0:
-			consumible = new VidaExtra(x, y, 40, 40, velX, velY, new Texture(Gdx.files.internal("health.png")));
-			break;
-		case 1:
-			consumible = new Supernave(x, y, 35, 42.24f, velX, velY, new Texture(Gdx.files.internal("supernave.png")));
-			 break;
+		if((n == 1) || ( 7 <= n && n <= 11) || ( 23< n && n <= 25 )|| n == 32){
+			consumible = new VidaExtra(x, y, 40, 40, 
+									   velX, velY, 
+									   new Texture(Gdx.files.internal("health.png")));
+		}
+		else {
+			consumible = new Supernave(x, y, 35, 42.24f, 
+									   velX, velY, 
+									   new Texture(Gdx.files.internal("supernave.png")));
 		} 
 		
 		consumibles.add(consumible);
@@ -119,10 +121,17 @@ public class PantallaJuego implements Screen {
 		asteroides.remove(asteroide);
 		score += 10;
 		
+		if(ronda == 1) 
+		{
+			return;
+		}
+		
 		// Probabilidad 1/10 de generar un PowerUp aleatorio
-		int n = Util.generateRandomInt(0, 9);
-		if (n == 0)
-			generarPowerUp(asteroide.getX(), asteroide.getY(), asteroide.getVelocidadX(), asteroide.getVelocidadY());
+		int n = Util.generateRandomInt(1, 10 * ronda);
+		if (n == 1 || n == 20) {
+			generarPowerUp(asteroide.getX(), asteroide.getY(), 
+					       asteroide.getVelocidadX(), asteroide.getVelocidadY());
+		}
 	}
 	
 	private void destruirBala(Bala bala) {
@@ -159,10 +168,14 @@ public class PantallaJuego implements Screen {
 	    	for (int i = 0; i < consumibles.size(); i++) {
 	    		Consumible consumible = consumibles.get(i);
 	    		((ObjetoEspacial)consumible).actualizar();
+	    		
 	    		if (((ObjetoEspacial)consumible).verificarColision(nave)) {
 	    			consumible.agregarEfecto(nave);
-	    			destruirConsumible(consumibles.get(i));
+	    			destruirConsumible(consumible);
+	    			continue;
 	    		}
+	    		
+	    		if (consumible.noUsado()) {destruirConsumible(consumible);}
 	    	}
 	    	
 		    // Actualizar movimiento de asteroides dentro del area
