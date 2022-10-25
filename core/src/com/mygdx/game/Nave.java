@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector3;
 public class Nave extends ObjetoMovil {
 	private final static float anchoNave = 45;
 	private final static float altoNave = 45;
+	private final static Texture image = new Texture(Gdx.files.internal("MainShip3.png"));
 	
     private float aceleracion;
     Vector3 collider;
@@ -40,14 +41,10 @@ public class Nave extends ObjetoMovil {
     
     private float tiempoSupernave;
     private float tiempoUltimoDisparo;
-
-
-    private Texture tex;
     
-    public Nave(int x, int y, Texture tx, Sound sonidoHerido) {
-    	super(x, y, anchoNave, altoNave, 0, 0, tx);
+    public Nave(int x, int y, Sound sonidoHerido) {
+    	super(x, y, anchoNave, altoNave, 0, 0, image);
     	this.sonidoHerido = sonidoHerido;
-        this.tex = tx;
     }
     
     
@@ -151,13 +148,11 @@ public class Nave extends ObjetoMovil {
     	if (esSupernave())
     		return new Bala(x, y, anchoBalaSupernave, altoBalaSupernave,
                         ballvelx * (float)Math.sin(Math.toRadians(this.rotacion)),
-                        ballvely * (float)Math.cos(Math.toRadians(-this.rotacion)),
-                        tx);
+                        ballvely * (float)Math.cos(Math.toRadians(-this.rotacion)));
     	
     	return new Bala(x, y, anchoBala, altoBala,
                         ballvelx * (float)Math.sin(Math.toRadians(this.rotacion)),
-                        ballvely * (float)Math.cos(Math.toRadians(-this.rotacion)),
-                        tx);
+                        ballvely * (float)Math.cos(Math.toRadians(-this.rotacion)));
     }
     
     public void herir() {

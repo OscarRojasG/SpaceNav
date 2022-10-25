@@ -6,9 +6,10 @@ import com.badlogic.gdx.graphics.Texture;
 
 
 public class Bala extends ObjetoMovil {
-	    
-    public Bala(float x, float y, float ancho, float alto, float velx, float vely, Texture tx) {
-    	super(x, y, ancho, alto, velx, vely, tx);
+	private final static Texture image = new Texture(Gdx.files.internal("Rocket2.png"));
+	
+    public Bala(float x, float y, float ancho, float alto, float velx, float vely) {
+    	super(x, y, ancho, alto, velx, vely, image);
     }
     
 	@Override

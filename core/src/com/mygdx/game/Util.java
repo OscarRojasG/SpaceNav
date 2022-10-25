@@ -22,4 +22,8 @@ public class Util {
 		cam.setToOrtho(false, 1200, 800);
 	}
 	
+	public static int getAsteroid() {
+		return generateRandomInt(0,3);
+	}
+	
 }

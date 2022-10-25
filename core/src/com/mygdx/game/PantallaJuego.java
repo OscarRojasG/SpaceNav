@@ -10,6 +10,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.asteroides.BigAsteroid;
+import com.mygdx.game.asteroides.MediumAsteroid;
+import com.mygdx.game.asteroides.SmallAsteroid;
 import com.mygdx.game.consumibles.Supernave;
 import com.mygdx.game.consumibles.VidaExtra;
 
@@ -17,8 +20,6 @@ import com.mygdx.game.consumibles.VidaExtra;
 public class PantallaJuego implements Screen {
 	private final int ASTEROID_MIN_ANGLE = 20;
 	private final int ASTEROID_MAX_ANGLE = 70;
-	private final int ASTEROID_MIN_SIZE = 40;
-	private final int ASTEROID_MAX_SIZE = 60;
 
 	private SpaceNav game;
 	private OrthographicCamera camera;	
@@ -61,8 +62,8 @@ public class PantallaJuego implements Screen {
 	    nave = new Nave(
 	    		Gdx.graphics.getWidth()/2-50,
 	    		30,
-	    		new Texture(Gdx.files.internal("MainShip3.png")),
-	    		Gdx.audio.newSound(Gdx.files.internal("hurt.ogg")));
+	    		Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"))
+	    		);
         
         //crear asteroides
         generarAsteroides();
@@ -76,15 +77,22 @@ public class PantallaJuego implements Screen {
 			float velXAsteroides = velAsteroides * (float)Math.cos(angle);
 			float velYAsteroides = velAsteroides * (float)Math.sin(angle);
 			
-			int size = Util.generateRandomInt(ASTEROID_MIN_SIZE, ASTEROID_MAX_SIZE);
+			int size = Util.getAsteroid();
 			
-	        Asteroide asteroide = new Asteroide(
-	        		Util.generateRandomInt(0, Gdx.graphics.getWidth() - size),
-	        		Util.generateRandomInt(0, Gdx.graphics.getHeight() - size),
-	        		size,
-	        		velXAsteroides,
-	        		velYAsteroides,
-	  	            new Texture(Gdx.files.internal("aGreyMedium4.png")));
+			Asteroide asteroide;
+			
+			if(size == 0)
+			{
+				asteroide = new SmallAsteroid(velXAsteroides, velYAsteroides);
+			}
+			else if (size == 1)
+			{
+				asteroide = new MediumAsteroid(velXAsteroides, velYAsteroides);
+			}
+			else 
+			{
+				asteroide = new BigAsteroid(velXAsteroides, velYAsteroides);
+			}
 	        
 	  	    asteroides.add(asteroide);
 	  	}
