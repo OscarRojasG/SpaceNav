@@ -1,8 +1,13 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Gdx;
+
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SpaceNav extends Game {
@@ -14,8 +19,11 @@ public class SpaceNav extends Game {
 	public void create() {
 		highScore = 0;
 		batch = new SpriteBatch();
-		font = new BitmapFont(); // usa Arial font x defecto
-		font.getData().setScale(2f);
+		FreeTypeFontGenerator g = new FreeTypeFontGenerator(Gdx.files.internal("minecraft.ttf"));
+		FreeTypeFontParameter p = new FreeTypeFontParameter();
+		p.size = 24;
+		font = g.generateFont(p);
+		g.dispose();
 		Screen ss = new PantallaMenu(this);
 		this.setScreen(ss);
 	}
