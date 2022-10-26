@@ -118,7 +118,11 @@ public class PantallaJuego implements Screen {
 	}
 	
 	public void finalizarJuego() {
-		game.setScreen(new PantallaGameOver(game));
+		game.setScreen(new PantallaGameOver(game));		
+		if (puntaje > game.getHighScore()) {
+			game.setHighScore(puntaje);
+		}
+		
 		musica.stop();
 	}
 	
