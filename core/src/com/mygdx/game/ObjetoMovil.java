@@ -16,6 +16,11 @@ public abstract class ObjetoMovil extends Figura {
 	
 	public abstract void actualizar();
 	
+	public void desacelerar(){
+		setVelocidadX(velX-1);
+		setVelocidadY(velY-1);
+	}
+	
 	public void setVelocidadX(float velX) {
 		this.velX = velX;
 	}

@@ -68,7 +68,7 @@ public class DesechoCohete extends DamageNave implements Hiriente{
 	
 	@Override
 	public void agregarEfecto(Nave nave) {
-		nave.quitarVida();
+		nave.desacelerar();
 	}
 
 	@Override
