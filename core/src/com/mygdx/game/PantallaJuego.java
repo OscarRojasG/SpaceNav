@@ -97,12 +97,22 @@ public class PantallaJuego implements Screen {
 	    		}
 	    	}
 	    	
+	    	Iterator<DamageNave> iteratorHirientes = hirientes.getHirientes();
+	    	while(iteratorHirientes.hasNext()) {
+	    		DamageNave h = iteratorHirientes.next();
+	    		if(balas.verificarColisiones(h)) {
+	    			iteratorHirientes.remove();
+	    			int sumScore = ((Hiriente)h).getScoreChange();
+	    			hirientes.eliminar(h);
+	    			agregarPuntaje(sumScore);
+	    		}
+	    	}
+	    	
 	    	if (asteroides.getCantidad() < 10 && hirientes.estaVacia()) {
 				hirientes.generar();
 			}
 	    	
 	    	consumibles.verificarColisiones(nave);
-			
 	    	asteroides.verificarColisiones();
 	    	hirientes.verificarColisiones();
 	    	

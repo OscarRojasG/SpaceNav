@@ -28,10 +28,12 @@ public class ColeccionHirientes {
 	
 	public void generar() {
 		int p = Util.generateRandomInt(0, 9);
-		if(p != 0)
+		if(p != 7) 
+		{
 			return;	
+		}
 		
-		int n = generarConsumibleAleatorio();
+		int n = generarHirienteAleatorio();
 		
 		DamageNave hiriente = null;
 		
@@ -71,6 +73,7 @@ public class ColeccionHirientes {
 	}
 	
 	public void eliminar(DamageNave hiriente) {
+		hiriente.destruir();
 		hirientes.remove(hiriente);
 	}
 	
@@ -109,6 +112,7 @@ public class ColeccionHirientes {
 			
 			if (((ObjetoEspacial)hiriente).verificarColision(nave)) {
 				hiriente.agregarEfecto(nave);
+				nave.herir();
 				eliminar(hiriente);
 			}
 		}
@@ -122,7 +126,7 @@ public class ColeccionHirientes {
 		return hirientes.size();
 	}
 	
-	private int generarConsumibleAleatorio() {
+	private int generarHirienteAleatorio() {
 		return Util.generateRandomInt(1, 2);
 	}
 	
