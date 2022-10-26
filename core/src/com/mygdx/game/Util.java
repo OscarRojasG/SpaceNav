@@ -2,8 +2,6 @@ package com.mygdx.game;
 
 import java.util.Random;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
-
 public class Util {
 	private static final Random r = new Random();
 	
@@ -25,24 +23,6 @@ public class Util {
 			return a;
 		}
 		return b;
-	}
-	
-	public static void setOtrhoCam(OrthographicCamera cam){
-		cam.setToOrtho(false, 1200, 800);
-	}
-	
-	public static int getAsteroid(int level) {
-		if (level > 10) 
-		{
-			return 0;
-		}
-		
-		if (level < 5) 
-		{
-			return generateRandomInt(0,3);
-		}
-		
-		return generateRandomInt(0,1);
 	}
 	
 }

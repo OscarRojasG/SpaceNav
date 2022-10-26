@@ -78,7 +78,7 @@ public class ColeccionHirientes {
 	
 	public void eliminar(DamageNave hiriente, boolean conSonido) {
 		if (conSonido) {
-			hiriente.destruir();
+			hiriente.explotar();
 		}
 		hirientes.remove(hiriente);
 	}

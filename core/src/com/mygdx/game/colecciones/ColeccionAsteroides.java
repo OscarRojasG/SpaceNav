@@ -56,7 +56,6 @@ public class ColeccionAsteroides {
 	}
 	
 	public void eliminar(DamageNave asteroide) {
-		asteroide.destruir();
 		asteroides.remove(asteroide);
 	}
 	

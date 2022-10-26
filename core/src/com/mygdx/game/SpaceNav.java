@@ -14,14 +14,15 @@ public class SpaceNav extends Game {
 	public void create() {
 		highScore = 0;
 		batch = new SpriteBatch();
-		font = new BitmapFont(); // usa Arial font x defecto
+		font = new BitmapFont();
 		font.getData().setScale(2f);
-		Screen ss = new PantallaMenu(this);
-		this.setScreen(ss);
+		
+		Screen screen = new PantallaMenu(this);
+		setScreen(screen);
 	}
 
 	public void render() {
-		super.render(); // important!
+		super.render();
 	}
 
 	public void dispose() {
