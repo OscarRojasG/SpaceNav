@@ -1,6 +1,6 @@
 package com.mygdx.game;
 
-import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -10,17 +10,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.asteroides.BigAsteroid;
-import com.mygdx.game.asteroides.MediumAsteroid;
-import com.mygdx.game.asteroides.SmallAsteroid;
-import com.mygdx.game.consumibles.Supernave;
-import com.mygdx.game.consumibles.VidaExtra;
-
+import com.mygdx.game.colecciones.ColeccionAsteroides;
+import com.mygdx.game.colecciones.ColeccionBalas;
+import com.mygdx.game.colecciones.ColeccionConsumibles;
 
 public class PantallaJuego implements Screen {
-	private final int ASTEROID_MIN_ANGLE = 20;
-	private final int ASTEROID_MAX_ANGLE = 70;
-
 	private SpaceNav game;
 	private OrthographicCamera camera;	
 	private SpriteBatch batch;
@@ -33,9 +27,9 @@ public class PantallaJuego implements Screen {
 	private int cantAsteroides;
 	
 	private Nave nave;
-	private ArrayList<Asteroide> asteroides = new ArrayList<>();
-	private ArrayList<Bala> balas = new ArrayList<>();
-	private ArrayList<Consumible> consumibles = new ArrayList<>();
+	private ColeccionAsteroides asteroides;
+	private ColeccionBalas balas;
+	private ColeccionConsumibles consumibles;
 
 	public PantallaJuego(SpaceNav game, int ronda, int vidas, int score,  
 			int velAsteroides, int cantAsteroides) {
@@ -65,58 +59,15 @@ public class PantallaJuego implements Screen {
 	    		Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"))
 	    		);
         
-        //crear asteroides
-        generarAsteroides();
-	}
-	
-	private void generarAsteroides() {	
-	    for (int i = 0; i < cantAsteroides; i++) {
-			float angle = Util.generateRandomInt(ASTEROID_MIN_ANGLE, ASTEROID_MAX_ANGLE);
-			angle = (float)Math.toRadians(angle);
-			
-			float velXAsteroides = velAsteroides * (float)Math.cos(angle);
-			float velYAsteroides = velAsteroides * (float)Math.sin(angle);
-			
-			int size = Util.getAsteroid();
-			
-			Asteroide asteroide;
-			
-			if(size == 0)
-			{
-				asteroide = new SmallAsteroid(velXAsteroides, velYAsteroides);
-			}
-			else if (size == 1)
-			{
-				asteroide = new MediumAsteroid(velXAsteroides, velYAsteroides);
-			}
-			else 
-			{
-				asteroide = new BigAsteroid(velXAsteroides, velYAsteroides);
-			}
-	        
-	  	    asteroides.add(asteroide);
-	  	}
-	}
-	
-	public void generarPowerUp(float x, float y, float velX, float velY) {
-		int n = Util.generateRandomInt(1, 32);
-		Consumible consumible = null;
-		
-		if((n == 1) || ( 7 <= n && n <= 11) || ( 23< n && n <= 25 )|| n == 32){
-			consumible = new VidaExtra(x, y, 40, 40, 
-									   velX, velY, 
-									   new Texture(Gdx.files.internal("health.png")));
-		}
-		else {
-			consumible = new Supernave(x, y, 35, 42.24f, 
-									   velX, velY, 
-									   new Texture(Gdx.files.internal("supernave.png")));
-		} 
-		
-		consumibles.add(consumible);
+           
+        asteroides = new ColeccionAsteroides();
+        consumibles = new ColeccionConsumibles();
+        balas = new ColeccionBalas();
+        
+        asteroides.crear(cantAsteroides, velAsteroides);
 	}
     
-	public void dibujaEncabezado() {
+	public void dibujarEncabezado() {
 		CharSequence str = "Vidas: " + nave.getVidas() + " Ronda: " + ronda;
 		game.getFont().getData().setScale(2f);		
 		game.getFont().draw(batch, str, 10, 30);
@@ -124,112 +75,45 @@ public class PantallaJuego implements Screen {
 		game.getFont().draw(batch, "HighScore:" + game.getHighScore(), Gdx.graphics.getWidth()/2-100, 30);
 	}
 	
-	private void destruirAsteroide(Asteroide asteroide) {
-		explosionSound.play();
-		asteroides.remove(asteroide);
-		score += 10;
-		
-		if(ronda == 1) 
-		{
-			return;
-		}
-		
-		// Probabilidad 1/10 de generar un PowerUp aleatorio
-		int n = Util.generateRandomInt(1, 10 * ronda);
-		if (n == 1 || n == 20) {
-			generarPowerUp(asteroide.getX(), asteroide.getY(), 
-					       asteroide.getVelocidadX(), asteroide.getVelocidadY());
-		}
-	}
-	
-	private void destruirBala(Bala bala) {
-		balas.remove(bala);
-	}
-	
-	private void destruirConsumible(Consumible consumible) {
-		consumibles.remove(consumible);
-	}
-	
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		batch.draw(font, 0, 0);
-		dibujaEncabezado();
+		dibujarEncabezado();
 		
 	    if (!nave.estaHerida()) {
-	    	// Colisiones entre balas y asteroides y su destrucción
-	    	for (int i = 0; i < balas.size(); i++) {
-	    		Bala bala = balas.get(i);
-	    		bala.actualizar();
-	    		for (int j = 0; j < asteroides.size(); j++) {
-	    			Asteroide asteroide = asteroides.get(j);
-	    			if (asteroide.verificarColision(bala)) {
-	    				destruirAsteroide(asteroide);
-	    				destruirBala(bala);
-	    				j--;
-		            }   	  
-		  	    }
-	    	}
-	    	
-	    	// Colisión entre consumibles y nave
-	    	for (int i = 0; i < consumibles.size(); i++) {
-	    		Consumible consumible = consumibles.get(i);
-	    		((ObjetoEspacial)consumible).actualizar();
-	    		
-	    		if (((ObjetoEspacial)consumible).verificarColision(nave)) {
-	    			consumible.agregarEfecto(nave);
-	    			destruirConsumible(consumible);
-	    			continue;
+	    	Iterator<Asteroide> iteratorAsteroides = asteroides.getAsteroides();
+	    	while(iteratorAsteroides.hasNext()) {
+	    		Asteroide a = iteratorAsteroides.next();
+	    		if(balas.verificarColisiones(a)) {
+	    			iteratorAsteroides.remove();
+	    			asteroides.eliminar(a);
+	    			consumibles.generar(a.getX(), a.getY(), a.getVelocidadX(), a.getVelocidadY());
+	    			agregarPuntaje(10);
 	    		}
-	    		
-	    		if (consumible.noUsado()) {destruirConsumible(consumible);}
 	    	}
 	    	
-		    // Actualizar movimiento de asteroides dentro del area
-	    	for (Asteroide asteroide : asteroides) 
-	    		asteroide.actualizar();
-	    	
-		    // Colisiones entre asteroides y sus rebotes  
-	    	for (int i = 0; i < asteroides.size(); i++) {
-	    		Asteroide ball1 = asteroides.get(i);   
-		        for (int j = 0; j < asteroides.size(); j++) {
-		        	Asteroide ball2 = asteroides.get(j); 
-		        	if (i < j) 
-		        		ball1.verificarColision(ball2); 
-		        }
-		    }
+	    	consumibles.verificarColisiones(nave);
+	    	asteroides.verificarColisiones();
 	    	
 	    	if (nave.disparar()) {
-	    		Bala bala = nave.generarBala(new Texture(Gdx.files.internal("Rocket2.png")));
-	    		balas.add(bala);
+	    		Bala bala = nave.generarBala();
+	    		balas.agregar(bala);
 	    	}
 	    }
 	    
-	    // Dibujar balas
-	    for (Bala b : balas) {       
-	    	b.dibujar(batch);
-	    }
-	     
-	    // Dibujar balas
-	    for (Consumible c : consumibles) {       
-	    	((ObjetoEspacial)(c)).dibujar(batch);
-	    }
+	    asteroides.verificarColisiones(nave);
 	    
+	    asteroides.actualizar();
+	    consumibles.actualizar();
+	    balas.actualizar();
 	    nave.actualizar();
-	    nave.dibujar(batch);
 	    
-	    // Dibujar asteroides y manejar colision con nave
-	    for (int i = 0; i < asteroides.size(); i++) {
-	    	Asteroide asteroide = asteroides.get(i);
-	    	asteroide.dibujar(batch);
-	    	
-	    	if (asteroide.verificarColision(nave)) {
-	    		nave.herir();
-	    		asteroides.remove(i);
-	    		i--;
-	    	}   	  
-	    }
+	    asteroides.dibujar(batch);
+	    consumibles.dibujar(batch);
+	    balas.dibujar(batch);
+	    nave.dibujar(batch);
 	      
 	    if (nave.estaDestruida()) {
 	    	if (score > game.getHighScore())
@@ -241,12 +125,16 @@ public class PantallaJuego implements Screen {
 	    batch.end();
 	    
 	    // Nivel completado
-	    if (asteroides.size() == 0) {
+	    if (asteroides.estaVacia()) {
 	    	Screen ss = new PantallaJuego(game,ronda+1, nave.getVidas(), score,
 	    			velAsteroides + 5, cantAsteroides+10);
 			game.setScreen(ss);
 			dispose();
 	    } 	 
+	}
+	
+	public void agregarPuntaje(int puntaje) {
+		this.score += puntaje;
 	}
 	
 	@Override

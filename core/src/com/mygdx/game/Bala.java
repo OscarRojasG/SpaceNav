@@ -3,8 +3,6 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
-
-
 public class Bala extends ObjetoMovil {
 	private final static Texture image = new Texture(Gdx.files.internal("Rocket2.png"));
 	
@@ -18,6 +16,10 @@ public class Bala extends ObjetoMovil {
         float y = getY() + getVelocidadY() * Gdx.graphics.getDeltaTime();
         setX(x);
         setY(y);
+	}
+	
+	public boolean verificarColision(Asteroide asteroide) {
+		return this.getArea().overlaps(asteroide.getArea());
 	}
 	
 }
