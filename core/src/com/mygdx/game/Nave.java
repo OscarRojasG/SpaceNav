@@ -157,7 +157,7 @@ public class Nave extends ObjetoMovil {
     }
     
     public boolean estaDestruida() {
-       return !estaHerida() && (vidas == 0);
+       return vidas == 0;
     }
     
     public boolean estaHerida() {
