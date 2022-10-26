@@ -3,8 +3,6 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
-
-
 public class Bala extends ObjetoMovil {
 	private final static Texture image = new Texture(Gdx.files.internal("Rocket2.png"));
 	
@@ -23,4 +21,9 @@ public class Bala extends ObjetoMovil {
 	public Texture getImageBala() {
 		return image;
 	}
+
+	public boolean verificarColision(DamageNave asteroide) {
+		return this.getArea().overlaps(asteroide.getArea());
+	}
+	
 }

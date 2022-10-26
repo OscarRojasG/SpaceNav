@@ -5,10 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-
-
 
 public class Nave extends ObjetoMovil {
 	private final static float anchoNave = 45;
@@ -16,9 +13,8 @@ public class Nave extends ObjetoMovil {
 	private final static Texture image = new Texture(Gdx.files.internal("MainShip3.png"));
 	
     private float aceleracion;
-    Vector3 collider;
+    private Vector3 collider;
     int rotacion = 0;
-
 
 	private final int DIRECCION_POSITIVA = 1;
 	private final int DIRECCION_NEGATIVA = -1;
@@ -46,8 +42,7 @@ public class Nave extends ObjetoMovil {
     	super(x, y, anchoNave, altoNave, 0, 0, image);
     	this.sonidoHerido = sonidoHerido;
     }
-    
-    
+     
     private float calcularPosicionX() {
     	float x = getX() + getVelocidadX() * aceleracion * accel * Gdx.graphics.getDeltaTime();
     	
@@ -92,10 +87,6 @@ public class Nave extends ObjetoMovil {
     	
         setVelocidadX((float)Math.sin(Math.toRadians(this.rotacion))* VELOCIDAD);
         setVelocidadY((float)Math.cos(Math.toRadians(this.rotacion))* VELOCIDAD);
-
-        System.out.println("velocidad:" + getVelocidadX() + "," + getVelocidadY());
-        System.out.println("accel:" + aceleracion);
-        System.out.println("rotacion:" + rotacion);
         
     	if (esSupernave())
     		tiempoSupernave -= Gdx.graphics.getDeltaTime();

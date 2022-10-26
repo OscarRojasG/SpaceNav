@@ -65,7 +65,7 @@ public class Figura {
     	return sprite.getBoundingRectangle();
     }
     
-    /*public boolean isOffscreen() {
+    public boolean isOffscreen() {
         if (sprite.getX() < 0 || sprite.getX() + sprite.getWidth() > Gdx.graphics.getWidth()) 
             return true;
         
@@ -73,6 +73,6 @@ public class Figura {
         	return true;
         
         return false;
-    }*/
+    }
     
 }

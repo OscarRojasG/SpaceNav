@@ -16,7 +16,7 @@ public class VidaExtra extends ObjetoEspacial implements Consumible {
 	private long elapsedTime;
 
 	public VidaExtra(float x, float y, float velX, float velY) {
-		super(x, y, 40, 40, velX, velY, image);
+		super(x, y, ancho, alto, velX, velY, image);
 		startTime = TimeUtils.millis();
 	}
 

@@ -3,11 +3,13 @@ package com.mygdx.game.asteroides;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.Asteroide;
 import com.mygdx.game.Bala;
+import com.mygdx.game.DamageNave;
+import com.mygdx.game.Nave;
+import com.mygdx.game.ObjetoEspacial;
 import com.mygdx.game.Util;
 
-public class MediumAsteroid extends Asteroide{
+public class MediumAsteroid extends DamageNave{
 	private final static int ancho = 55;
 	private final static int alto = 50;
 	private final static Texture image = new Texture(Gdx.files.internal("aGreyMedium4.png"));
@@ -25,26 +27,26 @@ public class MediumAsteroid extends Asteroide{
 
         if (x + getAncho() > Gdx.graphics.getWidth()) {
         	x = Gdx.graphics.getWidth() - getAncho();
-        	setVelocidadX(getVelocidadX() * -1);
+        	reverseVelX();
         }
         else if (x < 0) {
         	x = 0;
-        	setVelocidadX(getVelocidadX() * -1);
+        	reverseVelX();
         }
         
         if (y + getAlto() > Gdx.graphics.getHeight()) {
         	y = Gdx.graphics.getHeight() - getAlto();
-        	setVelocidadY(getVelocidadY() * -1);
+        	reverseVelY();
         }
         else if (y < 0) {
         	y = 0;
-        	setVelocidadY(getVelocidadY() * -1);
+        	reverseVelY();
         }
         
         setPosition(x,y);
     }
     
-	public boolean verificarColision(Asteroide a2) {
+	public boolean verificarColision(ObjetoEspacial a2) {
     	Rectangle r1 = this.getArea();
     	Rectangle r2 = a2.getArea();
     	
@@ -60,8 +62,8 @@ public class MediumAsteroid extends Asteroide{
 	        else
 	        	setY(r1.y + intersectionY + 0.1f);
 	        
-	        setVelocidadY(getVelocidadY() * -1);
-	        a2.setVelocidadY(a2.getVelocidadY() * -1);  
+	        reverseVelY();
+	        a2.reverseVelY();
         }
         else {
 	        if (r1.x < r2.x)
@@ -69,8 +71,8 @@ public class MediumAsteroid extends Asteroide{
 	        else
 	        	this.setX(r1.x + intersectionX + 0.1f);
 	        
-	        setVelocidadX(getVelocidadX() * -1);
-	        a2.setVelocidadX(a2.getVelocidadX() * -1);    	
+	        reverseVelX();
+	        a2.reverseVelX();  	
         }
         
         return true;
@@ -78,5 +80,10 @@ public class MediumAsteroid extends Asteroide{
 	
 	public boolean verificarColision(Bala bala) {
 		return this.getArea().overlaps(bala.getArea());
+	}
+	
+	@Override
+	public void agregarEfecto(Nave nave) {
+		// Aun no tiene efeccto real con la nave
 	}
 }
