@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,7 +17,6 @@ public class PantallaJuego implements Screen {
 	private static final Texture fondo = new Texture(Gdx.files.internal("FondoGame.png"));
 	private static final Music musica = Gdx.audio.newMusic(Gdx.files.internal("piano-loops.wav"));
 	
-	private OrthographicCamera camera;	
 	private SpaceNav game;
 	private BitmapFont font;
 	private SpriteBatch batch;
@@ -38,9 +36,6 @@ public class PantallaJuego implements Screen {
 		
 		this.ronda = ronda;
 		this.puntaje = puntaje;
-		
-		camera = new OrthographicCamera();	
-		Util.setOtrhoCam(camera);
 		
 		musica.setLooping(true);
 		musica.setVolume(0.5f);
