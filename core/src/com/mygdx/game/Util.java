@@ -2,8 +2,6 @@ package com.mygdx.game;
 
 import java.util.Random;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
-
 public class Util {
 	private static final Random r = new Random();
 	
@@ -16,10 +14,6 @@ public class Util {
 	        return -1;
 	    else
 	        return 1;
-	}
-	
-	public static void setOtrhoCam(OrthographicCamera cam){
-		cam.setToOrtho(false, 1200, 800);
 	}
 
 }
