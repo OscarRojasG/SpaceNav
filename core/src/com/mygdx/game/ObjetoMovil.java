@@ -2,12 +2,12 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Texture;
 
-public abstract class ObjetoMovil extends Figura {
+public abstract class ObjetoMovil extends Elemento2D implements Figura {
 	private float velX;
 	private float velY;
 	
-	public ObjetoMovil(float x, float y, float ancho, float alto, float velX, float velY, Texture tx) {
-		super(x, y, ancho, alto, tx);
+	public ObjetoMovil(int x, int y, int ancho, int alto, float velX, float velY, Texture tx) {
+		super(x, y, ancho, alto);
 		setVelocidadX(velX);
 		setVelocidadY(velY);
 	}
