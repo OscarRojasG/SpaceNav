@@ -80,8 +80,4 @@ public class DesechoCohete extends DamageNave implements Hiriente{
 	public int getScoreChange() {
 		return moreScore;
 	}
-	
-    public void destruir() {
-    	sonidoExplosion.play();
-    }
 }

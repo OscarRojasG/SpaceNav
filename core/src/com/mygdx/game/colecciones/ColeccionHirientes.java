@@ -1,6 +1,7 @@
 package com.mygdx.game.colecciones;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -27,10 +28,11 @@ public class ColeccionHirientes {
 	
 	public void generar() {
 		int p = Util.generateRandomInt(0, 9);
-		if(p != 0)
+		if(p != 0) {
 			return;	
+		}
 		
-		int n = generarConsumibleAleatorio();
+		int n = generarHirienteAleatorio();
 		
 		DamageNave hiriente = null;
 		
@@ -70,6 +72,7 @@ public class ColeccionHirientes {
 	}
 	
 	public void eliminar(DamageNave hiriente) {
+		hiriente.destruir();
 		hirientes.remove(hiriente);
 	}
 	
@@ -107,13 +110,22 @@ public class ColeccionHirientes {
 			((ObjetoEspacial)hiriente).actualizar();
 			
 			if (((ObjetoEspacial)hiriente).verificarColision(nave)) {
-				hiriente.agregarEfecto(nave);
+				((Hiriente)hiriente).agregarEfecto(nave);
+				nave.herir();
 				eliminar(hiriente);
 			}
 		}
 	}
 	
-	private int generarConsumibleAleatorio() {
+	public Iterator<DamageNave> getHirientes() {
+		return hirientes.iterator();
+	}
+	
+	public int getCantidad() {
+		return hirientes.size();
+	}
+	
+	private int generarHirienteAleatorio() {
 		return Util.generateRandomInt(1, 2);
 	}
 	

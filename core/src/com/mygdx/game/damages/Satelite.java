@@ -79,8 +79,4 @@ public class Satelite extends DamageNave implements Hiriente{
 	public int getScoreChange() {
 		return lessScore;
 	}
-	
-    public void destruir() {
-    	sonidoExplosion.play();
-    }
 }

@@ -8,9 +8,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 
 public class Nave extends ObjetoMovil {
-	private final static float anchoNave = 45;
-	private final static float altoNave = 45;
-	private final static Texture image = new Texture(Gdx.files.internal("MainShip3.png"));
+	private static final float anchoNave = 45;
+	private static final float altoNave = 45;
+	private static final Texture image = new Texture(Gdx.files.internal("MainShip3.png"));
+	private static final Sound sonidoHerido = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
 	
     private float aceleracion;
     private Vector3 collider;
@@ -33,14 +34,12 @@ public class Nave extends ObjetoMovil {
 	
     private int vidas = 3;
     private float tiempoHerido;
-    private Sound sonidoHerido;
     
     private float tiempoSupernave;
     private float tiempoUltimoDisparo;
     
-    public Nave(int x, int y, Sound sonidoHerido) {
+    public Nave(int x, int y) {
     	super(x, y, anchoNave, altoNave, 0, 0, image);
-    	this.sonidoHerido = sonidoHerido;
     }
      
     private float calcularPosicionX() {
