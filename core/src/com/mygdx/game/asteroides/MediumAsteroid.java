@@ -81,5 +81,5 @@ public class MediumAsteroid extends DamageNave{
 	public boolean verificarColision(Bala bala) {
 		return this.getArea().overlaps(bala.getArea());
 	}
-	
+
 }
