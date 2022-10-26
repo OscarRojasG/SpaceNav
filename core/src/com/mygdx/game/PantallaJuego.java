@@ -31,13 +31,10 @@ public class PantallaJuego implements Screen {
 	private ColeccionConsumibles consumibles;
 	private ColeccionHirientes hirientes;
 
-	public PantallaJuego(SpaceNav game, int ronda, int puntaje) {
+	public PantallaJuego(SpaceNav game) {
 		this.game = game;
 		this.font = game.getFont();
 		this.batch = game.getBatch();
-		
-		this.ronda = ronda;
-		this.puntaje = puntaje;
 		
 		musica.setLooping(true);
 		musica.setVolume(0.5f);
@@ -51,6 +48,12 @@ public class PantallaJuego implements Screen {
         balas = new ColeccionBalas();
         
         iniciarRonda();
+	}
+	
+	public PantallaJuego(SpaceNav game, int ronda, int puntaje) {
+		this(game);
+		this.ronda = ronda;
+		this.puntaje = puntaje;
 	}
 	
 	public void iniciarRonda() {
