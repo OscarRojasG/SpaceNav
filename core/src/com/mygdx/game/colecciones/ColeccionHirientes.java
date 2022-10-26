@@ -73,7 +73,13 @@ public class ColeccionHirientes {
 	}
 	
 	public void eliminar(DamageNave hiriente) {
-		hiriente.destruir();
+		eliminar(hiriente, true);
+	}
+	
+	public void eliminar(DamageNave hiriente, boolean conSonido) {
+		if (conSonido) {
+			hiriente.destruir();
+		}
 		hirientes.remove(hiriente);
 	}
 	
@@ -90,7 +96,7 @@ public class ColeccionHirientes {
 			((ObjetoEspacial)hiriente).actualizar();
 			
 			if(!((Hiriente)hiriente).enPantalla()) {
-				eliminar(hiriente);
+				eliminar(hiriente, false);
 			}
 		}
 	}
