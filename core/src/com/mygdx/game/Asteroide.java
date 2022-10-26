@@ -17,7 +17,7 @@ public abstract class Asteroide extends ObjetoEspacial {
     
     public abstract boolean verificarColision(Bala bala);
     
-    public void destruir() {
+    public void explotar() {
     	sonidoExplosion.play();
     }
 }
