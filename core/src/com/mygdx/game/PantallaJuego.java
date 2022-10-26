@@ -43,7 +43,13 @@ public PantallaJuego(SpaceNav game) {
         consumibles = new ColeccionConsumibles();
         balas = new ColeccionBalas();
         
-        iniciarRonda();
+        // Iniciar ronda
+
+		int cantAsteroides = 10 + (ronda - 1) * 2;
+		int velAsteroides = 120 + (ronda - 1) * 20;
+		
+		asteroides.crear(cantAsteroides, velAsteroides);
+
 	}
 
 	public PantallaJuego(SpaceNav game, int ronda, int puntaje) {
@@ -52,13 +58,6 @@ public PantallaJuego(SpaceNav game) {
 		this.puntaje = puntaje;
 	}
 	
-	public void iniciarRonda() {
-		int cantAsteroides = 10 + (ronda - 1) * 2;
-		int velAsteroides = 120 + (ronda - 1) * 20;
-		
-		asteroides.crear(cantAsteroides, velAsteroides);
-	}
-    
 	public void dibujarEncabezado() {
 		CharSequence str = "Vidas: " + nave.getVidas() + " Ronda: " + ronda;
 		font.getData().setScale(2f);	
