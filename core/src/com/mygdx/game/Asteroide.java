@@ -10,6 +10,7 @@ public abstract class Asteroide extends ObjetoEspacial {
 
     public Asteroide(float x, float y, int ancho, int alto, float velX, float velY, Texture tx) {
     	super(x, y, ancho, alto, velX, velY, tx);
+    	sonidoExplosion.setVolume(1, 0.5f);
     }
     
     public abstract boolean verificarColision(Asteroide a2);

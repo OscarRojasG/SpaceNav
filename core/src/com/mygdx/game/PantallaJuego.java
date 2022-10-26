@@ -5,82 +5,85 @@ import java.util.Iterator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.colecciones.ColeccionAsteroides;
 import com.mygdx.game.colecciones.ColeccionBalas;
 import com.mygdx.game.colecciones.ColeccionConsumibles;
 
 public class PantallaJuego implements Screen {
-	private SpaceNav game;
+	private static final Texture fondo = new Texture(Gdx.files.internal("FondoGame.png"));
+	private static final Music musica = Gdx.audio.newMusic(Gdx.files.internal("piano-loops.wav"));
+	
 	private OrthographicCamera camera;	
+	private SpaceNav game;
+	private BitmapFont font;
 	private SpriteBatch batch;
-	private Texture font;
-	private Sound explosionSound;
-	private Music gameMusic;
-	private int score;
+	
 	private int ronda;
-	private int velAsteroides; 
-	private int cantAsteroides;
+	private int puntaje;
 	
 	private Nave nave;
 	private ColeccionAsteroides asteroides;
 	private ColeccionBalas balas;
 	private ColeccionConsumibles consumibles;
 
-	public PantallaJuego(SpaceNav game, int ronda, int vidas, int score,  
-			int velAsteroides, int cantAsteroides) {
+	public PantallaJuego(SpaceNav game, int ronda, int puntaje) {
 		this.game = game;
-		this.ronda = ronda;
-		this.score = score;
-		this.velAsteroides = velAsteroides;
-		this.cantAsteroides = cantAsteroides;
+		this.font = game.getFont();
+		this.batch = game.getBatch();
 		
-		batch = game.getBatch();
+		this.ronda = ronda;
+		this.puntaje = puntaje;
+		
 		camera = new OrthographicCamera();	
 		Util.setOtrhoCam(camera);
-		//inicializar assets; musica de fondo y efectos de sonido
-		explosionSound = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
-		explosionSound.setVolume(1,0.5f);
-		gameMusic = Gdx.audio.newMusic(Gdx.files.internal("piano-loops.wav")); //
-		font = new Texture(Gdx.files.internal("FondoGame.png"));
 		
-		gameMusic.setLooping(true);
-		gameMusic.setVolume(0.5f);
-		gameMusic.play();
+		musica.setLooping(true);
+		musica.setVolume(0.5f);
+		musica.play();
 		
-	    // cargar imagen de la nave, 64x64   
-	    nave = new Nave(
-	    		Gdx.graphics.getWidth()/2-50,
-	    		30,
-	    		Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"))
-	    		);
-        
-           
+	    nave = new Nave(Gdx.graphics.getWidth()/2-50, 30);
+               
         asteroides = new ColeccionAsteroides();
         consumibles = new ColeccionConsumibles();
         balas = new ColeccionBalas();
         
-        asteroides.crear(cantAsteroides, velAsteroides);
+        iniciarRonda();
+	}
+	
+	public void iniciarRonda() {
+		int cantAsteroides = 10 + (ronda - 1) * 2;
+		int velAsteroides = 120 + (ronda - 1) * 20;
+		
+		asteroides.crear(cantAsteroides, velAsteroides);
 	}
     
 	public void dibujarEncabezado() {
 		CharSequence str = "Vidas: " + nave.getVidas() + " Ronda: " + ronda;
-		game.getFont().getData().setScale(2f);		
-		game.getFont().draw(batch, str, 10, 30);
-		game.getFont().draw(batch, "Score:" + this.score, Gdx.graphics.getWidth()-150, 30);
-		game.getFont().draw(batch, "HighScore:" + game.getHighScore(), Gdx.graphics.getWidth()/2-100, 30);
+		font.getData().setScale(2f);	
+		font.draw(batch, str, 10, 30);
+		font.draw(batch, "Score:" + puntaje, Gdx.graphics.getWidth()-150, 30);
+		font.draw(batch, "HighScore:" + game.getHighScore(), Gdx.graphics.getWidth()/2-100, 30);
 	}
 	
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(font, 0, 0);
+		game.getBatch().begin();
+		batch.draw(fondo, 0, 0);
 		dibujarEncabezado();
+		
+		if (nave.estaDestruida()) {
+			finalizarJuego();
+		}
+		
+		if (asteroides.estaVacia()) {
+			avanzarRonda();
+		}
 		
 	    if (!nave.estaHerida()) {
 	    	Iterator<Asteroide> iteratorAsteroides = asteroides.getAsteroides();
@@ -101,45 +104,42 @@ public class PantallaJuego implements Screen {
 	    		Bala bala = nave.generarBala();
 	    		balas.agregar(bala);
 	    	}
+	    	
+		    asteroides.actualizar();
+		    consumibles.actualizar();
+		    balas.actualizar();
+		    
+		    asteroides.verificarColisiones(nave);
 	    }
 	    
-	    asteroides.verificarColisiones(nave);
-	    
-	    asteroides.actualizar();
-	    consumibles.actualizar();
-	    balas.actualizar();
 	    nave.actualizar();
 	    
 	    asteroides.dibujar(batch);
 	    consumibles.dibujar(batch);
 	    balas.dibujar(batch);
 	    nave.dibujar(batch);
-	      
-	    if (nave.estaDestruida()) {
-	    	if (score > game.getHighScore())
-	    		game.setHighScore(score);
-	    	Screen ss = new PantallaGameOver(game);
-  			game.setScreen(ss);
-  			dispose();
-	    }
+
 	    batch.end();
-	    
-	    // Nivel completado
-	    if (asteroides.estaVacia()) {
-	    	Screen ss = new PantallaJuego(game,ronda+1, nave.getVidas(), score,
-	    			velAsteroides + 5, cantAsteroides+10);
-			game.setScreen(ss);
-			dispose();
-	    } 	 
+	}
+	
+	public void finalizarJuego() {
+		game.setScreen(new PantallaGameOver(game));
+		musica.stop();
+	}
+	
+	public void avanzarRonda() {
+		Screen screen = new PantallaJuego(game, ronda + 1, puntaje);
+		game.setScreen(screen);
+		dispose();
 	}
 	
 	public void agregarPuntaje(int puntaje) {
-		this.score += puntaje;
+		this.puntaje += puntaje;
 	}
 	
 	@Override
 	public void show() {
-		gameMusic.play();
+		musica.play();
 	}
 
 	@Override
@@ -164,8 +164,7 @@ public class PantallaJuego implements Screen {
 
 	@Override
 	public void dispose() {
-		this.explosionSound.dispose();
-		this.gameMusic.dispose();
+		
 	}
    
 }
