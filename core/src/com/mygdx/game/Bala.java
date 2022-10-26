@@ -20,4 +20,7 @@ public class Bala extends ObjetoMovil {
         setY(y);
 	}
 	
+	public Texture getImageBala() {
+		return image;
+	}
 }

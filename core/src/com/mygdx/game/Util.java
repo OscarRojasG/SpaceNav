@@ -18,6 +18,15 @@ public class Util {
 	        return 1;
 	}
 	
+	public static int generateRandomBetween(int a, int b) {
+		int option = generateRandomInt(1,2);
+		if(option == 1) 
+		{
+			return a;
+		}
+		return b;
+	}
+	
 	public static void setOtrhoCam(OrthographicCamera cam){
 		cam.setToOrtho(false, 1200, 800);
 	}

@@ -138,7 +138,7 @@ public class Nave extends ObjetoMovil {
         return Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
     }
     
-    public Bala generarBala(Texture tx) {
+    public Bala generarBala() {
 		float x = getX() + getAlto()/2 * (float)Math.sin(Math.toRadians(this.rotacion));
 		float y = getY() + getAlto()/2 *  (float)Math.cos(Math.toRadians(-this.rotacion));
 		
@@ -192,6 +192,10 @@ public class Nave extends ObjetoMovil {
     
 	public void quitarVida() {
 		this.vidas--;
+	}
+	
+	public void matarNave() {
+		this.vidas = 0;
 	}
 	
 	public int getVidas() {

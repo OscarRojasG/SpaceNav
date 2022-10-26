@@ -15,11 +15,15 @@ import com.mygdx.game.asteroides.MediumAsteroid;
 import com.mygdx.game.asteroides.SmallAsteroid;
 import com.mygdx.game.consumibles.Supernave;
 import com.mygdx.game.consumibles.VidaExtra;
+import com.mygdx.game.damages.DesechoCohete;
+import com.mygdx.game.damages.Satelite;
 
 
 public class PantallaJuego implements Screen {
 	private final int ASTEROID_MIN_ANGLE = 20;
 	private final int ASTEROID_MAX_ANGLE = 70;
+	private static final int Y_RESOLUTION = Gdx.graphics.getHeight()-10;
+	private static final int X_RESOLUTION = Gdx.graphics.getWidth()-10;
 
 	private SpaceNav game;
 	private OrthographicCamera camera;	
@@ -36,6 +40,7 @@ public class PantallaJuego implements Screen {
 	private ArrayList<Asteroide> asteroides = new ArrayList<>();
 	private ArrayList<Bala> balas = new ArrayList<>();
 	private ArrayList<Consumible> consumibles = new ArrayList<>();
+	private ArrayList<Hiriente> herir = new ArrayList<>();
 
 	public PantallaJuego(SpaceNav game, int ronda, int vidas, int score,  
 			int velAsteroides, int cantAsteroides) {
@@ -99,21 +104,48 @@ public class PantallaJuego implements Screen {
 	}
 	
 	public void generarPowerUp(float x, float y, float velX, float velY) {
+		if (consumibles.size() > 2) 
+		{
+			return;
+		}
 		int n = Util.generateRandomInt(1, 32);
 		Consumible consumible = null;
 		
 		if((n == 1) || ( 7 <= n && n <= 11) || ( 23< n && n <= 25 )|| n == 32){
-			consumible = new VidaExtra(x, y, 40, 40, 
-									   velX, velY, 
-									   new Texture(Gdx.files.internal("health.png")));
+			consumible = new VidaExtra(x, y, 
+									   velX, velY
+									   );
 		}
 		else {
-			consumible = new Supernave(x, y, 35, 42.24f, 
-									   velX, velY, 
-									   new Texture(Gdx.files.internal("supernave.png")));
+			consumible = new Supernave(x, y, 
+									   velX, velY
+									   );
 		} 
 		
 		consumibles.add(consumible);
+	}
+	
+	public void generarPowerLess(float x, float y, float velX, float velY) {
+		if (herir.size() > 1)
+		{
+			return;
+		}
+		
+		int n = Util.generateRandomInt(1, 32);
+		Hiriente powerLess = null;
+		
+		if((n == 1) || ( 7 <= n && n <= 11) || ( 23< n && n <= 25 )|| n == 32){
+			powerLess = new Satelite(x, y,
+									 velX, velY
+									);
+		}
+		else {
+			powerLess = new DesechoCohete(x, y, 
+									 	  velX, velY
+									 	 );
+		} 
+		
+		herir.add(powerLess);
 	}
     
 	public void dibujaEncabezado() {
@@ -139,6 +171,36 @@ public class PantallaJuego implements Screen {
 		if (n == 1 || n == 20) {
 			generarPowerUp(asteroide.getX(), asteroide.getY(), 
 					       asteroide.getVelocidadX(), asteroide.getVelocidadY());
+		}
+		
+		// Probabilidad 1/10 de generar un objeto dañino aleatorio
+		if (n == 2 || n == 10) {
+			int option = Util.generateRandomInt(0, 1);
+			int horizontal;
+			int vertical;
+			int velX = 200;
+			int velY = 200;
+			
+			if (option == 0) {
+				vertical = Util.generateRandomInt(10, Y_RESOLUTION);
+				horizontal = Util.generateRandomBetween(0, X_RESOLUTION);
+				velY = 0;
+				if(horizontal != 0) {
+					velX *= -1;
+				}
+			}
+			else {
+				horizontal = Util.generateRandomInt(10, X_RESOLUTION);
+				vertical= Util.generateRandomBetween(0, Y_RESOLUTION);
+				velX = 0;
+				if(vertical != 0) {
+					velY *= -1;
+				}
+			}
+			
+			generarPowerLess(horizontal, vertical,
+							 velX , velY
+							);
 		}
 	}
 	
@@ -172,6 +234,8 @@ public class PantallaJuego implements Screen {
 		  	    }
 	    	}
 	    	
+	    	// Colisiones entre balas e hirientes y su destruccion
+	    	
 	    	// Colisión entre consumibles y nave
 	    	for (int i = 0; i < consumibles.size(); i++) {
 	    		Consumible consumible = consumibles.get(i);
@@ -201,7 +265,7 @@ public class PantallaJuego implements Screen {
 		    }
 	    	
 	    	if (nave.disparar()) {
-	    		Bala bala = nave.generarBala(new Texture(Gdx.files.internal("Rocket2.png")));
+	    		Bala bala = nave.generarBala();
 	    		balas.add(bala);
 	    	}
 	    }

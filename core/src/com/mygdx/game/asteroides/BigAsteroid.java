@@ -8,14 +8,14 @@ import com.mygdx.game.Bala;
 import com.mygdx.game.Util;
 
 public class BigAsteroid extends Asteroide{
-	private final static int ancho = 149;
-	private final static int alto = 140;
+	private final static int ancho = 100;
+	private final static int alto = 100;
 	private final static Texture image = new Texture(Gdx.files.internal("aGreyLarge.png"));
 	
     public BigAsteroid(float velX, float velY) {
     	super(Util.generateRandomInt(0, Gdx.graphics.getWidth() - ancho),
     		  Util.generateRandomInt(0, Gdx.graphics.getHeight() - alto), 
-    		  ancho, alto, velX, velY, image);
+    		  ancho, alto, velX - 5, velY - 5, image);
     }
     
     @Override
