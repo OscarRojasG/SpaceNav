@@ -29,7 +29,7 @@ public class PantallaMenu implements Screen {
         batch.end();
 
 		if (Gdx.input.isTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) {
-			Screen screen = new PantallaJuego(game, 1, 0);
+			Screen screen = new PantallaJuego(game);
 			game.setScreen(screen);
 			dispose();
 		}
