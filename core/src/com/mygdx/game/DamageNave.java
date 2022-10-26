@@ -16,8 +16,6 @@ public abstract class DamageNave extends ObjetoEspacial {
     
     public abstract boolean verificarColision(Bala bala);
     
-	public abstract void agregarEfecto(Nave nave);
-    
     public void destruir() {
     	sonidoExplosion.play();
     }

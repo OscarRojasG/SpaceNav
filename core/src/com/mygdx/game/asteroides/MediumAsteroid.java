@@ -82,8 +82,4 @@ public class MediumAsteroid extends DamageNave{
 		return this.getArea().overlaps(bala.getArea());
 	}
 	
-	@Override
-	public void agregarEfecto(Nave nave) {
-		// Aun no tiene efeccto real con la nave
-	}
 }

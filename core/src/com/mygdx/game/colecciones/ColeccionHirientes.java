@@ -111,7 +111,7 @@ public class ColeccionHirientes {
 			((ObjetoEspacial)hiriente).actualizar();
 			
 			if (((ObjetoEspacial)hiriente).verificarColision(nave)) {
-				hiriente.agregarEfecto(nave);
+				((Hiriente)hiriente).agregarEfecto(nave);
 				nave.herir();
 				eliminar(hiriente);
 			}

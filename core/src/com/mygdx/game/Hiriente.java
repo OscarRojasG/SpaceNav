@@ -7,6 +7,8 @@ public interface Hiriente{
 	public static final int moreScore = 20;
 	public static final int lessScore = -20;
 	
+	public abstract void agregarEfecto(Nave nave);
+	
 	public boolean enPantalla();
 	
 	public int getScoreChange();
