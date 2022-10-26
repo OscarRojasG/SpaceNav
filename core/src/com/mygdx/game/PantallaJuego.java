@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.colecciones.ColeccionAsteroides;
 import com.mygdx.game.colecciones.ColeccionBalas;
 import com.mygdx.game.colecciones.ColeccionConsumibles;
+import com.mygdx.game.colecciones.ColeccionHirientes;
 
 public class PantallaJuego implements Screen {
 	private static final Texture fondo = new Texture(Gdx.files.internal("FondoGame.png"));
@@ -28,7 +29,9 @@ public class PantallaJuego implements Screen {
 	private ColeccionAsteroides asteroides;
 	private ColeccionBalas balas;
 	private ColeccionConsumibles consumibles;
-public PantallaJuego(SpaceNav game) {
+	private ColeccionHirientes hirientes;
+
+	public PantallaJuego(SpaceNav game) {
 		this.game = game;
 		this.font = game.getFont();
 		this.batch = game.getBatch();
@@ -41,17 +44,18 @@ public PantallaJuego(SpaceNav game) {
                
         asteroides = new ColeccionAsteroides();
         consumibles = new ColeccionConsumibles();
+        hirientes = new ColeccionHirientes();
         balas = new ColeccionBalas();
         
         // Iniciar ronda
 
 		int cantAsteroides = 10 + (ronda - 1) * 2;
 		int velAsteroides = 120 + (ronda - 1) * 20;
-		
+
 		asteroides.crear(cantAsteroides, velAsteroides);
 
 	}
-
+	
 	public PantallaJuego(SpaceNav game, int ronda, int puntaje) {
 		this(game);
 		this.ronda = ronda;
@@ -69,7 +73,7 @@ public PantallaJuego(SpaceNav game) {
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		game.getBatch().begin();
+		batch.begin();
 		batch.draw(fondo, 0, 0);
 		dibujarEncabezado();
 		
@@ -77,14 +81,14 @@ public PantallaJuego(SpaceNav game) {
 			finalizarJuego();
 		}
 		
-		if (asteroides.estaVacia()) {
+		if (asteroides.estaVacia() && hirientes.estaVacia()) {
 			avanzarRonda();
 		}
 		
 	    if (!nave.estaHerida()) {
-	    	Iterator<Asteroide> iteratorAsteroides = asteroides.getAsteroides();
+	    	Iterator<DamageNave> iteratorAsteroides = asteroides.getAsteroides();
 	    	while(iteratorAsteroides.hasNext()) {
-	    		Asteroide a = iteratorAsteroides.next();
+	    		DamageNave a = iteratorAsteroides.next();
 	    		if(balas.verificarColisiones(a)) {
 	    			iteratorAsteroides.remove();
 	    			asteroides.eliminar(a);
@@ -94,8 +98,24 @@ public PantallaJuego(SpaceNav game) {
 	    		}
 	    	}
 	    	
+	    	Iterator<DamageNave> iteratorHirientes = hirientes.getHirientes();
+	    	while(iteratorHirientes.hasNext()) {
+	    		DamageNave h = iteratorHirientes.next();
+	    		if(balas.verificarColisiones(h)) {
+	    			iteratorHirientes.remove();
+	    			int sumScore = ((Hiriente)h).getScoreChange();
+	    			hirientes.eliminar(h);
+	    			agregarPuntaje(sumScore);
+	    		}
+	    	}
+	    	
+	    	if (asteroides.getCantidad() < 10 && hirientes.estaVacia()) {
+				hirientes.generar();
+			}
+	    	
 	    	consumibles.verificarColisiones(nave);
 	    	asteroides.verificarColisiones();
+	    	hirientes.verificarColisiones();
 	    	
 	    	if (nave.disparar()) {
 	    		Bala bala = nave.generarBala();
@@ -103,15 +123,18 @@ public PantallaJuego(SpaceNav game) {
 	    	}
 	    	
 		    asteroides.actualizar();
+		    hirientes.actualizar();
 		    consumibles.actualizar();
 		    balas.actualizar();
 		    
 		    asteroides.verificarColisiones(nave);
+		    hirientes.verificarColisiones(nave);
 	    }
 	    
 	    nave.actualizar();
 	    
 	    asteroides.dibujar(batch);
+	    hirientes.dibujar(batch);
 	    consumibles.dibujar(batch);
 	    balas.dibujar(batch);
 	    nave.dibujar(batch);

@@ -15,5 +15,14 @@ public class Util {
 	    else
 	        return 1;
 	}
-
+	
+	public static int generateRandomBetween(int a, int b) {
+		int option = generateRandomInt(1,2);
+		if(option == 1) 
+		{
+			return a;
+		}
+		return b;
+	}
+	
 }

@@ -31,10 +31,10 @@ public class ColeccionConsumibles {
 		
 		switch(n) {
 			case CONSUMIBLE_VIDA:
-				consumible = new VidaExtra(x, y, 40, 40, velX, velY);
+				consumible = new VidaExtra(x, y, velX, velY);
 				break;
 			case CONSUMIBLE_SUPERNAVE:
-				consumible = new Supernave(x, y, 35, 42.24f, velX, velY);
+				consumible = new Supernave(x, y, velX, velY);
 				break;
 		}
 		

@@ -9,11 +9,15 @@ import com.badlogic.gdx.math.Rectangle;
 public class Figura {
 	private Sprite sprite;
 	
-	public Figura(float x, float y, float ancho, float alto, Texture tx) {
-		sprite = new Sprite(tx);
+	public void startSprite(Texture tx, float ancho, float alto, float x, float y) {
+		setTexture(tx);
 		setSize(ancho, alto);
 		setX(x);
 		setY(y);
+	}
+	
+	public void setTexture(Texture tx) {
+		sprite = new Sprite(tx);
 	}
 	
     public void dibujar(SpriteBatch batch) {

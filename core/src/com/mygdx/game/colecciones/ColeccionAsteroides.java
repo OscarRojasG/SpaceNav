@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.Asteroide;
+import com.mygdx.game.DamageNave;
 import com.mygdx.game.Nave;
 import com.mygdx.game.Util;
 import com.mygdx.game.asteroides.BigAsteroid;
@@ -18,10 +18,10 @@ public class ColeccionAsteroides {
 	private final int ASTEROID_SIZE_MEDIUM = 2;
 	private final int ASTEROID_SIZE_BIG = 3;
 	
-	private ArrayList<Asteroide> asteroides;
+	private ArrayList<DamageNave> asteroides;
 	
 	public ColeccionAsteroides() {
-		asteroides = new ArrayList<Asteroide>();
+		asteroides = new ArrayList<DamageNave>();
 	}
 	
 	public void crear(int cantidad, int velocidad) {
@@ -38,7 +38,7 @@ public class ColeccionAsteroides {
 		
 		int size = generarTamañoAleatorio();
 		
-		Asteroide asteroide = null;
+		DamageNave asteroide = null;
 		
 		switch(size) {
 			case ASTEROID_SIZE_SMALL:
@@ -55,7 +55,7 @@ public class ColeccionAsteroides {
   	    asteroides.add(asteroide);
 	}
 	
-	public void eliminar(Asteroide asteroide) {
+	public void eliminar(DamageNave asteroide) {
 		asteroides.remove(asteroide);
 	}
 	
@@ -67,9 +67,9 @@ public class ColeccionAsteroides {
 	
 	public void verificarColisiones() {
 		for (int i = 0; i < asteroides.size(); i++) {
-			Asteroide a1 = asteroides.get(i);
+			DamageNave a1 = asteroides.get(i);
 			for (int j = i+1; j < asteroides.size(); j++) {
-				Asteroide a2 = asteroides.get(j);
+				DamageNave a2 = asteroides.get(j);
 				a1.verificarColision(a2);
 			}
 		}
@@ -77,7 +77,7 @@ public class ColeccionAsteroides {
 	
 	public void verificarColisiones(Nave nave) {
 	    for (int i = 0; i < asteroides.size(); i++) {
-	    	Asteroide a = asteroides.get(i);	
+	    	DamageNave a = asteroides.get(i);	
 	    	if (a.verificarColision(nave)) {
 	    		nave.herir();
 	    		eliminar(a);
@@ -95,8 +95,12 @@ public class ColeccionAsteroides {
 		return asteroides.isEmpty();
 	}
 	
-	public Iterator<Asteroide> getAsteroides() {
+	public Iterator<DamageNave> getAsteroides() {
 		return asteroides.iterator();
+	}
+	
+	public int getCantidad() {
+		return asteroides.size();
 	}
  	
 	private int generarTamañoAleatorio() {

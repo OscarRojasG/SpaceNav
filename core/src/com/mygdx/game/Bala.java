@@ -18,7 +18,11 @@ public class Bala extends ObjetoMovil {
         setY(y);
 	}
 	
-	public boolean verificarColision(Asteroide asteroide) {
+	public Texture getImageBala() {
+		return image;
+	}
+
+	public boolean verificarColision(DamageNave asteroide) {
 		return this.getArea().overlaps(asteroide.getArea());
 	}
 	

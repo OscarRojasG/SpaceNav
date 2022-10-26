@@ -8,13 +8,15 @@ import com.mygdx.game.Nave;
 import com.mygdx.game.ObjetoEspacial;
 
 public class VidaExtra extends ObjetoEspacial implements Consumible {
+	private final static int ancho = 40;
+	private final static int alto = 40;
 	private final static Texture image = new Texture(Gdx.files.internal("health.png"));
 	
 	private long startTime;
 	private long elapsedTime;
 
-	public VidaExtra(float x, float y, float width, float height, float velX, float velY) {
-		super(x, y, width, height, velX, velY, image);
+	public VidaExtra(float x, float y, float velX, float velY) {
+		super(x, y, ancho, alto, velX, velY, image);
 		startTime = TimeUtils.millis();
 	}
 
@@ -35,7 +37,7 @@ public class VidaExtra extends ObjetoEspacial implements Consumible {
 		elapsedTime  = TimeUtils.timeSinceMillis(startTime);
 		long sTime = elapsedTime / 1000; // Consiguiendolo en segundos
 		
-		return (sTime > 3); // Si no se ha usado por mas de 5 segundos
+		return (sTime > 3); // Si no se ha usado por mas de 3 segundos
 	}
 	
 }

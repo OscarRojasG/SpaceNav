@@ -8,13 +8,15 @@ import com.mygdx.game.Nave;
 import com.mygdx.game.ObjetoEspacial;
 
 public class Supernave extends ObjetoEspacial implements Consumible {
+	private final static float ancho =  35 ;
+	private final static float alto = 42.24f;
 	private final static Texture image = new Texture(Gdx.files.internal("supernave.png"));
 	
 	private long startTime;
 	private long elapsedTime;
 	
-	public Supernave(float x, float y, float width, float height, float velX, float velY) {
-		super(x, y, width, height, velX, velY, image);
+	public Supernave(float x, float y, float velX, float velY) {
+		super(x, y, ancho, alto, velX, velY, image);
 		startTime = TimeUtils.millis();
 	}
 
@@ -35,7 +37,7 @@ public class Supernave extends ObjetoEspacial implements Consumible {
 		elapsedTime  = TimeUtils.timeSinceMillis(startTime);
 		long sTime = elapsedTime / 1000; // Consiguiendolo en segundos
 		
-		return (sTime > 6); // Si no se ha usado por mas de 5 segundos
+		return (sTime > 6); // Si no se ha usado por mas de 6 segundos
 	}
 	
 }

@@ -1,51 +1,33 @@
-package com.mygdx.game.asteroides;
+package com.mygdx.game.damages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Bala;
 import com.mygdx.game.DamageNave;
+import com.mygdx.game.Hiriente;
 import com.mygdx.game.Nave;
 import com.mygdx.game.ObjetoEspacial;
-import com.mygdx.game.Util;
 
-public class MediumAsteroid extends DamageNave{
-	private final static int ancho = 55;
-	private final static int alto = 50;
-	private final static Texture image = new Texture(Gdx.files.internal("aGreyMedium4.png"));
+public class DesechoCohete extends DamageNave implements Hiriente{
+	private final static int ancho = 40;
+	private final static int alto = 60;
+	private final static int scoreChange = 20;
+	private final static Texture image = new Texture(Gdx.files.internal("RocketEngine.png"));
 	
-    public MediumAsteroid(float velX, float velY) {
-    	super(Util.generateRandomInt(0, Gdx.graphics.getWidth() - ancho),
-    		  Util.generateRandomInt(0, Gdx.graphics.getHeight() - alto), 
-    		  ancho, alto, velX, velY, image);
-    }
-    
-    @Override
-    public void actualizar() {
+	public DesechoCohete(float x, float y, 
+			             float velX, float velY) {
+		super(x, y, ancho, alto, velX, velY, image);
+	}
+	@Override
+	public void actualizar() {
         float x = getX() + getVelocidadX() * Gdx.graphics.getDeltaTime();
         float y = getY() + getVelocidadY() * Gdx.graphics.getDeltaTime();
-
-        if (x + getAncho() > Gdx.graphics.getWidth()) {
-        	x = Gdx.graphics.getWidth() - getAncho();
-        	reverseVelX();
-        }
-        else if (x < 0) {
-        	x = 0;
-        	reverseVelX();
-        }
-        
-        if (y + getAlto() > Gdx.graphics.getHeight()) {
-        	y = Gdx.graphics.getHeight() - getAlto();
-        	reverseVelY();
-        }
-        else if (y < 0) {
-        	y = 0;
-        	reverseVelY();
-        }
         
         setPosition(x,y);
-    }
-    
+	}
+	
+	@Override
 	public boolean verificarColision(ObjetoEspacial a2) {
     	Rectangle r1 = this.getArea();
     	Rectangle r2 = a2.getArea();
@@ -77,9 +59,26 @@ public class MediumAsteroid extends DamageNave{
         
         return true;
 	}
-	
+
+	@Override
 	public boolean verificarColision(Bala bala) {
 		return this.getArea().overlaps(bala.getArea());
 	}
 
+	
+	@Override
+	public void agregarEfecto(Nave nave) {
+		nave.desacelerar();
+	}
+
+	@Override
+	public boolean enPantalla() {
+		return !isOffscreen();
+	}
+
+
+	@Override
+	public int getScoreChange() {
+		return scoreChange;
+	}
 }
