@@ -1,6 +1,7 @@
 package com.mygdx.game.colecciones;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -111,6 +112,14 @@ public class ColeccionHirientes {
 				eliminar(hiriente);
 			}
 		}
+	}
+	
+	public Iterator<DamageNave> getHirientes() {
+		return hirientes.iterator();
+	}
+	
+	public int getCantidad() {
+		return hirientes.size();
 	}
 	
 	private int generarConsumibleAleatorio() {
