@@ -19,7 +19,7 @@ public class PantallaJuego implements Screen {
 	private SpaceNav game;
 	private OrthographicCamera camera;	
 	private SpriteBatch batch;
-	private Texture font;
+	private Texture screen;
 	private Sound explosionSound;
 	private Music gameMusic;
 	private int score;
@@ -48,7 +48,7 @@ public class PantallaJuego implements Screen {
 		explosionSound = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
 		explosionSound.setVolume(1,0.5f);
 		gameMusic = Gdx.audio.newMusic(Gdx.files.internal("piano-loops.wav")); //
-		font = new Texture(Gdx.files.internal("FondoGame.png"));
+		screen = new Texture(Gdx.files.internal("FondoGame.png"));
 		
 		gameMusic.setLooping(true);
 		gameMusic.setVolume(0.5f);
@@ -82,7 +82,7 @@ public class PantallaJuego implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		batch.draw(font, 0, 0);
+		batch.draw(screen, 0, 0);
 		dibujarEncabezado();
 		
 	    if (!nave.estaHerida()) {
