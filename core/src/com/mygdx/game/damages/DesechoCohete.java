@@ -12,6 +12,7 @@ import com.mygdx.game.ObjetoEspacial;
 public class DesechoCohete extends DamageNave implements Hiriente{
 	private final static int ancho = 40;
 	private final static int alto = 60;
+	private final static int scoreChange = 20;
 	private final static Texture image = new Texture(Gdx.files.internal("RocketEngine.png"));
 	
 	public DesechoCohete(float x, float y, 
@@ -78,6 +79,6 @@ public class DesechoCohete extends DamageNave implements Hiriente{
 
 	@Override
 	public int getScoreChange() {
-		return moreScore;
+		return scoreChange;
 	}
 }
