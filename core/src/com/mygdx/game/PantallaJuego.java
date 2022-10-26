@@ -47,20 +47,18 @@ public class PantallaJuego implements Screen {
         hirientes = new ColeccionHirientes();
         balas = new ColeccionBalas();
         
-        iniciarRonda();
+        // Iniciar ronda
+
+		int cantAsteroides = 10 + (ronda - 1) * 2;
+		int velAsteroides = 120 + (ronda - 1) * 20;
+
+		asteroides.crear(cantAsteroides, velAsteroides);
 	}
 	
 	public PantallaJuego(SpaceNav game, int ronda, int puntaje) {
 		this(game);
 		this.ronda = ronda;
 		this.puntaje = puntaje;
-	}
-	
-	public void iniciarRonda() {
-		int cantAsteroides = 10 + (ronda - 1) * 2;
-		int velAsteroides = 120 + (ronda - 1) * 20;
-		
-		asteroides.crear(cantAsteroides, velAsteroides);
 	}
     
 	public void dibujarEncabezado() {
