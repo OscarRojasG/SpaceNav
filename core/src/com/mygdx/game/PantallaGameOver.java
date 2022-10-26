@@ -30,7 +30,7 @@ public class PantallaGameOver implements Screen {
 		batch.end();
 
 		if (Gdx.input.isTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) {
-			Screen ss = new PantallaMenu(game);
+			Screen ss = new PantallaMenu(game); // Crearemos un menu para la version final.
 			game.setScreen(ss);
 			dispose();
 		}

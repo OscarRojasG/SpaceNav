@@ -37,7 +37,7 @@ public class VidaExtra extends ObjetoEspacial implements Consumible {
 		elapsedTime  = TimeUtils.timeSinceMillis(startTime);
 		long sTime = elapsedTime / 1000; // Consiguiendolo en segundos
 		
-		return (sTime > 3); // Si no se ha usado por mas de 5 segundos
+		return (sTime > 3); // Si no se ha usado por mas de 3 segundos
 	}
 	
 }

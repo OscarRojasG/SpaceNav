@@ -37,7 +37,7 @@ public class Supernave extends ObjetoEspacial implements Consumible {
 		elapsedTime  = TimeUtils.timeSinceMillis(startTime);
 		long sTime = elapsedTime / 1000; // Consiguiendolo en segundos
 		
-		return (sTime > 6); // Si no se ha usado por mas de 5 segundos
+		return (sTime > 6); // Si no se ha usado por mas de 6 segundos
 	}
 	
 }
