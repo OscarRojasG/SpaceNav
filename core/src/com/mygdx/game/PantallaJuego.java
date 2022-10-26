@@ -77,7 +77,7 @@ public class PantallaJuego implements Screen {
 			float velXAsteroides = velAsteroides * (float)Math.cos(angle);
 			float velYAsteroides = velAsteroides * (float)Math.sin(angle);
 			
-			int size = Util.getAsteroid();
+			int size = Util.getAsteroid(ronda);
 			
 			Asteroide asteroide;
 			
@@ -243,7 +243,7 @@ public class PantallaJuego implements Screen {
 	    // Nivel completado
 	    if (asteroides.size() == 0) {
 	    	Screen ss = new PantallaJuego(game,ronda+1, nave.getVidas(), score,
-	    			velAsteroides + 5, cantAsteroides+10);
+	    			velAsteroides + 5, cantAsteroides+5);
 			game.setScreen(ss);
 			dispose();
 	    } 	 
