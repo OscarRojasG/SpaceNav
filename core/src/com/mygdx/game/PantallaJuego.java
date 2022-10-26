@@ -87,6 +87,7 @@ public class PantallaJuego implements Screen {
 	    		if(balas.verificarColisiones(a)) {
 	    			iteratorAsteroides.remove();
 	    			asteroides.eliminar(a);
+	    			a.explotar();
 	    			consumibles.generar(a.getX(), a.getY(), a.getVelocidadX(), a.getVelocidadY());
 	    			agregarPuntaje(10);
 	    		}
