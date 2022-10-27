@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class PantallaGameOver implements Screen {
-	private static final Texture fondo = new Texture(Gdx.files.internal("FondoGameOver.png"));
 	
 	private SpaceNav game;
 	private SpriteBatch batch;
@@ -22,7 +21,6 @@ public class PantallaGameOver implements Screen {
 	public void render(float delta) {
 		ScreenUtils.clear(0, 0, 0.2f, 1);
 		batch.begin();
-		batch.draw(fondo, 0, 0);
 
 		game.getFont().draw(game.getBatch(), "Game Over !!! ", 120, 400,400,1,true);
 		game.getFont().draw(game.getBatch(), "Presione cualquier tecla o haga click para reiniciar ...", 100, 300);
