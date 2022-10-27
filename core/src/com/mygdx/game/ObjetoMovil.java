@@ -29,10 +29,6 @@ public abstract class ObjetoMovil extends Figura {
 		this.velY = velY;
 	}
 	
-	public void reverseVelY() {
-		this.velY *= -1;
-	}
-	
 	public float getVelocidadX() {
 		return velX;
 	}

@@ -36,11 +36,11 @@ public class SmallAsteroid extends DamageNave{
         
         if (y + getAlto() > Gdx.graphics.getHeight()) {
         	y = Gdx.graphics.getHeight() - getAlto();
-        	reverseVelY();
+        	setVelocidadY(getVelocidadY() * -1);
         }
         else if (y < 0) {
         	y = 0;
-        	reverseVelY();
+        	setVelocidadY(getVelocidadY() * -1);
         }
         
         setPosition(x,y);
@@ -62,8 +62,8 @@ public class SmallAsteroid extends DamageNave{
 	        else
 	        	setY(r1.y + intersectionY + 0.1f);
 	        
-	        reverseVelY();
-	        a2.reverseVelY();
+	        setVelocidadY(getVelocidadY() * -1);
+	        a2.setVelocidadY(getVelocidadY() * -1);
         }
         else {
 	        if (r1.x < r2.x)

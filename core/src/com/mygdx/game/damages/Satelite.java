@@ -45,8 +45,8 @@ public class Satelite extends DamageNave implements Hiriente{
 	        else
 	        	setY(r1.y + intersectionY + 0.1f);
 	        
-	        reverseVelY();
-	        a2.reverseVelY();
+	        setVelocidadY(getVelocidadY() * -1);
+	        a2.setVelocidadY(getVelocidadY() * -1);
         }
         else {
 	        if (r1.x < r2.x)
