@@ -119,9 +119,9 @@ public class PantallaJuego implements Screen {
 	    asteroides.dibujar(batch);
 	    consumibles.dibujar(batch);
 	    balas.dibujar(batch);
-	    nave.dibujar(shapeRenderer);
-
 	    batch.end();
+	    
+	    nave.dibujar(shapeRenderer);
 	}
 	
 	public void finalizarJuego() {

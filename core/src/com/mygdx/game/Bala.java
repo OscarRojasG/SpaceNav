@@ -6,10 +6,11 @@ import com.badlogic.gdx.graphics.Texture;
 public class Bala extends FiguraSprite implements Movil {
 	private final static Texture image = new Texture(Gdx.files.internal("Rocket2.png"));
 	
-    public Bala(float x, float y, float ancho, float alto, float velx, float vely) {
+    public Bala(float x, float y, float ancho, float alto, float velx, float vely, float angulo) {
     	super(x, y, ancho, alto, image);
     	setVelocidadX(velx);
     	setVelocidadY(vely);
+    	setAngulo(angulo);
     }
     
 	@Override

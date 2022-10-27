@@ -98,7 +98,6 @@ public class Nave extends FiguraForma implements Movil{
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             float a = getAngulo() - 5;
-            System.out.println("izq");
             this.setAngulo(a);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
@@ -127,8 +126,8 @@ public class Nave extends FiguraForma implements Movil{
     }
     
     public Bala generarBala() {
-		float x = getX() + getAlto()/2 * (float)Math.sin(Math.toRadians(this.getAngulo()));
-		float y = getY() + getAlto()/2 *  (float)Math.cos(Math.toRadians(-this.getAngulo()));
+		float x = getX() + getAncho()/2 * (1 + (float)Math.sin(Math.toRadians(this.getAngulo())));
+		float y = getY() + getAlto()/2 * (1 + (float)Math.cos(Math.toRadians(this.getAngulo())));
 		
         float ballvelx = 3f * VELOCIDAD;
         float ballvely = 3f * VELOCIDAD;
@@ -136,11 +135,13 @@ public class Nave extends FiguraForma implements Movil{
     	if (esSupernave())
     		return new Bala(x, y, anchoBalaSupernave, altoBalaSupernave,
                         ballvelx * (float)Math.sin(Math.toRadians(this.getAngulo())),
-                        ballvely * (float)Math.cos(Math.toRadians(-this.getAngulo())));
+                        ballvely * (float)Math.cos(Math.toRadians(-this.getAngulo())),
+                        -getAngulo());
     	
     	return new Bala(x, y, anchoBala, altoBala,
                         ballvelx * (float)Math.sin(Math.toRadians(this.getAngulo())),
-                        ballvely * (float)Math.cos(Math.toRadians(-this.getAngulo())));
+                        ballvely * (float)Math.cos(Math.toRadians(-this.getAngulo())),
+                        -getAngulo());
     }
     
     public void herir() {
@@ -188,18 +189,18 @@ public class Nave extends FiguraForma implements Movil{
 
 	@Override
 	public void dibujar(ShapeRenderer sr) {
-		 System.out.println(getAngulo());
 		 sr.begin(ShapeType.Filled);
 		 sr.setColor(0x0, 0xff, 0xff, 1);
 
-		 sr.rotate(0.f, 0.f, 1.f, getAngulo());
-
-		 sr.triangle(getX(), getY(),
-				 getX() + getAncho(), getY(),
-				 getX(),  getY() + getAlto()
+		 sr.identity();
+		 sr.translate(getX() + getAncho()/2, getY() + getAlto()/2, 0);
+		 sr.rotate(0.0f, 0.0f, 1.0f, -getAngulo());
+		 
+		 sr.triangle(0, getAlto()/2, 
+				 -getAncho()/2, -getAlto()/2,
+				 getAncho()/2, -getAlto()/2
 				 );
-
-
+		 
 		 sr.identity();
 
 		 sr.end();	
