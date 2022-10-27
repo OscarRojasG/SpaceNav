@@ -4,24 +4,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector3;
 
-public class Nave extends ObjetoMovil {
-	private static final float anchoNave = 45;
-	private static final float altoNave = 45;
-	private static final Texture image = new Texture(Gdx.files.internal("MainShip3.png"));
+public class Nave extends FiguraForma implements Movil{
+	private static final int anchoNave = 45;
+	private static final int altoNave = 45;
+
 	private static final Sound sonidoHerido = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
 	
     private float aceleracion;
-    private Vector3 collider;
-    int rotacion = 0;
 
-	private final int DIRECCION_POSITIVA = 1;
-	private final int DIRECCION_NEGATIVA = -1;
 	private final float VELOCIDAD = 60.f;
 	private final float tiempoHeridoMax = 0.8f;
-	private final float maxVel = 300;
 
 	private final float accel = 3f;
 	
@@ -39,7 +36,7 @@ public class Nave extends ObjetoMovil {
     private float tiempoUltimoDisparo;
     
     public Nave(int x, int y) {
-    	super(x, y, anchoNave, altoNave, 0, 0, image);
+    	super(x, y, anchoNave, altoNave);
     }
      
     private float calcularPosicionX() {
@@ -84,8 +81,8 @@ public class Nave extends ObjetoMovil {
     		return;
     	}
     	
-        setVelocidadX((float)Math.sin(Math.toRadians(this.rotacion))* VELOCIDAD);
-        setVelocidadY((float)Math.cos(Math.toRadians(this.rotacion))* VELOCIDAD);
+        setVelocidadX((float)Math.sin(Math.toRadians(this.getAngulo()))* VELOCIDAD);
+        setVelocidadY((float)Math.cos(Math.toRadians(this.getAngulo()))* VELOCIDAD);
         
     	if (esSupernave())
     		tiempoSupernave -= Gdx.graphics.getDeltaTime();
@@ -100,12 +97,13 @@ public class Nave extends ObjetoMovil {
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            this.rotacion -=5;
-            this.setRotation(-this.rotacion);
+            float a = getAngulo() - 5;
+            System.out.println("izq");
+            this.setAngulo(a);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            this.rotacion +=5;
-            this.setRotation(-this.rotacion);
+            float a = getAngulo() + 5;
+            this.setAngulo(a);
         }
 
         
@@ -129,20 +127,20 @@ public class Nave extends ObjetoMovil {
     }
     
     public Bala generarBala() {
-		float x = getX() + getAlto()/2 * (float)Math.sin(Math.toRadians(this.rotacion));
-		float y = getY() + getAlto()/2 *  (float)Math.cos(Math.toRadians(-this.rotacion));
+		float x = getX() + getAlto()/2 * (float)Math.sin(Math.toRadians(this.getAngulo()));
+		float y = getY() + getAlto()/2 *  (float)Math.cos(Math.toRadians(-this.getAngulo()));
 		
         float ballvelx = 3f * VELOCIDAD;
         float ballvely = 3f * VELOCIDAD;
 
     	if (esSupernave())
     		return new Bala(x, y, anchoBalaSupernave, altoBalaSupernave,
-                        ballvelx * (float)Math.sin(Math.toRadians(this.rotacion)),
-                        ballvely * (float)Math.cos(Math.toRadians(-this.rotacion)));
+                        ballvelx * (float)Math.sin(Math.toRadians(this.getAngulo())),
+                        ballvely * (float)Math.cos(Math.toRadians(-this.getAngulo())));
     	
     	return new Bala(x, y, anchoBala, altoBala,
-                        ballvelx * (float)Math.sin(Math.toRadians(this.rotacion)),
-                        ballvely * (float)Math.cos(Math.toRadians(-this.rotacion)));
+                        ballvelx * (float)Math.sin(Math.toRadians(this.getAngulo())),
+                        ballvely * (float)Math.cos(Math.toRadians(-this.getAngulo())));
     }
     
     public void herir() {
@@ -186,6 +184,25 @@ public class Nave extends ObjetoMovil {
 	
 	public int getVidas() {
 		return vidas;
+	}
+
+	@Override
+	public void dibujar(ShapeRenderer sr) {
+		 System.out.println(getAngulo());
+		 sr.begin(ShapeType.Filled);
+		 sr.setColor(0x0, 0xff, 0xff, 1);
+
+		 sr.rotate(0.f, 0.f, 1.f, getAngulo());
+
+		 sr.triangle(getX(), getY(),
+				 getX() + getAncho(), getY(),
+				 getX(),  getY() + getAlto()
+				 );
+
+
+		 sr.identity();
+
+		 sr.end();	
 	}
 	
 }

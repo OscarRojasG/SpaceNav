@@ -1,24 +1,21 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class FiguraSprite extends Elemento2D implements Figura {
+public class FiguraSprite extends Figura {
 
 	private Texture tx;
 
-	public FiguraSprite(int x, int y, int ancho, int alto, Texture tx) {
+	public FiguraSprite(float x, float y, float ancho, float alto, Texture tx) {
+		super(x,y,ancho,alto);
 		this.tx = tx;
-		setSize(ancho, alto);
-		setX(x);
-		setY(y);
 	}
 
-	@Override
 	public void dibujar(SpriteBatch batch) {
     	batch.draw(tx, getX(), getY(), getAlto(), getAncho());
     }
+
 
 
 }

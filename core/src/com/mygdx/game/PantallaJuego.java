@@ -6,21 +6,22 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.colecciones.ColeccionAsteroides;
 import com.mygdx.game.colecciones.ColeccionBalas;
 import com.mygdx.game.colecciones.ColeccionConsumibles;
 
 public class PantallaJuego implements Screen {
-	private static final Texture fondo = new Texture(Gdx.files.internal("FondoGame.png"));
 	private static final Music musica = Gdx.audio.newMusic(Gdx.files.internal("piano-loops.wav"));
 	
 	private SpaceNav game;
 	private BitmapFont font;
+
 	private SpriteBatch batch;
-	
+	private ShapeRenderer shapeRenderer;
+
 	private int ronda;
 	private int puntaje;
 	
@@ -28,16 +29,21 @@ public class PantallaJuego implements Screen {
 	private ColeccionAsteroides asteroides;
 	private ColeccionBalas balas;
 	private ColeccionConsumibles consumibles;
-public PantallaJuego(SpaceNav game) {
+
+	public PantallaJuego(SpaceNav game) {
 		this.game = game;
 		this.font = game.getFont();
 		this.batch = game.getBatch();
+		this.shapeRenderer = game.getShapeRenderer();
 		
 		musica.setLooping(true);
-		musica.setVolume(0.5f);
+		musica.setVolume(0.5f); // Debería ser parte del archivo
 		musica.play();
 		
-	    nave = new Nave(Gdx.graphics.getWidth()/2-50, 30);
+		int navePosX = Gdx.graphics.getWidth()/2 - 50;
+		int navePosY = 30;
+		
+	    nave = new Nave(navePosX, navePosY);
                
         asteroides = new ColeccionAsteroides();
         consumibles = new ColeccionConsumibles();
@@ -70,7 +76,6 @@ public PantallaJuego(SpaceNav game) {
 	public void render(float delta) {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.getBatch().begin();
-		batch.draw(fondo, 0, 0);
 		dibujarEncabezado();
 		
 		if (nave.estaDestruida()) {
@@ -114,7 +119,7 @@ public PantallaJuego(SpaceNav game) {
 	    asteroides.dibujar(batch);
 	    consumibles.dibujar(batch);
 	    balas.dibujar(batch);
-	    nave.dibujar(batch);
+	    nave.dibujar(shapeRenderer);
 
 	    batch.end();
 	}

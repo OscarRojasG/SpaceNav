@@ -18,31 +18,6 @@ public class BigAsteroid extends Asteroide{
     		  ancho, alto, velX, velY, image);
     }
     
-    @Override
-    public void actualizar() {
-        float x = getX() + getVelocidadX() * Gdx.graphics.getDeltaTime();
-        float y = getY() + getVelocidadY() * Gdx.graphics.getDeltaTime();
-
-        if (x + getAncho() > Gdx.graphics.getWidth()) {
-        	x = Gdx.graphics.getWidth() - getAncho();
-        	setVelocidadX(getVelocidadX() * -1);
-        }
-        else if (x < 0) {
-        	x = 0;
-        	setVelocidadX(getVelocidadX() * -1);
-        }
-        
-        if (y + getAlto() > Gdx.graphics.getHeight()) {
-        	y = Gdx.graphics.getHeight() - getAlto();
-        	setVelocidadY(getVelocidadY() * -1);
-        }
-        else if (y < 0) {
-        	y = 0;
-        	setVelocidadY(getVelocidadY() * -1);
-        }
-        
-        setPosition(x,y);
-    }
     
 	public boolean verificarColision(Asteroide a2) {
     	Rectangle r1 = this.getArea();
@@ -56,9 +31,9 @@ public class BigAsteroid extends Asteroide{
      
         if (intersectionX > intersectionY) { 	
 	        if (r1.y < r2.y)
-	        	setY(r1.y - intersectionY - 0.1f);
+	        	setY(r1.y - intersectionY - 1);
 	        else
-	        	setY(r1.y + intersectionY + 0.1f);
+	        	setY(r1.y + intersectionY + 1);
 	        
 	        setVelocidadY(getVelocidadY() * -1);
 	        a2.setVelocidadY(a2.getVelocidadY() * -1);  

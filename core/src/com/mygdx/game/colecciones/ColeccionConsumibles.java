@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Consumible;
+import com.mygdx.game.Figura;
+import com.mygdx.game.FiguraSprite;
 import com.mygdx.game.Nave;
-import com.mygdx.game.ObjetoEspacial;
 import com.mygdx.game.Util;
 import com.mygdx.game.consumibles.Supernave;
 import com.mygdx.game.consumibles.VidaExtra;
@@ -47,22 +48,22 @@ public class ColeccionConsumibles {
 	
 	public void dibujar(SpriteBatch batch) {
 		for (int i = 0; i < consumibles.size(); i++) {
-			((ObjetoEspacial)consumibles.get(i)).dibujar(batch);
+			((FiguraSprite)consumibles.get(i)).dibujar(batch);
 		}
 	}
 	
 	public void actualizar() {
 		for (int i = 0; i < consumibles.size(); i++) {
-			((ObjetoEspacial)consumibles.get(i)).actualizar();
+			consumibles.get(i).actualizar();
 		}
 	}
 	
 	public void verificarColisiones(Nave nave) {
 		for (int i = 0; i < consumibles.size(); i++) {
 			Consumible consumible = consumibles.get(i);
-			((ObjetoEspacial)consumible).actualizar();
+			consumible.actualizar();
 			
-			if (((ObjetoEspacial)consumible).verificarColision(nave)) {
+			if (((Figura)consumible).verificarColision(nave)) {
 				consumible.agregarEfecto(nave);
 				eliminar(consumible);
 			} 

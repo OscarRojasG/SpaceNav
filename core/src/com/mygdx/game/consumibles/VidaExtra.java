@@ -4,17 +4,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.Consumible;
+import com.mygdx.game.FiguraSprite;
 import com.mygdx.game.Nave;
-import com.mygdx.game.ObjetoEspacial;
 
-public class VidaExtra extends ObjetoEspacial implements Consumible {
+public class VidaExtra extends FiguraSprite implements Consumible {
 	private final static Texture image = new Texture(Gdx.files.internal("health.png"));
 	
 	private long startTime;
 	private long elapsedTime;
 
 	public VidaExtra(float x, float y, float width, float height, float velX, float velY) {
-		super(x, y, width, height, velX, velY, image);
+		super(x, y, width, height, image);
+		setVelocidadX(velX);
+		setVelocidadY(velY);
 		startTime = TimeUtils.millis();
 	}
 
