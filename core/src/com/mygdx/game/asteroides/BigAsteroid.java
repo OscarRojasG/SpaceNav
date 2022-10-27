@@ -28,20 +28,20 @@ public class BigAsteroid extends DamageNave{
 
         if (x + getAncho() > Gdx.graphics.getWidth()) {
         	x = Gdx.graphics.getWidth() - getAncho();
-        	reverseVelX();
+        	setVelocidadX(getVelocidadX() * -1);
         }
         else if (x < 0) {
         	x = 0;
-        	reverseVelX();
+        	setVelocidadX(getVelocidadX() * -1);
         }
         
         if (y + getAlto() > Gdx.graphics.getHeight()) {
         	y = Gdx.graphics.getHeight() - getAlto();
-        	reverseVelY();
+        	setVelocidadY(getVelocidadY() * -1);
         }
         else if (y < 0) {
         	y = 0;
-        	reverseVelY();
+        	setVelocidadY(getVelocidadY() * -1);
         }
         
         setPosition(x,y);
@@ -63,8 +63,8 @@ public class BigAsteroid extends DamageNave{
 	        else
 	        	setY(r1.y + intersectionY + 0.1f);
 	        
-	        reverseVelY();
-	        a2.reverseVelY();
+	        setVelocidadY(getVelocidadY() * -1);
+	        a2.setVelocidadY(getVelocidadY() * -1);
         }
         else {
 	        if (r1.x < r2.x)
@@ -72,8 +72,8 @@ public class BigAsteroid extends DamageNave{
 	        else
 	        	this.setX(r1.x + intersectionX + 0.1f);
 	        
-	        reverseVelX();
-	        a2.reverseVelX();  	
+	        setVelocidadX(getVelocidadX() * -1);
+	        a2.setVelocidadX(getVelocidadX() * -1);  	
         }
         
         return true;
