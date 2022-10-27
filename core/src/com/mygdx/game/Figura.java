@@ -10,6 +10,7 @@ public class Figura {
 	private Sprite sprite;
 	
 	public void startSprite(Texture tx, float ancho, float alto, float x, float y) {
+		// Devolverlo a constructor genero error no se que cambie asi que me devuelvo
 		setTexture(tx);
 		setSize(ancho, alto);
 		setX(x);
