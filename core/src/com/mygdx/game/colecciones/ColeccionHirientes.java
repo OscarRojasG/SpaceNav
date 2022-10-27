@@ -17,8 +17,18 @@ public class ColeccionHirientes {
 	private final static int HIRIENTE_DESECHO_COHETE = 1;
 	private final static int HIRIENTE_SATELITE = 2;
 	
-	private final static int Y_RESOLUTION = Gdx.graphics.getHeight()-10;
-	private final static int X_RESOLUTION = Gdx.graphics.getWidth()-10;
+	private final static int SALIDA_HORIZONTAL = 1;
+	private final static int SALIDA_VERTICAL = 2;
+	
+	// Limites de la pantalla.
+	private final static int INICIO_PANTALLA = 0;
+	private final static int FINAL_PANTALLA_VERTICAL = Gdx.graphics.getHeight();
+	private final static int FINAL_PANTALLA_HORIZONTAL = Gdx.graphics.getWidth();
+	
+	// Limites donde puede aparecer el objeto espacial hiriente.
+	private final static int INICIO_SALIDA = 10;
+	private final static int FINAL_SALIDA_VERTICAL =Gdx.graphics.getHeight()-10;
+	private final static int FINAL_SALIDA_HORIZONTAL = Gdx.graphics.getWidth()-10;;
 	
 	private ArrayList<DamageNave> hirientes;
 	
@@ -27,8 +37,8 @@ public class ColeccionHirientes {
 	}
 	
 	public void generar() {
-		int p = Util.generateRandomInt(0, 9);
-		if(p != 7) 
+		int p = Util.generateRandomInt(1, 20);
+		if(p != 1) 
 		{
 			return;	
 		}
@@ -37,27 +47,34 @@ public class ColeccionHirientes {
 		
 		DamageNave hiriente = null;
 		
-		int option = Util.generateRandomInt(0, 1);
+		int option = Util.generateRandomBetween(SALIDA_HORIZONTAL, SALIDA_VERTICAL);
 		int x;
 		int y;
 		int velX = 200;
 		int velY = 200;
 		
-		if (option == 0) {
-			y = Util.generateRandomInt(10, Y_RESOLUTION);
-			x = Util.generateRandomBetween(0, X_RESOLUTION);
-			velY = 0;
+		if (option == SALIDA_HORIZONTAL) {
+			// Se decide desde que lado aparece
+			x = Util.generateRandomBetween(INICIO_PANTALLA, FINAL_PANTALLA_HORIZONTAL);
 			if(x != 0) {
 				velX *= -1;
 			}
+			// Se decide en que parte del lado
+			y = Util.generateRandomInt(INICIO_SALIDA, FINAL_SALIDA_VERTICAL);
+			velY = 0;
+			
 		}
 		else {
-			x = Util.generateRandomInt(10, X_RESOLUTION);
-			y= Util.generateRandomBetween(0, Y_RESOLUTION);
-			velX = 0;
+			// Se decide desde que lado aparece
+			y = Util.generateRandomBetween(INICIO_PANTALLA, FINAL_PANTALLA_VERTICAL);
 			if(y != 0) {
 				velY *= -1;
 			}
+			
+			// Se decide en que parte del lado
+			x = Util.generateRandomInt(INICIO_SALIDA, FINAL_SALIDA_HORIZONTAL);		
+			velX = 0;
+
 		}
 		
 		switch(n) {
