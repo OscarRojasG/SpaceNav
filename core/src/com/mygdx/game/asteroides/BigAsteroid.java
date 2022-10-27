@@ -73,7 +73,7 @@ public class BigAsteroid extends DamageNave{
 	        	this.setX(r1.x + intersectionX + 0.1f);
 	        
 	        setVelocidadX(getVelocidadX() * -1);
-	        a2.setVelocidadX(getVelocidadX() * -1);  	
+	        a2.setVelocidadX(getVelocidadX() * -1);	
         }
         
         return true;

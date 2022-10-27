@@ -6,10 +6,8 @@ public abstract class ObjetoMovil extends Figura {
 	private float velX;
 	private float velY;
 	
-	public ObjetoMovil(float x, float y, 
-					   float ancho, float alto, 
-					   float velX, float velY, Texture tx) {
-		super(ancho, alto, x , y, tx);
+	public ObjetoMovil(float x, float y, float ancho, float alto, float velX, float velY, Texture tx) {
+		super(x, y, ancho, alto, tx);
 		setVelocidadX(velX);
 		setVelocidadY(velY);
 	}

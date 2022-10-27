@@ -24,19 +24,19 @@ public class ColeccionAsteroides {
 		asteroides = new ArrayList<DamageNave>();
 	}
 	
-	public void crear(int cantidad, int velocidad) {
+	public void crear(int cantidad, int velocidad, int level) {
 		for (int i = 0; i < cantidad; i++)
-			crear(velocidad);
+			crear(velocidad,level);
 	}
 	
-	public void crear(int velocidad) {
+	public void crear(int velocidad, int ronda) {
 		float angle = Util.generateRandomInt(ASTEROID_MIN_ANGLE, ASTEROID_MAX_ANGLE);
 		angle = (float)Math.toRadians(angle);
 		
 		float velXAsteroides = velocidad * (float)Math.cos(angle);
 		float velYAsteroides = velocidad * (float)Math.sin(angle);
 		
-		int size = generarTamañoAleatorio();
+		int size = generarTamañoAleatorio(ronda);
 		
 		DamageNave asteroide = null;
 		
@@ -103,8 +103,17 @@ public class ColeccionAsteroides {
 		return asteroides.size();
 	}
  	
-	private int generarTamañoAleatorio() {
-		return Util.generateRandomInt(1, 3);
+	private int generarTamañoAleatorio(int nivel) {
+		if(nivel > 20) {
+			return ASTEROID_SIZE_SMALL;
+		}
+		
+		if (nivel > 10) {
+			return Util.generateRandomInt(ASTEROID_SIZE_SMALL, ASTEROID_SIZE_MEDIUM);
+		}
+		
+		// Incluye el ASTEROID_SIZE_MEDIUM
+		return Util.generateRandomInt(ASTEROID_SIZE_SMALL, ASTEROID_SIZE_BIG);
 	}
 	
 }

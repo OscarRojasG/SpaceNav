@@ -44,8 +44,8 @@ public class DesechoCohete extends DamageNave implements Hiriente{
 	        else
 	        	setY(r1.y + intersectionY + 0.1f);
 	        
-	        setVelocidadY(getVelocidadY() * -1); 
-	        a2.setVelocidadY(getVelocidadY() * -1); 
+	        setVelocidadY(getVelocidadY() * -1);
+	        a2.setVelocidadY(getVelocidadY() * -1);
         }
         else {
 	        if (r1.x < r2.x)
@@ -53,8 +53,8 @@ public class DesechoCohete extends DamageNave implements Hiriente{
 	        else
 	        	this.setX(r1.x + intersectionX + 0.1f);
 	        
-	        setVelocidadX(getVelocidadX() * -1); 
-	        a2.setVelocidadX(getVelocidadX() * -1); 	
+	        setVelocidadX(getVelocidadX() * -1);
+	        a2.setVelocidadX(getVelocidadX() * -1);
         }
         
         return true;

@@ -52,7 +52,7 @@ public class PantallaJuego implements Screen {
 		int cantAsteroides = 10 + (ronda - 1) * 2;
 		int velAsteroides = 120 + (ronda - 1) * 20;
 
-		asteroides.crear(cantAsteroides, velAsteroides);
+		asteroides.crear(cantAsteroides, velAsteroides, ronda);
 
 	}
 	
@@ -104,7 +104,7 @@ public class PantallaJuego implements Screen {
 	    		if(balas.verificarColisiones(h)) {
 	    			iteratorHirientes.remove();
 	    			int sumScore = ((Hiriente)h).getScoreChange();
-	    			hirientes.eliminar(h);
+	    			hirientes.eliminar(h, true);
 	    			agregarPuntaje(sumScore);
 	    		}
 	    	}
