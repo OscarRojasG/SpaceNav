@@ -16,22 +16,16 @@ public class SpaceNav extends Game {
 	public void create() {
 		highScore = 0;
 		batch = new SpriteBatch();
-<<<<<<< HEAD
 		shapeRenderer = new ShapeRenderer();
-=======
->>>>>>> NuevaInterface
 		font = new BitmapFont();
 		font.getData().setScale(2f);
 		
 		Screen screen = new PantallaMenu(this);
 		setScreen(screen);
-<<<<<<< HEAD
 	}
 
 	public ShapeRenderer getShapeRenderer() {
 		return shapeRenderer;
-=======
->>>>>>> NuevaInterface
 	}
 
 	public void render() {

@@ -7,27 +7,18 @@ import com.mygdx.game.Consumible;
 import com.mygdx.game.FiguraSprite;
 import com.mygdx.game.Nave;
 
-<<<<<<< HEAD
 public class Supernave extends FiguraSprite implements Consumible {
-=======
-public class Supernave extends ObjetoEspacial implements Consumible {
 	private final static float ancho =  35 ;
 	private final static float alto = 42.24f;
->>>>>>> NuevaInterface
 	private final static Texture image = new Texture(Gdx.files.internal("supernave.png"));
 	
 	private long startTime;
 	private long elapsedTime;
 	
-<<<<<<< HEAD
-	public Supernave(float x, float y, float width, float height, float velX, float velY) {
-		super(x, y, width, height, image);
+	public Supernave(float x, float y, float velX, float velY) {
+		super(x, y, ancho, alto, image);
 		setVelocidadX(velX);
 		setVelocidadY(velY);
-=======
-	public Supernave(float x, float y, float velX, float velY) {
-		super(x, y, ancho, alto, velX, velY, image);
->>>>>>> NuevaInterface
 		startTime = TimeUtils.millis();
 	}
 

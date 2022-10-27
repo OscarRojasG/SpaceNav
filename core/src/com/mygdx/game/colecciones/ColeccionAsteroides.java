@@ -55,11 +55,7 @@ public class ColeccionAsteroides {
   	    asteroides.add(asteroide);
 	}
 	
-<<<<<<< HEAD
-	public void eliminar(Asteroide asteroide) {
-=======
 	public void eliminar(DamageNave asteroide) {
->>>>>>> NuevaInterface
 		asteroides.remove(asteroide);
 	}
 	

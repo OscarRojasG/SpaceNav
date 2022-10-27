@@ -15,9 +15,6 @@ public class Util {
 	    else
 	        return 1;
 	}
-<<<<<<< HEAD
-
-=======
 	
 	public static int generateRandomBetween(int a, int b) {
 		int option = generateRandomInt(1,2);
@@ -27,6 +24,4 @@ public class Util {
 		}
 		return b;
 	}
-	
->>>>>>> NuevaInterface
 }

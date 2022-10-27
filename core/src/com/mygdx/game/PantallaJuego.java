@@ -6,10 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-<<<<<<< HEAD
-=======
-import com.badlogic.gdx.graphics.Texture;
->>>>>>> NuevaInterface
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -37,7 +33,6 @@ public class PantallaJuego implements Screen {
 	private ColeccionHirientes hirientes;
 
 	public PantallaJuego(SpaceNav game) {
-<<<<<<< HEAD
 		this(game, 1, 0);
 	}
 
@@ -49,11 +44,9 @@ public class PantallaJuego implements Screen {
 		this.font = game.getFont();
 		this.batch = game.getBatch();
 		this.shapeRenderer = game.getShapeRenderer();
-=======
 		this.game = game;
 		this.font = game.getFont();
 		this.batch = game.getBatch();
->>>>>>> NuevaInterface
 		
 		musica.setLooping(true);
 		musica.setVolume(0.5f); // Debería ser parte del archivo
@@ -78,15 +71,6 @@ public class PantallaJuego implements Screen {
 
 	}
 	
-<<<<<<< HEAD
-=======
-	public PantallaJuego(SpaceNav game, int ronda, int puntaje) {
-		this(game);
-		this.ronda = ronda;
-		this.puntaje = puntaje;
-	}
-	
->>>>>>> NuevaInterface
 	public void dibujarEncabezado() {
 		CharSequence str = "Vidas: " + nave.getVidas() + " Ronda: " + ronda;
 		font.getData().setScale(2f);	
@@ -98,12 +82,7 @@ public class PantallaJuego implements Screen {
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-<<<<<<< HEAD
-		game.getBatch().begin();
-=======
 		batch.begin();
-		batch.draw(fondo, 0, 0);
->>>>>>> NuevaInterface
 		dibujarEncabezado();
 		
 		if (nave.estaDestruida()) {

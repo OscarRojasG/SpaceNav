@@ -6,9 +6,9 @@ import java.util.Iterator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.DamageNave;
+import com.mygdx.game.FiguraSprite;
 import com.mygdx.game.Hiriente;
 import com.mygdx.game.Nave;
-import com.mygdx.game.ObjetoEspacial;
 import com.mygdx.game.Util;
 import com.mygdx.game.damages.DesechoCohete;
 import com.mygdx.game.damages.Satelite;
@@ -102,7 +102,7 @@ public class ColeccionHirientes {
 	
 	public void dibujar(SpriteBatch batch) {
 		for (int i = 0; i < hirientes.size(); i++) {
-			((ObjetoEspacial)hirientes.get(i)).dibujar(batch);
+			((FiguraSprite)hirientes.get(i)).dibujar(batch);
 		}
 	}
 	
@@ -110,7 +110,7 @@ public class ColeccionHirientes {
 		for (int i = 0; i < hirientes.size(); i++) {
 			DamageNave hiriente = hirientes.get(i);
 			
-			((ObjetoEspacial)hiriente).actualizar();
+			hiriente.actualizar();
 			
 			if(!((Hiriente)hiriente).enPantalla()) {
 				eliminar(hiriente, false);
@@ -131,9 +131,9 @@ public class ColeccionHirientes {
 	public void verificarColisiones(Nave nave) {
 		for (int i = 0; i < hirientes.size(); i++) {
 			DamageNave hiriente = hirientes.get(i);
-			((ObjetoEspacial)hiriente).actualizar();
+			hiriente.actualizar();
 			
-			if (((ObjetoEspacial)hiriente).verificarColision(nave)) {
+			if (hiriente.verificarColision(nave)) {
 				nave.herir();
 				eliminar(hiriente);
 			}
