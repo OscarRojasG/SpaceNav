@@ -156,7 +156,7 @@ public class Nave extends FiguraForma implements Movil{
     }
     
     public boolean estaDestruida() {
-       return !estaHerida() && (vidas == 0);
+        return !estaHerida() && vidas == 0;
     }
     
     public boolean estaHerida() {
@@ -181,6 +181,10 @@ public class Nave extends FiguraForma implements Movil{
     
 	public void quitarVida() {
 		this.vidas--;
+	}
+	
+	public void matarNave() {
+		this.vidas = 0;
 	}
 	
 	public int getVidas() {

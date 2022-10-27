@@ -6,12 +6,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
+<<<<<<< HEAD
+=======
+import com.badlogic.gdx.graphics.Texture;
+>>>>>>> NuevaInterface
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.colecciones.ColeccionAsteroides;
 import com.mygdx.game.colecciones.ColeccionBalas;
 import com.mygdx.game.colecciones.ColeccionConsumibles;
+import com.mygdx.game.colecciones.ColeccionHirientes;
 
 public class PantallaJuego implements Screen {
 	private static final Music musica = Gdx.audio.newMusic(Gdx.files.internal("piano-loops.wav"));
@@ -29,8 +34,10 @@ public class PantallaJuego implements Screen {
 	private ColeccionAsteroides asteroides;
 	private ColeccionBalas balas;
 	private ColeccionConsumibles consumibles;
+	private ColeccionHirientes hirientes;
 
 	public PantallaJuego(SpaceNav game) {
+<<<<<<< HEAD
 		this(game, 1, 0);
 	}
 
@@ -42,6 +49,11 @@ public class PantallaJuego implements Screen {
 		this.font = game.getFont();
 		this.batch = game.getBatch();
 		this.shapeRenderer = game.getShapeRenderer();
+=======
+		this.game = game;
+		this.font = game.getFont();
+		this.batch = game.getBatch();
+>>>>>>> NuevaInterface
 		
 		musica.setLooping(true);
 		musica.setVolume(0.5f); // Debería ser parte del archivo
@@ -54,16 +66,27 @@ public class PantallaJuego implements Screen {
                
         asteroides = new ColeccionAsteroides();
         consumibles = new ColeccionConsumibles();
+        hirientes = new ColeccionHirientes();
         balas = new ColeccionBalas();
         
         // Iniciar ronda
 
 		int cantAsteroides = 10 + (ronda - 1) * 2;
 		int velAsteroides = 120 + (ronda - 1) * 20;
-		
-		asteroides.crear(cantAsteroides, velAsteroides);
+
+		asteroides.crear(cantAsteroides, velAsteroides, ronda);
+
 	}
 	
+<<<<<<< HEAD
+=======
+	public PantallaJuego(SpaceNav game, int ronda, int puntaje) {
+		this(game);
+		this.ronda = ronda;
+		this.puntaje = puntaje;
+	}
+	
+>>>>>>> NuevaInterface
 	public void dibujarEncabezado() {
 		CharSequence str = "Vidas: " + nave.getVidas() + " Ronda: " + ronda;
 		font.getData().setScale(2f);	
@@ -75,21 +98,26 @@ public class PantallaJuego implements Screen {
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+<<<<<<< HEAD
 		game.getBatch().begin();
+=======
+		batch.begin();
+		batch.draw(fondo, 0, 0);
+>>>>>>> NuevaInterface
 		dibujarEncabezado();
 		
 		if (nave.estaDestruida()) {
 			finalizarJuego();
 		}
 		
-		if (asteroides.estaVacia()) {
+		if (asteroides.estaVacia() && hirientes.estaVacia()) {
 			avanzarRonda();
 		}
 		
 	    if (!nave.estaHerida()) {
-	    	Iterator<Asteroide> iteratorAsteroides = asteroides.getAsteroides();
+	    	Iterator<DamageNave> iteratorAsteroides = asteroides.getAsteroides();
 	    	while(iteratorAsteroides.hasNext()) {
-	    		Asteroide a = iteratorAsteroides.next();
+	    		DamageNave a = iteratorAsteroides.next();
 	    		if(balas.verificarColisiones(a)) {
 	    			iteratorAsteroides.remove();
 	    			asteroides.eliminar(a);
@@ -99,8 +127,24 @@ public class PantallaJuego implements Screen {
 	    		}
 	    	}
 	    	
+	    	Iterator<DamageNave> iteratorHirientes = hirientes.getHirientes();
+	    	while(iteratorHirientes.hasNext()) {
+	    		DamageNave h = iteratorHirientes.next();
+	    		if(balas.verificarColisiones(h)) {
+	    			iteratorHirientes.remove();
+	    			int sumScore = ((Hiriente)h).getScoreChange();
+	    			hirientes.eliminar(h, true);
+	    			agregarPuntaje(sumScore);
+	    		}
+	    	}
+	    	
+	    	if (asteroides.getCantidad() < 10 && hirientes.estaVacia()) {
+				hirientes.generar();
+			}
+	    	
 	    	consumibles.verificarColisiones(nave);
 	    	asteroides.verificarColisiones();
+	    	hirientes.verificarColisiones();
 	    	
 	    	if (nave.disparar()) {
 	    		Bala bala = nave.generarBala();
@@ -108,15 +152,18 @@ public class PantallaJuego implements Screen {
 	    	}
 	    	
 		    asteroides.actualizar();
+		    hirientes.actualizar();
 		    consumibles.actualizar();
 		    balas.actualizar();
 		    
 		    asteroides.verificarColisiones(nave);
+		    hirientes.verificarColisiones(nave);
 	    }
 	    
 	    nave.actualizar();
 	    
 	    asteroides.dibujar(batch);
+	    hirientes.dibujar(batch);
 	    consumibles.dibujar(batch);
 	    balas.dibujar(batch);
 	    batch.end();

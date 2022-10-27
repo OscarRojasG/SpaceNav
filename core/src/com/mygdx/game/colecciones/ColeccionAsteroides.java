@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.Asteroide;
+import com.mygdx.game.DamageNave;
 import com.mygdx.game.Nave;
 import com.mygdx.game.Util;
 import com.mygdx.game.asteroides.BigAsteroid;
@@ -18,27 +18,27 @@ public class ColeccionAsteroides {
 	private final int ASTEROID_SIZE_MEDIUM = 2;
 	private final int ASTEROID_SIZE_BIG = 3;
 	
-	private ArrayList<Asteroide> asteroides;
+	private ArrayList<DamageNave> asteroides;
 	
 	public ColeccionAsteroides() {
-		asteroides = new ArrayList<Asteroide>();
+		asteroides = new ArrayList<DamageNave>();
 	}
 	
-	public void crear(int cantidad, int velocidad) {
+	public void crear(int cantidad, int velocidad, int level) {
 		for (int i = 0; i < cantidad; i++)
-			crear(velocidad);
+			crear(velocidad,level);
 	}
 	
-	public void crear(int velocidad) {
+	public void crear(int velocidad, int ronda) {
 		float angle = Util.generateRandomInt(ASTEROID_MIN_ANGLE, ASTEROID_MAX_ANGLE);
 		angle = (float)Math.toRadians(angle);
 		
 		float velXAsteroides = velocidad * (float)Math.cos(angle);
 		float velYAsteroides = velocidad * (float)Math.sin(angle);
 		
-		int size = generarTamañoAleatorio();
+		int size = generarTamañoAleatorio(ronda);
 		
-		Asteroide asteroide = null;
+		DamageNave asteroide = null;
 		
 		switch(size) {
 			case ASTEROID_SIZE_SMALL:
@@ -55,7 +55,11 @@ public class ColeccionAsteroides {
   	    asteroides.add(asteroide);
 	}
 	
+<<<<<<< HEAD
 	public void eliminar(Asteroide asteroide) {
+=======
+	public void eliminar(DamageNave asteroide) {
+>>>>>>> NuevaInterface
 		asteroides.remove(asteroide);
 	}
 	
@@ -67,9 +71,9 @@ public class ColeccionAsteroides {
 	
 	public void verificarColisiones() {
 		for (int i = 0; i < asteroides.size(); i++) {
-			Asteroide a1 = asteroides.get(i);
+			DamageNave a1 = asteroides.get(i);
 			for (int j = i+1; j < asteroides.size(); j++) {
-				Asteroide a2 = asteroides.get(j);
+				DamageNave a2 = asteroides.get(j);
 				a1.verificarColision(a2);
 			}
 		}
@@ -77,7 +81,7 @@ public class ColeccionAsteroides {
 	
 	public void verificarColisiones(Nave nave) {
 	    for (int i = 0; i < asteroides.size(); i++) {
-	    	Asteroide a = asteroides.get(i);	
+	    	DamageNave a = asteroides.get(i);	
 	    	if (a.verificarColision(nave)) {
 	    		nave.herir();
 	    		eliminar(a);
@@ -95,12 +99,25 @@ public class ColeccionAsteroides {
 		return asteroides.isEmpty();
 	}
 	
-	public Iterator<Asteroide> getAsteroides() {
+	public Iterator<DamageNave> getAsteroides() {
 		return asteroides.iterator();
 	}
+	
+	public int getCantidad() {
+		return asteroides.size();
+	}
  	
-	private int generarTamañoAleatorio() {
-		return Util.generateRandomInt(1, 3);
+	private int generarTamañoAleatorio(int nivel) {
+		if(nivel > 20) {
+			return ASTEROID_SIZE_SMALL;
+		}
+		
+		if (nivel > 10) {
+			return Util.generateRandomInt(ASTEROID_SIZE_SMALL, ASTEROID_SIZE_MEDIUM);
+		}
+		
+		// Incluye el ASTEROID_SIZE_MEDIUM
+		return Util.generateRandomInt(ASTEROID_SIZE_SMALL, ASTEROID_SIZE_BIG);
 	}
 	
 }
