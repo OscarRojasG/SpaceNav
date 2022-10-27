@@ -9,16 +9,11 @@ import com.badlogic.gdx.math.Rectangle;
 public class Figura {
 	private Sprite sprite;
 	
-	public void startSprite(Texture tx, float ancho, float alto, float x, float y) {
-		// Devolverlo a constructor genero error no se que cambie asi que me devuelvo
-		setTexture(tx);
+	public Figura(float x, float y, float ancho, float alto, Texture tx) {
+		sprite = new Sprite(tx);
 		setSize(ancho, alto);
 		setX(x);
 		setY(y);
-	}
-	
-	public void setTexture(Texture tx) {
-		sprite = new Sprite(tx);
 	}
 	
     public void dibujar(SpriteBatch batch) {
