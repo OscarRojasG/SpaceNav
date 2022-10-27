@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -42,7 +41,8 @@ public abstract class Figura {
     }
     
     public void setSize(float ancho, float alto) {
-    	this.width = ancho; this.height = alto;
+    	this.width = ancho; 
+    	this.height = alto;
     }
 
     public void setRotation(float angle) {
@@ -95,8 +95,8 @@ public abstract class Figura {
     }
 
 	public boolean verificarColision(Figura figura) {
-			return getArea().overlaps(figura.getArea());
-		}
+		return getArea().overlaps(figura.getArea());
+	}
 
 	public float getAngulo() {
 		return this.angulo;
