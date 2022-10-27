@@ -19,6 +19,7 @@ public class DesechoCohete extends DamageNave implements Hiriente{
 			             float velX, float velY) {
 		super(x, y, ancho, alto, velX, velY, image);
 	}
+	
 	@Override
 	public void actualizar() {
         float x = getX() + getVelocidadX() * Gdx.graphics.getDeltaTime();

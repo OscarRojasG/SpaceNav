@@ -25,7 +25,12 @@ public class SmallAsteroid extends DamageNave{
         float x = getX() + getVelocidadX() * Gdx.graphics.getDeltaTime();
         float y = getY() + getVelocidadY() * Gdx.graphics.getDeltaTime();
 
-        if (x + getAncho() > Gdx.graphics.getWidth()) {
+        setPosition(x,y);
+    }
+    
+    @Override
+    public void setPosition(float x, float y) {
+    	if (x + getAncho() > Gdx.graphics.getWidth()) {
         	x = Gdx.graphics.getWidth() - getAncho();
         	setVelocidadX(getVelocidadX() * -1);
         }
@@ -43,7 +48,7 @@ public class SmallAsteroid extends DamageNave{
         	setVelocidadY(getVelocidadY() * -1);
         }
         
-        setPosition(x,y);
+        super.setPosition(x,y);
     }
     
 	public boolean verificarColision(ObjetoEspacial a2) {
