@@ -31,7 +31,14 @@ public class PantallaJuego implements Screen {
 	private ColeccionConsumibles consumibles;
 
 	public PantallaJuego(SpaceNav game) {
+		this(game, 1, 0);
+	}
+
+	public PantallaJuego(SpaceNav game, int ronda, int puntaje) {
 		this.game = game;
+		this.ronda = ronda;
+		this.puntaje = puntaje;
+		
 		this.font = game.getFont();
 		this.batch = game.getBatch();
 		this.shapeRenderer = game.getShapeRenderer();
@@ -55,13 +62,6 @@ public class PantallaJuego implements Screen {
 		int velAsteroides = 120 + (ronda - 1) * 20;
 		
 		asteroides.crear(cantAsteroides, velAsteroides);
-
-	}
-
-	public PantallaJuego(SpaceNav game, int ronda, int puntaje) {
-		this(game);
-		this.ronda = ronda;
-		this.puntaje = puntaje;
 	}
 	
 	public void dibujarEncabezado() {

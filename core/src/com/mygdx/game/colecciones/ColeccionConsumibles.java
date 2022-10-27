@@ -61,7 +61,6 @@ public class ColeccionConsumibles {
 	public void verificarColisiones(Nave nave) {
 		for (int i = 0; i < consumibles.size(); i++) {
 			Consumible consumible = consumibles.get(i);
-			consumible.actualizar();
 			
 			if (((Figura)consumible).verificarColision(nave)) {
 				consumible.agregarEfecto(nave);

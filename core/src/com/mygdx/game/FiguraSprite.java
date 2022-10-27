@@ -15,9 +15,12 @@ public class FiguraSprite extends Figura {
 
 	public void dibujar(SpriteBatch batch) {
 		sprite.setPosition(getX(), getY());
-		sprite.setCenter(getX(), getY());
-		sprite.setRotation(getAngulo());
+		sprite.setSize(getAncho(), getAlto());
     	sprite.draw(batch);
     }
+	
+	public Sprite getSprite() {
+		return sprite;
+	}
 	
 }

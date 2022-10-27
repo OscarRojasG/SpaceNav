@@ -6,8 +6,8 @@ import com.mygdx.game.Asteroide;
 import com.mygdx.game.Util;
 
 public class SmallAsteroid extends Asteroide{
-	private final static int ancho = 30;
-	private final static int alto = 30;
+	private final static int ancho = 40;
+	private final static int alto = 40;
 	private final static Texture image = new Texture(Gdx.files.internal("aGreySmall.png"));
 	
     public SmallAsteroid(float velX, float velY) {
