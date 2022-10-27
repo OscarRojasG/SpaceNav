@@ -27,13 +27,7 @@ public class DesechoCohete extends DamageNave implements Hiriente{
 	
 	@Override
 	public void agregarEfecto(Nave nave) {
-	//	nave.desacelerar();
-	}
-
-	@Override
-	public boolean enPantalla() {
-		//return !isOffscreen();
-		return true;
+		nave.desacelerar();
 	}
 
 

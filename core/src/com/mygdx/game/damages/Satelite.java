@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.DamageNave;
 import com.mygdx.game.Hiriente;
 import com.mygdx.game.Nave;
+import com.mygdx.game.Util;
 
 public class Satelite extends DamageNave implements Hiriente{
 	private final static int ancho = 60;
@@ -16,20 +17,17 @@ public class Satelite extends DamageNave implements Hiriente{
             			float velX, float velY) {
 		super(x, y, ancho, alto, velX, velY, image);
 	}
-
-	@Override
-	public boolean enPantalla() {
-		//return !isOffscreen();
-		return true;
-	}
 	
 	@Override
 	public void agregarEfecto(Nave nave) {
-//		nave.desacelerar();
+		nave.desacelerar();
 	}
 
 	@Override
 	public int getScoreChange() {
-		return scoreChange;
+		if (Util.generateRandomInt(0, 1) == 0) {
+			return scoreChange * -1; // Esto es cuando el satelite era basura espacial
+		}
+		return scoreChange; // Esto es cuando el satelite estaba funcional
 	}
 }

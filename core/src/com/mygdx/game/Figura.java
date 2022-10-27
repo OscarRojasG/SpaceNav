@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -19,14 +20,23 @@ public abstract class Figura {
 		this.velocidad = new Vector2(0.f,0.f);
 
 		this.aceleracion = new Vector2(0.f,0.f);
-
-
+		
 		this.width = width;
 		this.height = height;
 
 		this.angulo = 0;
 	}
-
+	
+	public boolean isOffscreen() {
+        if (getX() < 0 || getX() + getAncho() > Gdx.graphics.getWidth()) 
+            return true;
+        
+        if (getY() < 0 || getY() + getAlto() > Gdx.graphics.getHeight())
+        	return true;
+        
+        return false;
+    }
+	
     public void setPosition(float x, float y) {
     	this.position.x = x;
     	this.position.y = y;

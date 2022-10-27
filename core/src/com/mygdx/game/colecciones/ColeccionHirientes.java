@@ -112,7 +112,7 @@ public class ColeccionHirientes {
 			
 			hiriente.actualizar();
 			
-			if(!((Hiriente)hiriente).enPantalla()) {
+			if(hiriente.isOffscreen()) {
 				eliminar(hiriente, false);
 			}
 		}

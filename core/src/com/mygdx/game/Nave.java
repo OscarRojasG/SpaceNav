@@ -190,6 +190,14 @@ public class Nave extends FiguraForma implements Movil{
 	public int getVidas() {
 		return vidas;
 	}
+	
+	public void desacelerar() {
+		if(getVelocidadX() < 3) {
+			return;
+		}
+		setVelocidadX(getVelocidadX() - 1);
+		setVelocidadY(getVelocidadY() - 1);
+	}
 
 	@Override
 	public void dibujar(ShapeRenderer sr) {
