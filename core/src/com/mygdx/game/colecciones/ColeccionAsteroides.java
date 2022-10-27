@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.DamageNave;
+import com.mygdx.game.Enemigo;
 import com.mygdx.game.Nave;
 import com.mygdx.game.Util;
 import com.mygdx.game.asteroides.BigAsteroid;
@@ -18,10 +18,10 @@ public class ColeccionAsteroides {
 	private final int ASTEROID_SIZE_MEDIUM = 2;
 	private final int ASTEROID_SIZE_BIG = 3;
 	
-	private ArrayList<DamageNave> asteroides;
+	private ArrayList<Enemigo> asteroides;
 	
 	public ColeccionAsteroides() {
-		asteroides = new ArrayList<DamageNave>();
+		asteroides = new ArrayList<Enemigo>();
 	}
 	
 	public void crear(int cantidad, int velocidad, int level) {
@@ -38,7 +38,7 @@ public class ColeccionAsteroides {
 		
 		int size = generarTamañoAleatorio(ronda);
 		
-		DamageNave asteroide = null;
+		Enemigo asteroide = null;
 		
 		switch(size) {
 			case ASTEROID_SIZE_SMALL:
@@ -55,7 +55,7 @@ public class ColeccionAsteroides {
   	    asteroides.add(asteroide);
 	}
 	
-	public void eliminar(DamageNave asteroide) {
+	public void eliminar(Enemigo asteroide) {
 		asteroides.remove(asteroide);
 	}
 	
@@ -67,9 +67,9 @@ public class ColeccionAsteroides {
 	
 	public void verificarColisiones() {
 		for (int i = 0; i < asteroides.size(); i++) {
-			DamageNave a1 = asteroides.get(i);
+			Enemigo a1 = asteroides.get(i);
 			for (int j = i+1; j < asteroides.size(); j++) {
-				DamageNave a2 = asteroides.get(j);
+				Enemigo a2 = asteroides.get(j);
 				a1.verificarColision(a2);
 			}
 		}
@@ -77,7 +77,7 @@ public class ColeccionAsteroides {
 	
 	public void verificarColisiones(Nave nave) {
 	    for (int i = 0; i < asteroides.size(); i++) {
-	    	DamageNave a = asteroides.get(i);	
+	    	Enemigo a = asteroides.get(i);	
 	    	if (a.verificarColision(nave)) {
 	    		nave.herir();
 	    		eliminar(a);
@@ -95,7 +95,7 @@ public class ColeccionAsteroides {
 		return asteroides.isEmpty();
 	}
 	
-	public Iterator<DamageNave> getAsteroides() {
+	public Iterator<Enemigo> getAsteroides() {
 		return asteroides.iterator();
 	}
 	

@@ -94,9 +94,9 @@ public class PantallaJuego implements Screen {
 		}
 		
 	    if (!nave.estaHerida()) {
-	    	Iterator<DamageNave> iteratorAsteroides = asteroides.getAsteroides();
+	    	Iterator<Enemigo> iteratorAsteroides = asteroides.getAsteroides();
 	    	while(iteratorAsteroides.hasNext()) {
-	    		DamageNave a = iteratorAsteroides.next();
+	    		Enemigo a = iteratorAsteroides.next();
 	    		if(balas.verificarColisiones(a)) {
 	    			iteratorAsteroides.remove();
 	    			asteroides.eliminar(a);
@@ -106,9 +106,9 @@ public class PantallaJuego implements Screen {
 	    		}
 	    	}
 	    	
-	    	Iterator<DamageNave> iteratorHirientes = hirientes.getHirientes();
+	    	Iterator<Enemigo> iteratorHirientes = hirientes.getHirientes();
 	    	while(iteratorHirientes.hasNext()) {
-	    		DamageNave h = iteratorHirientes.next();
+	    		Enemigo h = iteratorHirientes.next();
 	    		if(balas.verificarColisiones(h)) {
 	    			iteratorHirientes.remove();
 	    			int sumScore = ((Hiriente)h).getScoreChange();

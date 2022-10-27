@@ -27,7 +27,7 @@ public class Bala extends FiguraSprite implements Movil {
 		return image;
 	}
 
-	public boolean verificarColision(DamageNave asteroide) {
+	public boolean verificarColision(Enemigo asteroide) {
 		return this.getArea().overlaps(asteroide.getArea());
 	}
 	

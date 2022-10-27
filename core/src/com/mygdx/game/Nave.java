@@ -3,14 +3,11 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Vector3;
 
 public class Nave extends FiguraForma implements Movil{
-	private static final int anchoNave = 45;
+	private static final int anchoNave = 25;
 	private static final int altoNave = 45;
 
 	private static final Sound sonidoHerido = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
@@ -27,7 +24,6 @@ public class Nave extends FiguraForma implements Movil{
 	private final float velDisparoSupernave = 8.5f;
 	private final float anchoBalaSupernave = 10f;
 	private final float altoBalaSupernave = 40;
-	private final float velBalaSupernave = 350;
 	
     private int vidas = 3;
     private float tiempoHerido;

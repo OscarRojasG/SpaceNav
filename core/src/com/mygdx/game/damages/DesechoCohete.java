@@ -2,11 +2,11 @@ package com.mygdx.game.damages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.DamageNave;
+import com.mygdx.game.Enemigo;
 import com.mygdx.game.Hiriente;
 import com.mygdx.game.Nave;
 
-public class DesechoCohete extends DamageNave implements Hiriente{
+public class DesechoCohete extends Enemigo implements Hiriente{
 	private final static int ancho = 40;
 	private final static int alto = 60;
 	private final static int scoreChange = 20;
