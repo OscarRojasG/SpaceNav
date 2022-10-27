@@ -9,7 +9,7 @@ public abstract class ObjetoMovil extends Figura {
 	public ObjetoMovil(float x, float y, 
 					   float ancho, float alto, 
 					   float velX, float velY, Texture tx) {
-		startSprite(tx, ancho, alto, x ,y);
+		super(ancho, alto, x , y, tx);
 		setVelocidadX(velX);
 		setVelocidadY(velY);
 	}
