@@ -4,21 +4,28 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class SpaceNav extends Game {
-	private String nombreJuego = "Space Navigation";
+	private final String nombreJuego = "Space Navigation";
 	private SpriteBatch batch;
+	private ShapeRenderer shapeRenderer;
 	private BitmapFont font;
 	private int highScore;	
 
 	public void create() {
 		highScore = 0;
 		batch = new SpriteBatch();
+		shapeRenderer = new ShapeRenderer();
 		font = new BitmapFont();
 		font.getData().setScale(2f);
 		
 		Screen screen = new PantallaMenu(this);
 		setScreen(screen);
+	}
+
+	public ShapeRenderer getShapeRenderer() {
+		return shapeRenderer;
 	}
 
 	public void render() {

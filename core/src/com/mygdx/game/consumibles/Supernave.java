@@ -4,10 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.Consumible;
+import com.mygdx.game.FiguraSprite;
 import com.mygdx.game.Nave;
-import com.mygdx.game.ObjetoEspacial;
 
-public class Supernave extends ObjetoEspacial implements Consumible {
+public class Supernave extends FiguraSprite implements Consumible {
 	private final static float ancho =  35 ;
 	private final static float alto = 42.24f;
 	private final static Texture image = new Texture(Gdx.files.internal("supernave.png"));
@@ -16,7 +16,9 @@ public class Supernave extends ObjetoEspacial implements Consumible {
 	private long elapsedTime;
 	
 	public Supernave(float x, float y, float velX, float velY) {
-		super(x, y, ancho, alto, velX, velY, image);
+		super(x, y, ancho, alto, image);
+		setVelocidadX(velX);
+		setVelocidadY(velY);
 		startTime = TimeUtils.millis();
 	}
 

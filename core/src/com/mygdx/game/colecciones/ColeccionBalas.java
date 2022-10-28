@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Bala;
-import com.mygdx.game.DamageNave;
+import com.mygdx.game.Enemigo;
 
 public class ColeccionBalas {
 	private ArrayList<Bala> balas;
@@ -33,7 +33,7 @@ public class ColeccionBalas {
 		}
 	}
 	
-	public boolean verificarColisiones(DamageNave asteroide) {
+	public boolean verificarColisiones(Enemigo asteroide) {
 		for (int i = 0; i < balas.size(); i++) {
 			Bala b = balas.get(i);
 			if (b.verificarColision(asteroide)) {

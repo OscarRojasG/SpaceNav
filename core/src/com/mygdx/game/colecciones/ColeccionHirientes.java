@@ -5,13 +5,12 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.DamageNave;
-import com.mygdx.game.Hiriente;
+import com.mygdx.game.Enemigo;
+import com.mygdx.game.FiguraSprite;
 import com.mygdx.game.Nave;
-import com.mygdx.game.ObjetoEspacial;
 import com.mygdx.game.Util;
-import com.mygdx.game.damages.DesechoCohete;
-import com.mygdx.game.damages.Satelite;
+import com.mygdx.game.enemigos.DesechoCohete;
+import com.mygdx.game.enemigos.Satelite;
 
 public class ColeccionHirientes {
 	private final static int HIRIENTE_DESECHO_COHETE = 1;
@@ -30,10 +29,10 @@ public class ColeccionHirientes {
 	private final static int FINAL_SALIDA_VERTICAL =Gdx.graphics.getHeight()-10;
 	private final static int FINAL_SALIDA_HORIZONTAL = Gdx.graphics.getWidth()-10;;
 	
-	private ArrayList<DamageNave> hirientes;
+	private ArrayList<Enemigo> hirientes;
 	
 	public ColeccionHirientes() {
-		hirientes = new ArrayList<DamageNave>();
+		hirientes = new ArrayList<Enemigo>();
 	}
 	
 	public void generar() {
@@ -45,7 +44,7 @@ public class ColeccionHirientes {
 		
 		int n = generarHirienteAleatorio();
 		
-		DamageNave hiriente = null;
+		Enemigo hiriente = null;
 		
 		int option = Util.generateRandomBetween(SALIDA_HORIZONTAL, SALIDA_VERTICAL);
 		int x;
@@ -89,11 +88,11 @@ public class ColeccionHirientes {
 		hirientes.add(hiriente);
 	}
 	
-	public void eliminar(DamageNave hiriente) {
+	public void eliminar(Enemigo hiriente) {
 		eliminar(hiriente, true);
 	}
 	
-	public void eliminar(DamageNave hiriente, boolean conSonido) {
+	public void eliminar(Enemigo hiriente, boolean conSonido) {
 		if (conSonido) {
 			hiriente.explotar();
 		}
@@ -102,17 +101,17 @@ public class ColeccionHirientes {
 	
 	public void dibujar(SpriteBatch batch) {
 		for (int i = 0; i < hirientes.size(); i++) {
-			((ObjetoEspacial)hirientes.get(i)).dibujar(batch);
+			((FiguraSprite)hirientes.get(i)).dibujar(batch);
 		}
 	}
 	
 	public void actualizar() {
 		for (int i = 0; i < hirientes.size(); i++) {
-			DamageNave hiriente = hirientes.get(i);
+			Enemigo hiriente = hirientes.get(i);
 			
-			((ObjetoEspacial)hiriente).actualizar();
+			hiriente.actualizar();
 			
-			if(!((Hiriente)hiriente).enPantalla()) {
+			if(hiriente.isOffscreen()) {
 				eliminar(hiriente, false);
 			}
 		}
@@ -120,9 +119,9 @@ public class ColeccionHirientes {
 	
 	public void verificarColisiones() {
 		for (int i = 0; i < hirientes.size(); i++) {
-			DamageNave a1 = hirientes.get(i);
+			Enemigo a1 = hirientes.get(i);
 			for (int j = i+1; j < hirientes.size(); j++) {
-				DamageNave a2 = hirientes.get(j);
+				Enemigo a2 = hirientes.get(j);
 				a1.verificarColision(a2);
 			}
 		}
@@ -130,17 +129,17 @@ public class ColeccionHirientes {
 	
 	public void verificarColisiones(Nave nave) {
 		for (int i = 0; i < hirientes.size(); i++) {
-			DamageNave hiriente = hirientes.get(i);
-			((ObjetoEspacial)hiriente).actualizar();
+			Enemigo hiriente = hirientes.get(i);
+			hiriente.actualizar();
 			
-			if (((ObjetoEspacial)hiriente).verificarColision(nave)) {
+			if (hiriente.verificarColision(nave)) {
 				nave.herir();
 				eliminar(hiriente);
 			}
 		}
 	}
 	
-	public Iterator<DamageNave> getHirientes() {
+	public Iterator<Enemigo> getHirientes() {
 		return hirientes.iterator();
 	}
 	

@@ -6,22 +6,23 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.colecciones.ColeccionAsteroides;
 import com.mygdx.game.colecciones.ColeccionBalas;
 import com.mygdx.game.colecciones.ColeccionConsumibles;
 import com.mygdx.game.colecciones.ColeccionHirientes;
 
 public class PantallaJuego implements Screen {
-	private static final Texture fondo = new Texture(Gdx.files.internal("FondoGame.png"));
 	private static final Music musica = Gdx.audio.newMusic(Gdx.files.internal("piano-loops.wav"));
 	
 	private SpaceNav game;
 	private BitmapFont font;
+
 	private SpriteBatch batch;
-	
+	private ShapeRenderer shapeRenderer;
+
 	private int ronda;
 	private int puntaje;
 	
@@ -32,15 +33,29 @@ public class PantallaJuego implements Screen {
 	private ColeccionHirientes hirientes;
 
 	public PantallaJuego(SpaceNav game) {
+		this(game, 1, 0);
+	}
+
+	public PantallaJuego(SpaceNav game, int ronda, int puntaje) {
+		this.game = game;
+		this.ronda = ronda;
+		this.puntaje = puntaje;
+		
+		this.font = game.getFont();
+		this.batch = game.getBatch();
+		this.shapeRenderer = game.getShapeRenderer();
 		this.game = game;
 		this.font = game.getFont();
 		this.batch = game.getBatch();
 		
 		musica.setLooping(true);
-		musica.setVolume(0.5f);
+		musica.setVolume(0.5f); // Debería ser parte del archivo
 		musica.play();
 		
-	    nave = new Nave(Gdx.graphics.getWidth()/2-50, 30);
+		int navePosX = Gdx.graphics.getWidth()/2 - 50;
+		int navePosY = 30;
+		
+	    nave = new Nave(navePosX, navePosY);
                
         asteroides = new ColeccionAsteroides();
         consumibles = new ColeccionConsumibles();
@@ -56,12 +71,6 @@ public class PantallaJuego implements Screen {
 
 	}
 	
-	public PantallaJuego(SpaceNav game, int ronda, int puntaje) {
-		this(game);
-		this.ronda = ronda;
-		this.puntaje = puntaje;
-	}
-	
 	public void dibujarEncabezado() {
 		CharSequence str = "Vidas: " + nave.getVidas() + " Ronda: " + ronda;
 		font.getData().setScale(2f);	
@@ -74,7 +83,6 @@ public class PantallaJuego implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		batch.draw(fondo, 0, 0);
 		dibujarEncabezado();
 		
 		if (nave.estaDestruida()) {
@@ -86,9 +94,9 @@ public class PantallaJuego implements Screen {
 		}
 		
 	    if (!nave.estaHerida()) {
-	    	Iterator<DamageNave> iteratorAsteroides = asteroides.getAsteroides();
+	    	Iterator<Enemigo> iteratorAsteroides = asteroides.getAsteroides();
 	    	while(iteratorAsteroides.hasNext()) {
-	    		DamageNave a = iteratorAsteroides.next();
+	    		Enemigo a = iteratorAsteroides.next();
 	    		if(balas.verificarColisiones(a)) {
 	    			iteratorAsteroides.remove();
 	    			asteroides.eliminar(a);
@@ -98,9 +106,9 @@ public class PantallaJuego implements Screen {
 	    		}
 	    	}
 	    	
-	    	Iterator<DamageNave> iteratorHirientes = hirientes.getHirientes();
+	    	Iterator<Enemigo> iteratorHirientes = hirientes.getHirientes();
 	    	while(iteratorHirientes.hasNext()) {
-	    		DamageNave h = iteratorHirientes.next();
+	    		Enemigo h = iteratorHirientes.next();
 	    		if(balas.verificarColisiones(h)) {
 	    			iteratorHirientes.remove();
 	    			int sumScore = ((Hiriente)h).getScoreChange();
@@ -137,9 +145,9 @@ public class PantallaJuego implements Screen {
 	    hirientes.dibujar(batch);
 	    consumibles.dibujar(batch);
 	    balas.dibujar(batch);
-	    nave.dibujar(batch);
-
 	    batch.end();
+	    
+	    nave.dibujar(shapeRenderer);
 	}
 	
 	public void finalizarJuego() {
