@@ -43,8 +43,8 @@ public class Nave extends FiguraForma implements Movil{
     		return;
     	}
     	
-        setVelocidadX((float)Math.sin(Math.toRadians(this.getAngulo()))* VELOCIDAD);
-        setVelocidadY((float)Math.cos(Math.toRadians(this.getAngulo()))* VELOCIDAD);
+        setVelocidadX((float)Math.sin(Math.toRadians(this.getRotacion()))* VELOCIDAD);
+        setVelocidadY((float)Math.cos(Math.toRadians(this.getRotacion()))* VELOCIDAD);
         
     	if (esSupernave())
     		tiempoSupernave -= Gdx.graphics.getDeltaTime();
@@ -59,12 +59,12 @@ public class Nave extends FiguraForma implements Movil{
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            float a = getAngulo() - 5;
-            this.setAngulo(a);
+            float a = getRotacion() - 5;
+            this.setRotacion(a);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            float a = getAngulo() + 5;
-            this.setAngulo(a);
+            float a = getRotacion() + 5;
+            this.setRotacion(a);
         }
 
         
@@ -82,7 +82,7 @@ public class Nave extends FiguraForma implements Movil{
 
 		 sr.identity();
 		 sr.translate(getX() + getAncho()/2, getY() + getAlto()/2, 0);
-		 sr.rotate(0.0f, 0.0f, 1.0f, -getAngulo());
+		 sr.rotate(0.0f, 0.0f, 1.0f, -getRotacion());
 		 
 		 sr.triangle(0, getAlto()/2, 
 				 -getAncho()/2, -getAlto()/2,
@@ -154,22 +154,22 @@ public class Nave extends FiguraForma implements Movil{
      * @return Bala: Genera la clase Bala (Sprite) de forma que "sale" de la nave en pantalla.
      * */
     public Bala generarBala() {
-		float x = getX() + getAncho()/2 * (1 + (float)Math.sin(Math.toRadians(this.getAngulo())));
-		float y = getY() + getAlto()/2 * (1 + (float)Math.cos(Math.toRadians(this.getAngulo())));
+		float x = getX() + getAncho()/2 * (1 + (float)Math.sin(Math.toRadians(this.getRotacion())));
+		float y = getY() + getAlto()/2 * (1 + (float)Math.cos(Math.toRadians(this.getRotacion())));
 		
         float ballvelx = 3f * VELOCIDAD;
         float ballvely = 3f * VELOCIDAD;
 
     	if (esSupernave())
     		return new Bala(x, y, anchoBalaSupernave, altoBalaSupernave,
-                        ballvelx * (float)Math.sin(Math.toRadians(this.getAngulo())),
-                        ballvely * (float)Math.cos(Math.toRadians(-this.getAngulo())),
-                        -getAngulo());
+                        ballvelx * (float)Math.sin(Math.toRadians(this.getRotacion())),
+                        ballvely * (float)Math.cos(Math.toRadians(-this.getRotacion())),
+                        -getRotacion());
     	
     	return new Bala(x, y, anchoBala, altoBala,
-                        ballvelx * (float)Math.sin(Math.toRadians(this.getAngulo())),
-                        ballvely * (float)Math.cos(Math.toRadians(-this.getAngulo())),
-                        -getAngulo());
+                        ballvelx * (float)Math.sin(Math.toRadians(this.getRotacion())),
+                        ballvely * (float)Math.cos(Math.toRadians(-this.getRotacion())),
+                        -getRotacion());
     }
     
     /** Cambia el tiempo a permanecer herido de la nave, quita vida al herirse y reproduce el sonido de Nave herida. */

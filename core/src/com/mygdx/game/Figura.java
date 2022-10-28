@@ -7,22 +7,17 @@ import com.badlogic.gdx.math.Vector2;
 public abstract class Figura {
 	private Vector2 position;
 	private Vector2 velocidad;
-	private Vector2 aceleracion;
 
-	private float width;
-	private float height;
+	private float ancho;
+	private float alto;
 	private float angulo;
 	
-
-	public Figura(float x, float y, float width, float height) {
+	public Figura(float x, float y, float ancho, float alto) {
 		this.position = new Vector2(x,y);
-
 		this.velocidad = new Vector2(0.f,0.f);
 
-		this.aceleracion = new Vector2(0.f,0.f);
-		
-		this.width = width;
-		this.height = height;
+		this.ancho = ancho;
+		this.alto = alto;
 
 		this.angulo = 0;
 	}
@@ -40,6 +35,14 @@ public abstract class Figura {
         return false;
     }
 	
+    /** Método para verificar colisión entre Figura y Figura.
+	 * @param Figura: Un parametro clase Figura que contiene su posición y área
+	 * @return boolean: Manda true si la posición de Enemigo coincide con el área de la Figura, false en caso contrario.
+	 * */
+	public boolean verificarColision(Figura figura) {
+		return getArea().overlaps(figura.getArea());
+	}
+	
 	/** Sobrescribe la posición de la Figura por los parametros recibidos.
 	 * @param float x: Nueva posición para la Figura respecto al eje x.
 	 * @param float y: Nueva posición para la Figura respecto al eje y.
@@ -52,15 +55,15 @@ public abstract class Figura {
     /** Sobrescribe la posición de la Figura en el eje x por el parametro recibido.
 	 * @param float: Nueva posición para la Figura respecto al eje x.
 	 * */
-    public void setX(float f) {
-    	this.position.x = f;
+    public void setX(float x) {
+    	this.position.x = x;
     }
     
     /** Sobrescribe la posición de la Figura en el eje y por el parametro recibido.
 	 * @param float: Nueva posición para la Figura respecto al eje y.
 	 * */
-    public void setY(float f) {
-    	this.position.y = f;
+    public void setY(float y) {
+    	this.position.y = y;
     }
     
     /** Sobrescribe la velocidad de la Figura respecto al eje x.
@@ -77,27 +80,19 @@ public abstract class Figura {
 		this.velocidad.y = velY;
 	}
     
-    
     /** Sobrescribe el tamaño de la Figura por los parametros recibidos.
 	 * @param float ancho: Nuevo ancho para el tamaño de la Figura.
 	 * @param float alto: Nueva altura para el tamaño de la Figura.
 	 * */
-    public void setSize(float ancho, float alto) {
-    	this.width = ancho; 
-    	this.height = alto;
+    public void setTamaño(float ancho, float alto) {
+    	this.ancho = ancho; 
+    	this.alto = alto;
     }
     
-    /** Sobrescribe la rotación de la Figura en el espacio por el angulo recibidp.
+    /** Sobrescribe la rotación de la Figura en el espacio por el angulo recibido.
 	 * @param float: Nuevo ángulo en que estara rotada la Figura.
 	 * */
-    public void setRotation(float angle) {
-    	this.setAngulo(angle);
-    }
-    
-    /** Sobrescribe el angulo guardado en la Figura por el angulo recibidp.
-	 * @param float: Nuevo ángulo en que estara rotada la Figura.
-	 * */
-    public void setAngulo(float angulo) {
+    public void setRotacion(float angulo) {
 		this.angulo = angulo;
 	}
 	
@@ -116,20 +111,6 @@ public abstract class Figura {
 	}
 	
 	/** 
-	 * @return float: Ancho del tamaño de la Figura.
-	 * */
-	public float getAncho() {
-		return this.width;
-	}
-	
-	/** 
-	 * @return float: Alto del tamaño de la Figura.
-	 * */
-	public float getAlto() {
-		return this.height;
-	}
-	
-	/** 
 	 * @return float: Velocidad de la Figura en el eje x.
 	 * */
 	public float getVelocidadX() {
@@ -144,23 +125,23 @@ public abstract class Figura {
 	}
 	
 	/** 
-	 * @return float: Aceleración de la Figura en el eje x.
+	 * @return float: Ancho del tamaño de la Figura.
 	 * */
-	public float getAceleracionX() {
-		return this.aceleracion.x;
+	public float getAncho() {
+		return this.ancho;
 	}
 	
 	/** 
-	 * @return float: Aceleración de la Figura en el eje y.
+	 * @return float: Alto del tamaño de la Figura.
 	 * */
-	public float getAceleracionY() {
-		return this.aceleracion.y;
+	public float getAlto() {
+		return this.alto;
 	}
 	
 	/** 
 	 * @return float: Angulo de la Figura respecto a si mismo.
 	 * */
-	public float getAngulo() {
+	public float getRotacion() {
 		return this.angulo;
 	}
 	
@@ -169,16 +150,8 @@ public abstract class Figura {
 	 * */
     public Rectangle getArea() {
     	return new Rectangle(this.position.x, this.position.y,
-    			this.width, this.height);
+    			this.ancho, this.alto);
     }
-    
-    /** Clase para verificar colisión entre Figura y Figura.
-	 * @param Figura: Un parametro clase Figura que contiene su posición y área
-	 * @return boolean: Manda true si la posición de Enemigo coincide con el área de la Figura, false en caso contrario.
-	 * */
-	public boolean verificarColision(Figura figura) {
-		return getArea().overlaps(figura.getArea());
-	}
 
 }
 

@@ -12,7 +12,7 @@ public class Bala extends FiguraSprite implements Movil {
     	super(x, y, ancho, alto, image);
     	setVelocidadX(velx);
     	setVelocidadY(vely);
-    	setAngulo(angulo);
+    	setRotacion(angulo);
     }
     
 	@Override
@@ -43,7 +43,7 @@ public class Bala extends FiguraSprite implements Movil {
 		Sprite sprite = getSprite();
 		sprite.setPosition(getX(), getY());
 		sprite.setCenter(getX(), getY());
-		sprite.setRotation(getAngulo());	
+		sprite.setRotation(getRotacion());	
 		sprite.draw(batch);
 	}
 	
