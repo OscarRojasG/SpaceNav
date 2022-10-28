@@ -12,7 +12,7 @@ import com.mygdx.game.Util;
 import com.mygdx.game.enemigos.DesechoCohete;
 import com.mygdx.game.enemigos.Satelite;
 
-public class ColeccionHirientes {
+public class ColeccionEnemigos {
 	private final static int HIRIENTE_DESECHO_COHETE = 1;
 	private final static int HIRIENTE_SATELITE = 2;
 	
@@ -31,7 +31,7 @@ public class ColeccionHirientes {
 	
 	private ArrayList<Enemigo> hirientes;
 	
-	public ColeccionHirientes() {
+	public ColeccionEnemigos() {
 		hirientes = new ArrayList<Enemigo>();
 	}
 	
