@@ -32,7 +32,7 @@ public class Bala extends FiguraSprite implements Movil {
 	
 	/** Clase para verificar colisión entre Enemigo y Bala.
 	 * @param Enemigo: Un parametro clase Enemigo que contiene su posición y área
-	 * @return boolean: Manda true si la posición de Enemigo coincide con el área de la bala. False sino.
+	 * @return boolean: Manda true si la posición de Enemigo coincide con el área de la bala, false en caso contrario.
 	 * */
 	public boolean verificarColision(Enemigo asteroide) {
 		return this.getArea().overlaps(asteroide.getArea());
