@@ -75,6 +75,25 @@ public class Nave extends FiguraForma implements Movil{
         setPosition(x, y);
     }
     
+    @Override
+	public void dibujar(ShapeRenderer sr) {
+		 sr.begin(ShapeType.Filled);
+		 sr.setColor(0x0, 0xff, 0xff, 1);
+
+		 sr.identity();
+		 sr.translate(getX() + getAncho()/2, getY() + getAlto()/2, 0);
+		 sr.rotate(0.0f, 0.0f, 1.0f, -getAngulo());
+		 
+		 sr.triangle(0, getAlto()/2, 
+				 -getAncho()/2, -getAlto()/2,
+				 getAncho()/2, -getAlto()/2
+				 );
+		 
+		 sr.identity();
+
+		 sr.end();	
+	}
+    
     /** Calcula la nueva posición en el eje x.
      * @return float: Posición de la Nave en el eje x.
      * */
@@ -205,35 +224,20 @@ public class Nave extends FiguraForma implements Movil{
 		this.vidas--;
 	}
 	
+	/**
+	 * @return int: Cantidad de vidas que la Nave posee.
+	 * */
 	public int getVidas() {
 		return vidas;
 	}
 	
+	/** Clase que se encarga de disminuir la velocidad general en 1 si que la Nave quede estatica. */
 	public void desacelerar() {
 		if(getVelocidadX() < 3) {
 			return;
 		}
 		setVelocidadX(getVelocidadX() - 1);
 		setVelocidadY(getVelocidadY() - 1);
-	}
-
-	@Override
-	public void dibujar(ShapeRenderer sr) {
-		 sr.begin(ShapeType.Filled);
-		 sr.setColor(0x0, 0xff, 0xff, 1);
-
-		 sr.identity();
-		 sr.translate(getX() + getAncho()/2, getY() + getAlto()/2, 0);
-		 sr.rotate(0.0f, 0.0f, 1.0f, -getAngulo());
-		 
-		 sr.triangle(0, getAlto()/2, 
-				 -getAncho()/2, -getAlto()/2,
-				 getAncho()/2, -getAlto()/2
-				 );
-		 
-		 sr.identity();
-
-		 sr.end();	
 	}
 	
 }
