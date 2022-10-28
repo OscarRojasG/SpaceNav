@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 public class Enemigo extends FiguraSprite implements Movil {
 	private final static Sound sonidoExplosion = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
 
-    public Enemigo(float x, float y, int ancho, int alto, float velX, float velY, Texture tx) {
+    public Enemigo(float x, float y, float ancho, float alto, float velX, float velY, Texture tx) {
     	super(x, y, ancho, alto, tx);
     	setVelocidadX(velX);
     	setVelocidadY(velY);

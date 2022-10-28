@@ -7,13 +7,12 @@ import com.mygdx.game.Hiriente;
 import com.mygdx.game.Nave;
 
 public class DesechoCohete extends Enemigo implements Hiriente{
-	private final static int ancho = 40;
-	private final static int alto = 60;
+	private final static float ancho = 40;
+	private final static float alto = 60;
 	private final static int scoreChange = 20;
 	private final static Texture image = new Texture(Gdx.files.internal("RocketEngine.png"));
 	
-	public DesechoCohete(float x, float y, 
-			             float velX, float velY) {
+	public DesechoCohete(float x, float y, float velX, float velY) {
 		super(x, y, ancho, alto, velX, velY, image);
 	}
 	
