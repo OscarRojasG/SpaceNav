@@ -34,40 +34,6 @@ public class Nave extends FiguraForma implements Movil{
     public Nave(int x, int y) {
     	super(x, y, anchoNave, altoNave);
     }
-     
-    private float calcularPosicionX() {
-    	float x = getX() + getVelocidadX() * aceleracion * accel * Gdx.graphics.getDeltaTime();
-    	
-        if (x + getAncho() > Gdx.graphics.getWidth()) {
-        	x = Gdx.graphics.getWidth() - getAncho();
-        	setVelocidadX(0);
-        }
-        else if (x < 0) {
-        	x = 0;
-        	setVelocidadX(0);
-        }
-        
-        return x;
-    }
-    
-    private float calcularPosicionY() {
-    	float y = getY() + getVelocidadY() * aceleracion * accel *  Gdx.graphics.getDeltaTime();
-    	
-        if (y + getAlto() > Gdx.graphics.getHeight()) {
-        	y = Gdx.graphics.getHeight() - getAlto();
-        	setVelocidadY(0);
-        }
-        else if (y < 0) {
-        	y = 0;
-        	setVelocidadY(0);
-        }
-        
-        return y;
-    }
-    
-    private void animarNaveHerida() {
-    	setX(getX() + Util.generateRandomInt(-2, 2));
-    }
     
     @Override
     public void actualizar() {
@@ -109,6 +75,50 @@ public class Nave extends FiguraForma implements Movil{
         setPosition(x, y);
     }
     
+    /** Calcula la nueva posición en el eje x.
+     * @return float: Posición de la Nave en el eje x.
+     * */
+    private float calcularPosicionX() {
+    	float x = getX() + getVelocidadX() * aceleracion * accel * Gdx.graphics.getDeltaTime();
+    	
+        if (x + getAncho() > Gdx.graphics.getWidth()) {
+        	x = Gdx.graphics.getWidth() - getAncho();
+        	setVelocidadX(0);
+        }
+        else if (x < 0) {
+        	x = 0;
+        	setVelocidadX(0);
+        }
+        
+        return x;
+    }
+    
+    /** Calcula la nueva posición en el eje y.
+     * @return float: Posición de la Nave en el eje y.
+     * */
+    private float calcularPosicionY() {
+    	float y = getY() + getVelocidadY() * aceleracion * accel *  Gdx.graphics.getDeltaTime();
+    	
+        if (y + getAlto() > Gdx.graphics.getHeight()) {
+        	y = Gdx.graphics.getHeight() - getAlto();
+        	setVelocidadY(0);
+        }
+        else if (y < 0) {
+        	y = 0;
+        	setVelocidadY(0);
+        }
+        
+        return y;
+    }
+    
+    /** Genera una animación donde el Sprite Nave simula temblar en pantalla. */
+    private void animarNaveHerida() {
+    	setX(getX() + Util.generateRandomInt(-2, 2));
+    }
+    
+    /**
+     * @return boolean: Retorna true si la Nave debe disparar
+     * */
     public boolean disparar() {
     	if(esSupernave()) {
     		if ((tiempoUltimoDisparo - tiempoSupernave) > (1 / velDisparoSupernave)) {
@@ -121,6 +131,9 @@ public class Nave extends FiguraForma implements Movil{
         return Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
     }
     
+    /**
+     * @return Bala: Genera la clase Bala (Sprite) de forma que "sale" de la nave en pantalla.
+     * */
     public Bala generarBala() {
 		float x = getX() + getAncho()/2 * (1 + (float)Math.sin(Math.toRadians(this.getAngulo())));
 		float y = getY() + getAlto()/2 * (1 + (float)Math.cos(Math.toRadians(this.getAngulo())));
@@ -140,21 +153,29 @@ public class Nave extends FiguraForma implements Movil{
                         -getAngulo());
     }
     
+    /** Cambia el tiempo a permanecer herido de la nave, quita vida al herirse y reproduce el sonido de Nave herida. */
     public void herir() {
     	tiempoHerido = tiempoHeridoMax;
     	sonidoHerido.play();
     	quitarVida();
     }
     
+    /** Maneja el tiempo que ha estado en accion el consumible Supernave. */
     public void mejorar(float tiempo) {
     	tiempoSupernave = tiempo;
     	tiempoUltimoDisparo = tiempo;
     }
     
+    /** Verifica si al ser herida, la nave perdio su ultima vida.
+     * @return boolean: true si la nave quedo con 0 vidas y su animacion herida acabo. En caso contrario false.
+     * */
     public boolean estaDestruida() {
         return !estaHerida() && vidas == 0;
     }
     
+    /** Verifica si la animación de Nave herida continua o termino.
+     * @return boolean: true si el tiempo de animación de Nave herida no ha acabado. Si ya acabo retorna false.
+     * */
     public boolean estaHerida() {
  	   if (tiempoHerido > 0)
  		   return true;
@@ -163,6 +184,9 @@ public class Nave extends FiguraForma implements Movil{
  	   return false;
     }
     
+    /** Verifica si lel consumible de Supernave continua o termino.
+     * @return boolean: true si el tiempo del consumible Supernave no ha acabado. Si ya acabo retorna false.
+     * */
     public boolean esSupernave() {
   	   if (tiempoSupernave > 0)
  		   return true;
@@ -171,16 +195,14 @@ public class Nave extends FiguraForma implements Movil{
  	   return false;    	
     }
     
+    /** Aumenta la cantidad de vidas de la Nave en 1. */
 	public void agregarVida() {
 		this.vidas++;
 	}
     
+	/** Disminuye la cantidad de vidas de la Nave en 1. */
 	public void quitarVida() {
 		this.vidas--;
-	}
-	
-	public void matarNave() {
-		this.vidas = 0;
 	}
 	
 	public int getVidas() {
