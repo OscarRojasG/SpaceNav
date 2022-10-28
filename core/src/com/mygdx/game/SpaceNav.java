@@ -36,22 +36,37 @@ public class SpaceNav extends Game {
 		font.dispose();
 	}
 	
+	/** 
+	 * @return SpriteBatch: El sprite del dibujo de la Figura guardado interpretable por Batch.
+	 * */
 	public SpriteBatch getBatch() {
 		return batch;
 	}
 	
+	/** 
+	 * @return BitmapFont: La fuente del texto para dibujar en pantalla.
+	 * */
 	public BitmapFont getFont() {
 		return font;
 	}
 	
+	/** 
+	 * @return SpriteBatch: El sprite de la forma de la Figura guardado.
+	 * */
 	public ShapeRenderer getShapeRenderer() {
 		return shapeRenderer;
 	}
-
+	
+	/** 
+	 * @return int: Puntaje más alto guardado hasta el momento.
+	 * */
 	public int getHighScore() {
 		return highScore;
 	}
 	
+	/** Sobrescribe el puntaje más alto guardado.
+	 * @param int: Nuevo puntaje más alto alcanzado.
+	 * */
 	public void setHighScore(int highScore) {
 		this.highScore = highScore;
 	}

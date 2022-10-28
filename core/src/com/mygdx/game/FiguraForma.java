@@ -10,5 +10,5 @@ public abstract class FiguraForma extends Figura {
 	
 	/** Dibuja la forma de la Figura en pantalla */
 	public abstract void dibujar(ShapeRenderer sr);
-
+	
 }
