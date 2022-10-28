@@ -12,13 +12,17 @@ public class FiguraSprite extends Figura {
 		super(x,y,ancho,alto);
 		sprite = new Sprite(tx);
 	}
-
+	
+	/** Dibuja el sprite de la Figura en pantalla sobre su forma .*/
 	public void dibujar(SpriteBatch batch) {
 		sprite.setPosition(getX(), getY());
 		sprite.setSize(getAncho(), getAlto());
     	sprite.draw(batch);
     }
 	
+	/**
+	 * @return Sprite: Sprite de la Figura con su información.
+	 * */
 	public Sprite getSprite() {
 		return sprite;
 	}
