@@ -56,6 +56,7 @@ public class Enemigo extends FiguraSprite implements Movil {
         return true;
 	}
     
+    /** Clase que reproduce sonido de explosion en la ventana. */
     public void explotar() {
     	sonidoExplosion.play();
     }
