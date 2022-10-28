@@ -23,14 +23,22 @@ public class Bala extends FiguraSprite implements Movil {
         setY(y);
 	}
 	
+	/** Envia la imagen que utiliza bala en pantalla
+	 * @return Texture: Image que usara la clase para aparecer en pantalla
+	 */
 	public Texture getImageBala() {
 		return image;
 	}
-
+	
+	/** Clase para verificar colisión entre Enemigo y Bala.
+	 * @param Enemigo: Un parametro clase Enemigo que contiene su posición y área
+	 * @return boolean: Manda true si la posición de Enemigo coincide con el área de la bala. False sino.
+	 * */
 	public boolean verificarColision(Enemigo asteroide) {
 		return this.getArea().overlaps(asteroide.getArea());
 	}
 	
+	@Override
 	public void dibujar(SpriteBatch batch) {
 		Sprite sprite = getSprite();
 		sprite.setPosition(getX(), getY());
