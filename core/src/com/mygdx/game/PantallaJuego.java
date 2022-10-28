@@ -71,14 +71,6 @@ public class PantallaJuego implements Screen {
 
 	}
 	
-	public void dibujarEncabezado() {
-		CharSequence str = "Vidas: " + nave.getVidas() + " Ronda: " + ronda;
-		font.getData().setScale(2f);	
-		font.draw(batch, str, 10, 30);
-		font.draw(batch, "Score:" + puntaje, Gdx.graphics.getWidth()-150, 30);
-		font.draw(batch, "HighScore:" + game.getHighScore(), Gdx.graphics.getWidth()/2-100, 30);
-	}
-	
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -150,25 +142,6 @@ public class PantallaJuego implements Screen {
 	    nave.dibujar(shapeRenderer);
 	}
 	
-	public void finalizarJuego() {
-		game.setScreen(new PantallaGameOver(game));		
-		if (puntaje > game.getHighScore()) {
-			game.setHighScore(puntaje);
-		}
-		
-		musica.stop();
-	}
-	
-	public void avanzarRonda() {
-		Screen screen = new PantallaJuego(game, ronda + 1, puntaje);
-		game.setScreen(screen);
-		dispose();
-	}
-	
-	public void agregarPuntaje(int puntaje) {
-		this.puntaje += puntaje;
-	}
-	
 	@Override
 	public void show() {
 		musica.play();
@@ -197,6 +170,37 @@ public class PantallaJuego implements Screen {
 	@Override
 	public void dispose() {
 		
+	}
+	
+	/** Dibuja en la parte inferior de la pantalla los datos del jugador. */
+	public void dibujarEncabezado() {
+		CharSequence str = "Vidas: " + nave.getVidas() + " Ronda: " + ronda;
+		font.getData().setScale(2f);	
+		font.draw(batch, str, 10, 30);
+		font.draw(batch, "Score:" + puntaje, Gdx.graphics.getWidth()-150, 30);
+		font.draw(batch, "HighScore:" + game.getHighScore(), Gdx.graphics.getWidth()/2-100, 30);
+	}
+	
+	/** Se encarga de que PantallaJuego cambie a PantallaGameOver*/
+	public void finalizarJuego() {
+		game.setScreen(new PantallaGameOver(game));		
+		if (puntaje > game.getHighScore()) {
+			game.setHighScore(puntaje);
+		}
+		
+		musica.stop();
+	}
+	
+	/** Se encarga de iniciar la PantallaJuego en la siguiente ronda */
+	public void avanzarRonda() {
+		Screen screen = new PantallaJuego(game, ronda + 1, puntaje);
+		game.setScreen(screen);
+		dispose();
+	}
+	
+	/** Aumenta el puntaje guardado en la PantallaJuego */
+	public void agregarPuntaje(int puntaje) {
+		this.puntaje += puntaje;
 	}
    
 }

@@ -11,8 +11,9 @@ public class SpaceNav extends Game {
 	private SpriteBatch batch;
 	private ShapeRenderer shapeRenderer;
 	private BitmapFont font;
-	private int highScore;	
-
+	private int highScore;
+	
+	@Override
 	public void create() {
 		highScore = 0;
 		batch = new SpriteBatch();
@@ -23,32 +24,34 @@ public class SpaceNav extends Game {
 		Screen screen = new PantallaMenu(this);
 		setScreen(screen);
 	}
-
-	public ShapeRenderer getShapeRenderer() {
-		return shapeRenderer;
-	}
-
+	
+	@Override
 	public void render() {
 		super.render();
 	}
-
+	
+	@Override
 	public void dispose() {
 		batch.dispose();
 		font.dispose();
 	}
-
+	
 	public SpriteBatch getBatch() {
 		return batch;
 	}
-
+	
 	public BitmapFont getFont() {
 		return font;
+	}
+	
+	public ShapeRenderer getShapeRenderer() {
+		return shapeRenderer;
 	}
 
 	public int getHighScore() {
 		return highScore;
 	}
-
+	
 	public void setHighScore(int highScore) {
 		this.highScore = highScore;
 	}
