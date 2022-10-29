@@ -7,14 +7,14 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class Nave extends FiguraForma implements Movil{
-	private static final int anchoNave = 45;
+	private static final int anchoNave = 30;
 	private static final int altoNave = 45;
 
 	private static final Sound sonidoHerido = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
 	
     private float aceleracion;
 
-	private final float velBala = 180.f;
+	private final float velBala = 240.f;
 	private final float velNave = 60.f;
 	private final float tiempoHeridoMax = 0.8f;
 
@@ -91,6 +91,7 @@ public class Nave extends FiguraForma implements Movil{
 				 );
 		 
 		 sr.identity();
+		 Gdx.gl.glLineWidth(1.5f);
 
 		 sr.end();	
 	}
