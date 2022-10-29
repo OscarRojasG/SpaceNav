@@ -2,17 +2,17 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Bala extends FiguraSprite implements Movil {
 	private final static Texture image = new Texture(Gdx.files.internal("Rocket2.png"));
 	
-    public Bala(float x, float y, float ancho, float alto, float velx, float vely, float angulo) {
+    public Bala(float x, float y, float ancho, float alto, float velx, float vely, float angulo,
+    		float centroRotacionX, float centroRotacionY) {
     	super(x, y, ancho, alto, image);
     	setVelocidadX(velx);
     	setVelocidadY(vely);
     	setRotacion(angulo);
+    	setCentroRotacion(centroRotacionX, centroRotacionY);
     }
     
 	@Override
@@ -36,15 +36,6 @@ public class Bala extends FiguraSprite implements Movil {
 	 * */
 	public boolean verificarColision(Enemigo asteroide) {
 		return this.getArea().overlaps(asteroide.getArea());
-	}
-	
-	@Override
-	public void dibujar(SpriteBatch batch) {
-		Sprite sprite = getSprite();
-		sprite.setPosition(getX(), getY());
-		sprite.setCenter(getX(), getY());
-		sprite.setRotation(getRotacion());	
-		sprite.draw(batch);
 	}
 	
 }

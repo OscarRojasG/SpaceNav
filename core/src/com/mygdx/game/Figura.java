@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 public abstract class Figura {
 	private Vector2 position;
 	private Vector2 velocidad;
+	private Vector2 centroRotacion;
 
 	private float ancho;
 	private float alto;
@@ -15,6 +16,7 @@ public abstract class Figura {
 	public Figura(float x, float y, float ancho, float alto) {
 		this.position = new Vector2(x,y);
 		this.velocidad = new Vector2(0.f,0.f);
+		this.centroRotacion = new Vector2(0.f,0.f);
 
 		this.ancho = ancho;
 		this.alto = alto;
@@ -95,6 +97,11 @@ public abstract class Figura {
     public void setRotacion(float angulo) {
 		this.angulo = angulo;
 	}
+    
+    public void setCentroRotacion(float x, float y) {
+    	this.centroRotacion.x = x;
+    	this.centroRotacion.y = y;
+    }
 	
     /** 
 	 * @return float: Posición de la Figura respecto al eje x.
@@ -143,6 +150,14 @@ public abstract class Figura {
 	 * */
 	public float getRotacion() {
 		return this.angulo;
+	}
+	
+	public float getCentroRotacionX() {
+		return this.centroRotacion.x;
+	}
+	
+	public float getCentroRotacionY() {
+		return this.centroRotacion.y;
 	}
 	
 	/** 

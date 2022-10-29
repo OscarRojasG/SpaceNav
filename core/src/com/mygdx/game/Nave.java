@@ -7,20 +7,21 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class Nave extends FiguraForma implements Movil{
-	private static final int anchoNave = 25;
+	private static final int anchoNave = 45;
 	private static final int altoNave = 45;
 
 	private static final Sound sonidoHerido = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
 	
     private float aceleracion;
 
-	private final float VELOCIDAD = 60.f;
+	private final float velBala = 180.f;
+	private final float velNave = 60.f;
 	private final float tiempoHeridoMax = 0.8f;
 
 	private final float accel = 3f;
 	
-	private final float anchoBala = 5;
-	private final float altoBala = 20;
+	private final float anchoBala = 10;
+	private final float altoBala = 30;
 	private final float velDisparoSupernave = 8.5f;
 	private final float anchoBalaSupernave = 10f;
 	private final float altoBalaSupernave = 40;
@@ -43,8 +44,8 @@ public class Nave extends FiguraForma implements Movil{
     		return;
     	}
     	
-        setVelocidadX((float)Math.sin(Math.toRadians(this.getRotacion()))* VELOCIDAD);
-        setVelocidadY((float)Math.cos(Math.toRadians(this.getRotacion()))* VELOCIDAD);
+        setVelocidadX((float)Math.sin(Math.toRadians(this.getRotacion()))* velNave);
+        setVelocidadY((float)Math.cos(Math.toRadians(this.getRotacion()))* velNave);
         
     	if (esSupernave())
     		tiempoSupernave -= Gdx.graphics.getDeltaTime();
@@ -77,7 +78,7 @@ public class Nave extends FiguraForma implements Movil{
     
     @Override
 	public void dibujar(ShapeRenderer sr) {
-		 sr.begin(ShapeType.Filled);
+		 sr.begin(ShapeType.Line);
 		 sr.setColor(0x0, 0xff, 0xff, 1);
 
 		 sr.identity();
@@ -154,22 +155,28 @@ public class Nave extends FiguraForma implements Movil{
      * @return Bala: Genera la clase Bala (Sprite) de forma que "sale" de la nave en pantalla.
      * */
     public Bala generarBala() {
-		float x = getX() + getAncho()/2 * (1 + (float)Math.sin(Math.toRadians(this.getRotacion())));
-		float y = getY() + getAlto()/2 * (1 + (float)Math.cos(Math.toRadians(this.getRotacion())));
-		
-        float ballvelx = 3f * VELOCIDAD;
-        float ballvely = 3f * VELOCIDAD;
+    	// Ubicación de la bala en el ángulo 0
+        float x = getX() + getAncho()/2 - anchoBala/2;
+        float y = getY() + getAlto();
+        
+        // Ubicación del centro de rotación respecto a la posición de la bala
+        float centroX = anchoBala/2;
+        float centroY = -altoNave/2;
+        
+        // Velocidad de la bala
+        float velBalaX = velBala * (float)Math.abs(Math.sin(Math.toRadians(this.getRotacion())));
+        float velBalaY = velBala * (float)Math.abs(Math.cos(Math.toRadians(this.getRotacion())));
 
     	if (esSupernave())
     		return new Bala(x, y, anchoBalaSupernave, altoBalaSupernave,
-                        ballvelx * (float)Math.sin(Math.toRadians(this.getRotacion())),
-                        ballvely * (float)Math.cos(Math.toRadians(-this.getRotacion())),
-                        -getRotacion());
+                        velBalaX * (float)Math.sin(Math.toRadians(this.getRotacion())),
+                        velBalaY * (float)Math.cos(Math.toRadians(-this.getRotacion())),
+                        -getRotacion(), centroX, centroY);
     	
     	return new Bala(x, y, anchoBala, altoBala,
-                        ballvelx * (float)Math.sin(Math.toRadians(this.getRotacion())),
-                        ballvely * (float)Math.cos(Math.toRadians(-this.getRotacion())),
-                        -getRotacion());
+                velBalaX * (float)Math.sin(Math.toRadians(this.getRotacion())),
+                velBalaY * (float)Math.cos(Math.toRadians(-this.getRotacion())),
+                -getRotacion(), centroX, centroY);
     }
     
     /** Cambia el tiempo a permanecer herido de la nave, quita vida al herirse y reproduce el sonido de Nave herida. */
