@@ -13,7 +13,7 @@ public class BigAsteroid extends Asteroide{
     public BigAsteroid(float velX, float velY) {
     	super(Util.generateRandomInt(0, Gdx.graphics.getWidth() - ancho),
     		  Util.generateRandomInt(0, Gdx.graphics.getHeight() - alto), 
-    		  ancho, alto, velX, velY, puntaje, image);
+    		  ancho, alto, velX+20, velY+20, puntaje, image);
     }
     
 }
