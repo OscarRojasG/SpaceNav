@@ -20,12 +20,5 @@ public class VidaExtra extends Consumible {
 	public void agregarEfecto(Nave nave) {
 		nave.agregarVida();
 	}
-
-	@Override
-	public void actualizar() {
-		float x = getX() + getVelocidadX() * Gdx.graphics.getDeltaTime();
-        float y = getY() + getVelocidadY() * Gdx.graphics.getDeltaTime();
-        setPosition(x,y);
-	}
 	
 }

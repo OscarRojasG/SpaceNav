@@ -1,5 +1,6 @@
 package com.mygdx.game.consumibles;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.FiguraSprite;
@@ -26,6 +27,12 @@ public abstract class Consumible extends FiguraSprite implements Movil {
 		tiempo = tiempo / 1000; // Consiguiendolo en segundos
 		
 		return (tiempo > tiempoMaximo);
+	}
+
+	public void actualizar() {
+		float x = getX() + getVelocidadX() * Gdx.graphics.getDeltaTime();
+        float y = getY() + getVelocidadY() * Gdx.graphics.getDeltaTime();
+        setPosition(x,y);
 	}
 	
 }
