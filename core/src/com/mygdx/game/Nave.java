@@ -25,6 +25,16 @@ public class Nave extends FiguraForma implements Movil{
 	private final float velDisparoSupernave = 8.5f;
 	private final float anchoBalaSupernave = 10f;
 	private final float altoBalaSupernave = 40;
+
+	int x1 = -20; int y1 = -20;
+	int x2 = 0; int y2 = 40;
+	int x3 = 20; int y3 = -20;
+	int x4 = 0; int y4 = -10;
+
+	int fx1 = -10; int fy1 = -15;
+	int fx2 = 10; int fy2 = -15;
+	int fx3 = 0; int fy3 = -30;
+
 	
     private int vidas = 3;
     private float tiempoHerido;
@@ -85,15 +95,29 @@ public class Nave extends FiguraForma implements Movil{
 		 sr.translate(getX() + getAncho()/2, getY() + getAlto()/2, 0);
 		 sr.rotate(0.0f, 0.0f, 1.0f, -getRotacion());
 		 
-		 sr.triangle(0, getAlto()/2, 
-				 -getAncho()/2, -getAlto()/2,
-				 getAncho()/2, -getAlto()/2
-				 );
-		 
+		 sr.line(x1,y1,x2,y2);
+		 sr.line(x2, y2, x3, y3);
+		 sr.line(x3, y3, x4, y4);
+		 sr.line(x4, y4, x1, y1);
 		 sr.identity();
-		 Gdx.gl.glLineWidth(1.5f);
+		 Gdx.gl.glLineWidth(2.f);
 
 		 sr.end();	
+
+		if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+			sr.begin(ShapeType.Filled);
+			sr.translate(getX() + getAncho()/2, getY() + getAlto()/2, 0);
+			sr.rotate(0.0f, 0.0f, 1.0f, -getRotacion());
+			sr.triangle(fx1, fy1, fx2, fy2, x4, y4);
+			sr.triangle(fx1, fy1, fx2, fy2, fx3, fy3);
+			sr.end();
+			
+		}
+
+		 
+
+
+		 
 	}
     
     /** Calcula la nueva posición en el eje x.
