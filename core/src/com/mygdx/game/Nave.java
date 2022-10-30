@@ -11,6 +11,7 @@ public class Nave extends FiguraForma implements Movil{
 	private static final int altoNave = 50;
 
 	private static final Sound sonidoHerido = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
+	private static final Sound sonidoDisparo = Gdx.audio.newSound(Gdx.files.internal("disparoNave.mp3"));
 	
     private float aceleracion;
 
@@ -173,6 +174,8 @@ public class Nave extends FiguraForma implements Movil{
      * @return Bala: Genera la clase Bala (Sprite) de forma que "sale" de la nave en pantalla.
      * */
     public Bala generarBala() {
+    	sonidoDisparo.play(0.01f);
+    	
     	// Ubicación de la bala en el ángulo 0
         float x = getX() + getAncho()/2 - anchoBala/2;
         float y = getY() + getAlto();
@@ -181,7 +184,7 @@ public class Nave extends FiguraForma implements Movil{
         float centroX = anchoBala/2;
         float centroY = -altoNave/2;
         
-        // Velocidad de la bal
+        // Velocidad de la bala
         float velBalaX = getVelocidadX() * accel *  1.5f * Gdx.graphics.getDeltaTime();
         float velBalaY = getVelocidadY() * accel *  1.5f * Gdx.graphics.getDeltaTime();
 
