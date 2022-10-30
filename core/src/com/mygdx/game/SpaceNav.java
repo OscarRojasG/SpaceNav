@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.ScreenUtils;
 
 public class SpaceNav extends Game {
 	private final String nombreJuego = "Space Navigation";
@@ -21,6 +22,8 @@ public class SpaceNav extends Game {
 		font = new BitmapFont();
 		font.getData().setScale(2f);
 		
+
+		ScreenUtils.clear((float)0x10/0xff, (float)0x10/0xff, (float)0x10/0xff, 1);
 		Screen screen = new PantallaMenu(this);
 		setScreen(screen);
 	}

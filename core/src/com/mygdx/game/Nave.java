@@ -87,8 +87,9 @@ public class Nave extends FiguraForma implements Movil{
     
     @Override
 	public void dibujar(ShapeRenderer sr) {
+		 Gdx.gl.glLineWidth(2.f);
 		 sr.begin(ShapeType.Line);
-		 sr.setColor(0x0, 0xff, 0xff, 1);
+		 sr.setColor(0xff, 0xff, 0xff, 1);
 
 		 sr.identity();
 		 sr.translate(getX() + getAncho()/2, getY() + getAlto()/2, 0);
@@ -99,7 +100,6 @@ public class Nave extends FiguraForma implements Movil{
 		 sr.line(x3, y3, x4, y4);
 		 sr.line(x4, y4, x1, y1);
 		 sr.identity();
-		 Gdx.gl.glLineWidth(2.f);
 
 		 sr.end();	
 
