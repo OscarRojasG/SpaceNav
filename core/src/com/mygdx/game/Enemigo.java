@@ -6,16 +6,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 
 public abstract class Enemigo extends FiguraSprite implements Movil {
-	private final static Sound sonidoExplosion = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
 	private int puntaje;
-
+//	private final static Sound sonidoExplosion = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
     public Enemigo(float x, float y, float ancho, float alto, float velX, float velY, int puntaje, Texture tx) {
     	super(x, y, ancho, alto, tx);
     	setVelocidadX(velX);
     	setVelocidadY(velY);
     	setPuntaje(puntaje);
-    	
-    	sonidoExplosion.setVolume(1, 0.5f);
+//    	sonidoExplosion.setVolume(1, 0.5f);
     }
     
     public abstract void agregarEfecto(Nave nave);
@@ -62,7 +60,7 @@ public abstract class Enemigo extends FiguraSprite implements Movil {
 	}
     
     public void explotar() {
-    	sonidoExplosion.play();
+//    	sonidoExplosion.play();
     }
     
     public void setPuntaje(int puntaje) {
