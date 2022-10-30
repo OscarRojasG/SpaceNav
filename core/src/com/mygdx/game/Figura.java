@@ -1,11 +1,13 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class Figura {
-	private Vector2 position;
+	private Vector2 posicion;
 	private Vector2 velocidad;
 	private Vector2 centroRotacion;
 
@@ -14,7 +16,7 @@ public abstract class Figura {
 	private float angulo;
 	
 	public Figura(float x, float y, float ancho, float alto) {
-		this.position = new Vector2(x,y);
+		this.posicion = new Vector2(x,y);
 		this.velocidad = new Vector2(0.f,0.f);
 		this.centroRotacion = new Vector2(0.f,0.f);
 
@@ -42,7 +44,21 @@ public abstract class Figura {
 	 * @return boolean: Manda true si la posición de Enemigo coincide con el área de la Figura, false en caso contrario.
 	 * */
 	public boolean verificarColision(Figura figura) {
-		return getArea().overlaps(figura.getArea());
+		Polygon p1 = this.getPoligono();
+		Polygon p2 = figura.getPoligono();
+		
+		return Intersector.overlapConvexPolygons(p1, p2);
+	}
+	
+	/** Método utilizado para generar un objeto Polygon con los atributos de la clase
+	 * @return Polygon
+	 */
+	private Polygon getPoligono() {
+		Polygon polygon = new Polygon(new float[]{0,0,ancho,0,ancho,alto,0,alto});
+		polygon.setOrigin(centroRotacion.x, centroRotacion.y);
+		polygon.setRotation(angulo);
+		polygon.setPosition(posicion.x, posicion.y);
+		return polygon;
 	}
 	
 	/** Sobrescribe la posición de la Figura por los parametros recibidos.
@@ -50,22 +66,22 @@ public abstract class Figura {
 	 * @param float y: Nueva posición para la Figura respecto al eje y.
 	 * */
     public void setPosition(float x, float y) {
-    	this.position.x = x;
-    	this.position.y = y;
+    	this.posicion.x = x;
+    	this.posicion.y = y;
     }
     
     /** Sobrescribe la posición de la Figura en el eje x por el parametro recibido.
 	 * @param float: Nueva posición para la Figura respecto al eje x.
 	 * */
     public void setX(float x) {
-    	this.position.x = x;
+    	this.posicion.x = x;
     }
     
     /** Sobrescribe la posición de la Figura en el eje y por el parametro recibido.
 	 * @param float: Nueva posición para la Figura respecto al eje y.
 	 * */
     public void setY(float y) {
-    	this.position.y = y;
+    	this.posicion.y = y;
     }
     
     /** Sobrescribe la velocidad de la Figura respecto al eje x.
@@ -107,14 +123,14 @@ public abstract class Figura {
 	 * @return float: Posición de la Figura respecto al eje x.
 	 * */
 	public float getX() {
-		return this.position.x;
+		return this.posicion.x;
 	}
 	
 	/** 
 	 * @return float: Posición de la Figura respecto al eje y.
 	 * */
 	public float getY() {
-		return this.position.y;
+		return this.posicion.y;
 	}
 	
 	/** 
@@ -164,7 +180,7 @@ public abstract class Figura {
 	 * @return Rectangle: Atributo clase Rectangulo con la posición (ejes x,y) y tamaño (ancho,alto) de la Figura.
 	 * */
     public Rectangle getArea() {
-    	return new Rectangle(this.position.x, this.position.y,
+    	return new Rectangle(this.posicion.x, this.posicion.y,
     			this.ancho, this.alto);
     }
 
