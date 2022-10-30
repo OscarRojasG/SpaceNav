@@ -3,12 +3,12 @@ package com.mygdx.game.colecciones;
 import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.Consumible;
 import com.mygdx.game.Figura;
 import com.mygdx.game.FiguraSprite;
 import com.mygdx.game.Movil;
 import com.mygdx.game.Nave;
 import com.mygdx.game.Util;
+import com.mygdx.game.consumibles.Consumible;
 import com.mygdx.game.consumibles.Supernave;
 import com.mygdx.game.consumibles.VidaExtra;
 

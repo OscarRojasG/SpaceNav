@@ -2,7 +2,6 @@ package com.mygdx.game.colecciones;
 
 import java.util.Iterator;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.Bala;
 import com.mygdx.game.Enemigo;
