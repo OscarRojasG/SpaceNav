@@ -22,7 +22,7 @@ public abstract class Consumible extends FiguraSprite implements Movil {
 	public abstract void agregarEfecto(Nave nave);
 	
 	public boolean noUsado() {
-		long tiempo = TimeUtils.timeSinceMillis(tiempoInicio);
+		float tiempo = TimeUtils.timeSinceMillis(tiempoInicio);
 		tiempo = tiempo / 1000; // Consiguiendolo en segundos
 		
 		return (tiempo > tiempoMaximo);

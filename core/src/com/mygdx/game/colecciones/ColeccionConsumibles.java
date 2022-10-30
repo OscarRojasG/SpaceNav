@@ -45,6 +45,21 @@ public class ColeccionConsumibles extends ColeccionMovil {
 		}
 	}
 	
+	@Override
+	public void actualizar() {
+		Iterator<Movil> consumibles = getObjetos(); 
+		while(consumibles.hasNext()) {
+			Consumible consumible = (Consumible) consumibles.next();
+			
+			if (consumible.noUsado()) {
+				consumibles.remove();
+				eliminar(consumible);
+			}	
+		}
+		
+		super.actualizar();
+	}
+	
 	public void verificarColisiones(Nave nave) {
 		Iterator<Movil> consumibles = getObjetos(); 
 		while(consumibles.hasNext()) {
@@ -54,11 +69,7 @@ public class ColeccionConsumibles extends ColeccionMovil {
 				consumible.agregarEfecto(nave);
 				consumibles.remove();
 				eliminar(consumible);
-			}
-			else if (consumible.noUsado()) {
-				consumibles.remove();
-				eliminar(consumible);
-			}		
+			}	
 		}
 	}
 	
