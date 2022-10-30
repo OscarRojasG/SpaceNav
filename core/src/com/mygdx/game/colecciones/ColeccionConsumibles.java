@@ -3,8 +3,6 @@ package com.mygdx.game.colecciones;
 import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.Figura;
-import com.mygdx.game.FiguraSprite;
 import com.mygdx.game.Movil;
 import com.mygdx.game.Nave;
 import com.mygdx.game.Util;
@@ -40,7 +38,7 @@ public class ColeccionConsumibles extends ColeccionMovil {
 	public void dibujar(SpriteBatch batch) {
 		Iterator<Movil> consumibles = getObjetos(); 
 		while(consumibles.hasNext()) {
-			FiguraSprite consumible = (FiguraSprite) consumibles.next();
+			Consumible consumible = (Consumible) consumibles.next();
 			consumible.dibujar(batch);
 		}
 	}
@@ -65,7 +63,7 @@ public class ColeccionConsumibles extends ColeccionMovil {
 		while(consumibles.hasNext()) {
 			Consumible consumible = (Consumible) consumibles.next();
 			
-			if (((Figura)consumible).verificarColision(nave)) {
+			if (consumible.verificarColision(nave)) {
 				consumible.agregarEfecto(nave);
 				consumibles.remove();
 				eliminar(consumible);
