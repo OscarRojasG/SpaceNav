@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.mygdx.game.asteroides.Asteroide;
 import com.mygdx.game.colecciones.ColeccionAsteroides;
 import com.mygdx.game.colecciones.ColeccionBalas;
 import com.mygdx.game.colecciones.ColeccionConsumibles;
@@ -68,7 +69,6 @@ public class PantallaJuego implements Screen {
 		int velAsteroides = 120 + (ronda - 1) * 20;
 
 		asteroides.crear(cantAsteroides, velAsteroides, ronda);
-
 	}
 	
 	@Override
@@ -81,39 +81,46 @@ public class PantallaJuego implements Screen {
 			finalizarJuego();
 		}
 		
-		if (asteroides.estaVacia() && enemigos.estaVacia()) {
+		if (asteroides.isEmpty() && enemigos.isEmpty()) {
 			avanzarRonda();
 		}
 		
 	    if (!nave.estaHerida()) {
-	    	Iterator<Enemigo> iteratorAsteroides = asteroides.getAsteroides();
+	    	Iterator<Movil> iteratorAsteroides = asteroides.getObjetos();
 	    	while(iteratorAsteroides.hasNext()) {
-	    		Enemigo a = iteratorAsteroides.next();
-	    		if(balas.verificarColisiones(a)) {
+	    		Asteroide asteroide = (Asteroide) iteratorAsteroides.next();
+	    		
+	    		if(balas.verificarColisiones(asteroide)) {
 	    			iteratorAsteroides.remove();
-	    			asteroides.eliminar(a);
-	    			a.explotar();
-	    			consumibles.generar(a.getX(), a.getY(), a.getVelocidadX(), a.getVelocidadY());
+	    			asteroides.eliminar(asteroide);
+	    			asteroide.explotar();
+	    			
+	    			consumibles.generar(asteroide.getX(), asteroide.getY(), 
+	    					asteroide.getVelocidadX(), asteroide.getVelocidadY());
+
 	    			agregarPuntaje(10);
 	    		}
 	    	}
 	    	
-	    	Iterator<Enemigo> iteratorHirientes = enemigos.getHirientes();
-	    	while(iteratorHirientes.hasNext()) {
-	    		Enemigo h = iteratorHirientes.next();
-	    		if(balas.verificarColisiones(h)) {
-	    			iteratorHirientes.remove();
-	    			int sumScore = ((Hiriente)h).getScoreChange();
-	    			enemigos.eliminar(h, true);
-	    			agregarPuntaje(sumScore);
+	    	Iterator<Movil> iteratorEnemigos = enemigos.getObjetos();
+	    	while(iteratorEnemigos.hasNext()) {
+	    		Enemigo enemigo = (Enemigo) iteratorEnemigos.next();
+	    		
+	    		if(balas.verificarColisiones(enemigo)) {
+	    			iteratorEnemigos.remove();
+	    			enemigos.eliminar(enemigo);
+	    			enemigo.explotar();
+	    			
+	    			agregarPuntaje(((Hiriente)enemigo).getScoreChange());
 	    		}
 	    	}
 	    	
-	    	if (asteroides.getCantidad() < 10 && enemigos.estaVacia()) {
+	    	if (asteroides.getCantidad() < 10 && enemigos.isEmpty())
 				enemigos.generar();
-			}
 	    	
 	    	consumibles.verificarColisiones(nave);
+		    asteroides.verificarColisiones(nave);
+		    enemigos.verificarColisiones(nave);
 	    	asteroides.verificarColisiones();
 	    	enemigos.verificarColisiones();
 	    	
@@ -126,9 +133,6 @@ public class PantallaJuego implements Screen {
 		    enemigos.actualizar();
 		    consumibles.actualizar();
 		    balas.actualizar();
-		    
-		    asteroides.verificarColisiones(nave);
-		    enemigos.verificarColisiones(nave);
 	    }
 	    
 	    nave.actualizar();

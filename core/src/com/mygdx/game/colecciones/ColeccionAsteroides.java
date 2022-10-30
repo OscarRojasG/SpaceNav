@@ -1,32 +1,26 @@
 package com.mygdx.game.colecciones;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.Enemigo;
+import com.mygdx.game.Movil;
 import com.mygdx.game.Nave;
 import com.mygdx.game.Util;
+import com.mygdx.game.asteroides.Asteroide;
 import com.mygdx.game.asteroides.BigAsteroid;
 import com.mygdx.game.asteroides.MediumAsteroid;
 import com.mygdx.game.asteroides.SmallAsteroid;
 
-public class ColeccionAsteroides {
+public class ColeccionAsteroides extends ColeccionMovil {
 	private final int ASTEROID_MIN_ANGLE = 20;
 	private final int ASTEROID_MAX_ANGLE = 70;
 	private final int ASTEROID_SIZE_SMALL = 1;
 	private final int ASTEROID_SIZE_MEDIUM = 2;
 	private final int ASTEROID_SIZE_BIG = 3;
 	
-	private ArrayList<Enemigo> asteroides;
-	
-	public ColeccionAsteroides() {
-		asteroides = new ArrayList<Enemigo>();
-	}
-	
-	public void crear(int cantidad, int velocidad, int level) {
+	public void crear(int cantidad, int velocidad, int ronda) {
 		for (int i = 0; i < cantidad; i++)
-			crear(velocidad,level);
+			crear(velocidad, ronda);
 	}
 	
 	public void crear(int velocidad, int ronda) {
@@ -36,9 +30,8 @@ public class ColeccionAsteroides {
 		float velXAsteroides = velocidad * (float)Math.cos(angle);
 		float velYAsteroides = velocidad * (float)Math.sin(angle);
 		
-		int size = generarTamañoAleatorio(ronda);
-		
-		Enemigo asteroide = null;
+		int size = generarAsteroideAleatorio(ronda);
+		Asteroide asteroide = null;
 		
 		switch(size) {
 			case ASTEROID_SIZE_SMALL:
@@ -52,67 +45,49 @@ public class ColeccionAsteroides {
 				break;		
 		}
         
-  	    asteroides.add(asteroide);
+  	    this.agregar(asteroide);
 	}
 	
-	public void eliminar(Enemigo asteroide) {
-		asteroides.remove(asteroide);
-	}
-	
-	public void dibujar(SpriteBatch batch) {
-		for (int i = 0; i < asteroides.size(); i++) {
-			asteroides.get(i).dibujar(batch);
+	public void dibujar(SpriteBatch batch) { 
+		Iterator<Movil> asteroides = getObjetos(); 
+		while(asteroides.hasNext()) {
+			Asteroide asteroide = (Asteroide) asteroides.next();
+			asteroide.dibujar(batch);
 		}
 	}
 	
 	public void verificarColisiones() {
-		for (int i = 0; i < asteroides.size(); i++) {
-			Enemigo a1 = asteroides.get(i);
-			for (int j = i+1; j < asteroides.size(); j++) {
-				Enemigo a2 = asteroides.get(j);
-				a1.verificarColision(a2);
+		Iterator<Movil> asteroides = getObjetos(); 
+		while(asteroides.hasNext()) {
+			Asteroide asteroide = (Asteroide) asteroides.next();
+			Iterator<Movil> asteroides2 = getObjetos();
+			
+			while(asteroides2.hasNext()) {
+				Asteroide asteroide2 = (Asteroide) asteroides2.next();
+				
+				if (asteroide != asteroide2) {
+					asteroide.verificarColision(asteroide2);
+				}
 			}
 		}
 	}
 	
 	public void verificarColisiones(Nave nave) {
-	    for (int i = 0; i < asteroides.size(); i++) {
-	    	Enemigo a = asteroides.get(i);	
-	    	if (a.verificarColision(nave)) {
+		Iterator<Movil> asteroides = getObjetos(); 
+		while(asteroides.hasNext()) {
+			Asteroide asteroide = (Asteroide) asteroides.next();
+	    	if (asteroide.verificarColision(nave)) {
 	    		nave.herir();
-	    		eliminar(a);
+	    		asteroides.remove();
+	    		eliminar(asteroide);
 	    	}
 	    }
 	}
-	
-	public void actualizar() {
-		for (int i = 0; i < asteroides.size(); i++) {
-			asteroides.get(i).actualizar();
-		}
-	}
-	
-	public boolean estaVacia() {
-		return asteroides.isEmpty();
-	}
-	
-	public Iterator<Enemigo> getAsteroides() {
-		return asteroides.iterator();
-	}
-	
-	public int getCantidad() {
-		return asteroides.size();
-	}
  	
-	private int generarTamañoAleatorio(int nivel) {
-		if(nivel > 20) {
-			return ASTEROID_SIZE_SMALL;
-		}
+	private int generarAsteroideAleatorio(int nivel) {
+		if(nivel > 20) return ASTEROID_SIZE_SMALL;
+		if (nivel > 10) return Util.generateRandomInt(ASTEROID_SIZE_SMALL, ASTEROID_SIZE_MEDIUM);
 		
-		if (nivel > 10) {
-			return Util.generateRandomInt(ASTEROID_SIZE_SMALL, ASTEROID_SIZE_MEDIUM);
-		}
-		
-		// Incluye el ASTEROID_SIZE_MEDIUM
 		return Util.generateRandomInt(ASTEROID_SIZE_SMALL, ASTEROID_SIZE_BIG);
 	}
 	

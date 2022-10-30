@@ -1,25 +1,20 @@
 package com.mygdx.game.colecciones;
 
-import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Consumible;
 import com.mygdx.game.Figura;
 import com.mygdx.game.FiguraSprite;
+import com.mygdx.game.Movil;
 import com.mygdx.game.Nave;
 import com.mygdx.game.Util;
 import com.mygdx.game.consumibles.Supernave;
 import com.mygdx.game.consumibles.VidaExtra;
 
-public class ColeccionConsumibles {
+public class ColeccionConsumibles extends ColeccionMovil {
 	private final static int CONSUMIBLE_VIDA = 1;
 	private final static int CONSUMIBLE_SUPERNAVE = 2;
-	
-	private ArrayList<Consumible> consumibles;
-	
-	public ColeccionConsumibles() {
-		consumibles = new ArrayList<Consumible>();
-	}
 	
 	public void generar(float x, float y, float velX, float velY) {
 		int p = Util.generateRandomInt(0, 9);
@@ -39,40 +34,35 @@ public class ColeccionConsumibles {
 				break;
 		}
 		
-		consumibles.add(consumible);
-	}
-	
-	public void eliminar(Consumible consumible) {
-		consumibles.remove(consumible);
+		this.agregar(consumible);
 	}
 	
 	public void dibujar(SpriteBatch batch) {
-		for (int i = 0; i < consumibles.size(); i++) {
-			((FiguraSprite)consumibles.get(i)).dibujar(batch);
-		}
-	}
-	
-	public void actualizar() {
-		for (int i = 0; i < consumibles.size(); i++) {
-			consumibles.get(i).actualizar();
+		Iterator<Movil> consumibles = getObjetos(); 
+		while(consumibles.hasNext()) {
+			FiguraSprite consumible = (FiguraSprite) consumibles.next();
+			consumible.dibujar(batch);
 		}
 	}
 	
 	public void verificarColisiones(Nave nave) {
-		for (int i = 0; i < consumibles.size(); i++) {
-			Consumible consumible = consumibles.get(i);
+		Iterator<Movil> consumibles = getObjetos(); 
+		while(consumibles.hasNext()) {
+			Consumible consumible = (Consumible) consumibles.next();
 			
 			if (((Figura)consumible).verificarColision(nave)) {
 				consumible.agregarEfecto(nave);
-				eliminar(consumible);
-			} 
-			else if (consumible.noUsado()) {
+				consumibles.remove();
 				eliminar(consumible);
 			}
+			else if (consumible.noUsado()) {
+				consumibles.remove();
+				eliminar(consumible);
+			}		
 		}
 	}
 	
-	private int generarConsumibleAleatorio() {
+	private  int generarConsumibleAleatorio() {
 		return Util.generateRandomInt(1, 2);
 	}
 	

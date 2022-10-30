@@ -1,43 +1,28 @@
 package com.mygdx.game.colecciones;
 
-import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Bala;
 import com.mygdx.game.Enemigo;
+import com.mygdx.game.Movil;
 
-public class ColeccionBalas {
-	private ArrayList<Bala> balas;
-	
-	public ColeccionBalas() {
-		balas = new ArrayList<Bala>();
-	}
-	
-	public void agregar(Bala bala) {
-		balas.add(bala);
-	}
-	
-	public void eliminar(Bala bala) {
-		balas.remove(bala);
-	}
+public class ColeccionBalas extends ColeccionMovil {
 	
 	public void dibujar(SpriteBatch batch) {
-		for (int i = 0; i < balas.size(); i++) {
-			balas.get(i).dibujar(batch);
+		Iterator<Movil> balas = getObjetos(); 
+		while(balas.hasNext()) {
+			Bala bala = (Bala) balas.next();
+			bala.dibujar(batch);
 		}
 	}
-	
-	public void actualizar() {
-		for (int i = 0; i < balas.size(); i++) {
-			balas.get(i).actualizar();
-		}
-	}
-	
-	public boolean verificarColisiones(Enemigo asteroide) {
-		for (int i = 0; i < balas.size(); i++) {
-			Bala b = balas.get(i);
-			if (b.verificarColision(asteroide)) {
-				eliminar(b);
+
+	public boolean verificarColisiones(Enemigo enemigo) {
+		Iterator<Movil> balas = getObjetos();
+		while(balas.hasNext()) {
+			Bala bala = (Bala) balas.next();
+			if (bala.verificarColision(enemigo)) {
+				eliminar(bala);
 				return true;
 			}
 		}
