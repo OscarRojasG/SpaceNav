@@ -5,15 +5,20 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Enemigo extends FiguraSprite implements Movil {
+public abstract class Enemigo extends FiguraSprite implements Movil {
 	private final static Sound sonidoExplosion = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
+	private int puntaje;
 
-    public Enemigo(float x, float y, float ancho, float alto, float velX, float velY, Texture tx) {
+    public Enemigo(float x, float y, float ancho, float alto, float velX, float velY, int puntaje, Texture tx) {
     	super(x, y, ancho, alto, tx);
     	setVelocidadX(velX);
     	setVelocidadY(velY);
+    	setPuntaje(puntaje);
+    	
     	sonidoExplosion.setVolume(1, 0.5f);
     }
+    
+    public abstract void agregarEfecto(Nave nave);
     
     @Override
     public void actualizar() {
@@ -56,9 +61,16 @@ public class Enemigo extends FiguraSprite implements Movil {
         return true;
 	}
     
-    /** Clase que reproduce sonido de explosion en la ventana. */
     public void explotar() {
     	sonidoExplosion.play();
+    }
+    
+    public void setPuntaje(int puntaje) {
+    	this.puntaje = puntaje;
+    }
+    
+    public int getPuntaje() {
+    	return puntaje;
     }
     
 }

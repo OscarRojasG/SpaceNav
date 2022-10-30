@@ -77,7 +77,7 @@ public class ColeccionAsteroides extends ColeccionMovil {
 		while(asteroides.hasNext()) {
 			Asteroide asteroide = (Asteroide) asteroides.next();
 	    	if (asteroide.verificarColision(nave)) {
-	    		nave.herir();
+	    		asteroide.agregarEfecto(nave);
 	    		asteroides.remove();
 	    		eliminar(asteroide);
 	    	}

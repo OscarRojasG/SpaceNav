@@ -98,7 +98,7 @@ public class PantallaJuego implements Screen {
 	    			consumibles.generar(asteroide.getX(), asteroide.getY(), 
 	    					asteroide.getVelocidadX(), asteroide.getVelocidadY());
 
-	    			agregarPuntaje(10);
+	    			agregarPuntaje(asteroide.getPuntaje());
 	    		}
 	    	}
 	    	
@@ -111,7 +111,7 @@ public class PantallaJuego implements Screen {
 	    			enemigos.eliminar(enemigo);
 	    			enemigo.explotar();
 	    			
-	    			agregarPuntaje(((Hiriente)enemigo).getScoreChange());
+	    			agregarPuntaje(enemigo.getPuntaje());
 	    		}
 	    	}
 	    	

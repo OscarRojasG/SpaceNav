@@ -3,11 +3,12 @@ package com.mygdx.game.asteroides;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Enemigo;
+import com.mygdx.game.Nave;
 
 public class Asteroide extends Enemigo {
 	
-    public Asteroide(float x, float y, int ancho, int alto, float velX, float velY, Texture tx) {
-    	super(x, y, ancho, alto, velX, velY, tx);
+    public Asteroide(float x, float y, int ancho, int alto, float velX, float velY, int puntaje, Texture tx) {
+    	super(x, y, ancho, alto, velX, velY, puntaje, tx);
     }
     
     @Override
@@ -32,4 +33,10 @@ public class Asteroide extends Enemigo {
         
         super.setPosition(x,y);
     }
+
+	@Override
+	public void agregarEfecto(Nave nave) {
+		nave.herir();
+	}
+	
 }
