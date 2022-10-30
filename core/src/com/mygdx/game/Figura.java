@@ -53,7 +53,7 @@ public abstract class Figura {
 	/** Método utilizado para generar un objeto Polygon con los atributos de la clase
 	 * @return Polygon
 	 */
-	private Polygon getPoligono() {
+	public Polygon getPoligono() {
 		Polygon polygon = new Polygon(new float[]{0,0,ancho,0,ancho,alto,0,alto});
 		polygon.setOrigin(centroRotacion.x, centroRotacion.y);
 		polygon.setRotation(angulo);

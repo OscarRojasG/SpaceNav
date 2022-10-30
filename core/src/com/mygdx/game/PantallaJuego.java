@@ -141,10 +141,9 @@ public class PantallaJuego implements Screen {
 	    asteroides.dibujar(batch);
 	    enemigos.dibujar(batch);
 	    consumibles.dibujar(batch);
-	    balas.dibujar(batch);
 	    batch.end();
-	    
 	    nave.dibujar(shapeRenderer);
+	    balas.dibujar(shapeRenderer);
 	}
 	
 	@Override
