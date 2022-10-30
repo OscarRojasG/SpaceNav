@@ -22,7 +22,7 @@ public class Nave extends FiguraForma implements Movil{
 	private final float anchoBala = 10;
 	private final float altoBala = 30;
 	private final float velDisparoSupernave = 8.5f;
-	private final float anchoBalaSupernave = 10f;
+	private final float anchoBalaSupernave = 10;
 	private final float altoBalaSupernave = 40;
 
 	int x1 = -20; int y1 = -20;
