@@ -13,7 +13,7 @@ public class SmallAsteroid extends Asteroide{
     public SmallAsteroid(float velX, float velY) {
     	super(Util.generateRandomInt(ancho, Gdx.graphics.getWidth() - ancho),
     		  Util.generateRandomInt(alto, Gdx.graphics.getHeight() - alto), 
-    		  ancho, alto, velX-20, velY-20, puntaje, image);
+    		  ancho, alto, velX, velY, puntaje, image);
     }
     
 }

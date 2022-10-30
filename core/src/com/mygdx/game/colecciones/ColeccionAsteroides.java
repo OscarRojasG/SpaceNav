@@ -35,13 +35,13 @@ public class ColeccionAsteroides extends ColeccionMovil {
 		
 		switch(size) {
 			case ASTEROID_SIZE_SMALL:
-				asteroide = new SmallAsteroid(velXAsteroides, velYAsteroides);
+				asteroide = new SmallAsteroid(velXAsteroides - 20, velYAsteroides - 20);
 				break;
 			case ASTEROID_SIZE_MEDIUM:
 				asteroide = new MediumAsteroid(velXAsteroides, velYAsteroides);
 				break;
 			case ASTEROID_SIZE_BIG:
-				asteroide = new BigAsteroid(velXAsteroides, velYAsteroides);
+				asteroide = new BigAsteroid(velXAsteroides + 20, velYAsteroides + 20);
 				break;		
 		}
         
