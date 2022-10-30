@@ -7,18 +7,17 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class Nave extends FiguraForma implements Movil{
-	private static final int anchoNave = 30;
-	private static final int altoNave = 45;
+	private static final int anchoNave = 40;
+	private static final int altoNave = 50;
 
 	private static final Sound sonidoHerido = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
 	
     private float aceleracion;
 
-	private final float velBala = 240.f;
 	private final float velNave = 60.f;
 	private final float tiempoHeridoMax = 0.8f;
 
-	private final float accel = 3f;
+	private final float accel = 6f;
 	
 	private final float anchoBala = 10;
 	private final float altoBala = 30;
@@ -61,20 +60,20 @@ public class Nave extends FiguraForma implements Movil{
     		tiempoSupernave -= Gdx.graphics.getDeltaTime();
     	
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-        	if (this.aceleracion < 1) this.aceleracion += .04f;
+        	if (this.aceleracion < 1) this.aceleracion += .16f;
 
         }
         else {
-            if (this.aceleracion > 0) this.aceleracion -= .02f;
+            if (this.aceleracion > 0) this.aceleracion -= .04f;
             else if (this.aceleracion < 0) this.aceleracion = 0;
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            float a = getRotacion() - 5;
+            float a = getRotacion() - 6f;
             this.setRotacion(a);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            float a = getRotacion() + 5;
+            float a = getRotacion() + 6f;
             this.setRotacion(a);
         }
 
@@ -111,13 +110,7 @@ public class Nave extends FiguraForma implements Movil{
 			sr.triangle(fx1, fy1, fx2, fy2, x4, y4);
 			sr.triangle(fx1, fy1, fx2, fy2, fx3, fy3);
 			sr.end();
-			
 		}
-
-		 
-
-
-		 
 	}
     
     /** Calcula la nueva posición en el eje x.
@@ -188,19 +181,17 @@ public class Nave extends FiguraForma implements Movil{
         float centroX = anchoBala/2;
         float centroY = -altoNave/2;
         
-        // Velocidad de la bala
-        float velBalaX = velBala * (float)Math.abs(Math.sin(Math.toRadians(this.getRotacion())));
-        float velBalaY = velBala * (float)Math.abs(Math.cos(Math.toRadians(this.getRotacion())));
+        // Velocidad de la bal
+        float velBalaX = getVelocidadX() * accel *  1.5f * Gdx.graphics.getDeltaTime();
+        float velBalaY = getVelocidadY() * accel *  1.5f * Gdx.graphics.getDeltaTime();
 
     	if (esSupernave())
     		return new Bala(x, y, anchoBalaSupernave, altoBalaSupernave,
-                        velBalaX * (float)Math.sin(Math.toRadians(this.getRotacion())),
-                        velBalaY * (float)Math.cos(Math.toRadians(-this.getRotacion())),
+                        velBalaX * velNave, velBalaY * velNave,
                         -getRotacion(), centroX, centroY);
     	
     	return new Bala(x, y, anchoBala, altoBala,
-                velBalaX * (float)Math.sin(Math.toRadians(this.getRotacion())),
-                velBalaY * (float)Math.cos(Math.toRadians(-this.getRotacion())),
+                velBalaX * velNave * 1.5f, velBalaY * velNave * 1.5f,
                 -getRotacion(), centroX, centroY);
     }
     
