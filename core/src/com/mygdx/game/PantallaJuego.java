@@ -16,7 +16,7 @@ import com.mygdx.game.colecciones.ColeccionConsumibles;
 import com.mygdx.game.colecciones.ColeccionEnemigos;
 
 public class PantallaJuego implements Screen {
-	private static final Music musica = Gdx.audio.newMusic(Gdx.files.internal("piano-loops.wav"));
+//	private static final Music musica = Gdx.audio.newMusic(Gdx.files.internal("piano-loops.wav"));
 	
 	private SpaceNav game;
 	private BitmapFont font;
@@ -49,9 +49,9 @@ public class PantallaJuego implements Screen {
 		this.font = game.getFont();
 		this.batch = game.getBatch();
 		
-		musica.setLooping(true);
-		musica.setVolume(0.5f); // Debería ser parte del archivo
-		musica.play();
+//		musica.setLooping(true);
+//		musica.setVolume(0.5f); // Debería ser parte del archivo
+//		musica.play();
 		
 		int navePosX = Gdx.graphics.getWidth()/2 - 50;
 		int navePosY = 30;
@@ -149,7 +149,7 @@ public class PantallaJuego implements Screen {
 	
 	@Override
 	public void show() {
-		musica.play();
+//		musica.play();
 	}
 
 	@Override
@@ -193,7 +193,7 @@ public class PantallaJuego implements Screen {
 			game.setHighScore(puntaje);
 		}
 		
-		musica.stop();
+//		musica.stop();
 	}
 	
 	/** Se encarga de iniciar la PantallaJuego en la siguiente ronda */
