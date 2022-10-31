@@ -22,7 +22,7 @@ public class PantallaGameOver implements Screen {
 		batch.begin();
 
 		game.getFont().draw(game.getBatch(), "Game Over !!! ", 120, 400,400,1,true);
-		game.getFont().draw(game.getBatch(), "Presione cualquier tecla o haga click para volver al menu ...", 100, 300);
+		game.getFont().draw(game.getBatch(), "Presione cualquier tecla o haga click para reiniciar ...", 100, 300);
 	
 		batch.end();
 
