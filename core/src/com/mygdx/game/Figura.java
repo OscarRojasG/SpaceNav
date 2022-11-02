@@ -5,6 +5,9 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.World;
 
 public abstract class Figura {
 	private Vector2 posicion;
@@ -14,7 +17,11 @@ public abstract class Figura {
 	private float ancho;
 	private float alto;
 	private float angulo;
+
+	Body cuerpo;
+	BodyDef body_def = null;
 	
+
 	public Figura(float x, float y, float ancho, float alto) {
 		this.posicion = new Vector2(x,y);
 		this.velocidad = new Vector2(0.f,0.f);
@@ -183,6 +190,40 @@ public abstract class Figura {
     	return new Rectangle(this.posicion.x, this.posicion.y,
     			this.ancho, this.alto);
     }
+
+	public Body getCuerpo() {
+		return cuerpo;
+	}
+
+	public void setCuerpo(Body cuerpo) {
+		this.cuerpo = cuerpo;
+		cuerpo.setUserData(this);
+	}
+
+	public void crearCuerpo(World w) {
+		try {
+			w.createBody(this.body_def);
+		} catch(NullPointerException e) {
+			throw new RuntimeException("Cuerpo sin definir");
+		}
+	}
+
+	public void update() {
+
+	}
+
+
+    public void setBodyDef(BodyDef bodyDef) {
+    	this.body_def = bodyDef;
+		
+	}
+
+    public BodyDef getBodyDef() {
+    	return this.body_def;
+		
+	}
+
+		
 
 }
 
