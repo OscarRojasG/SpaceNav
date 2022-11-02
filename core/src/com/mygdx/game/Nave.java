@@ -5,10 +5,13 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 
 public class Nave extends FiguraForma implements Movil{
-	private static final int anchoNave = 40;
-	private static final int altoNave = 50;
+	private static final int anchoNave = 20;
+	private static final int altoNave = 30;
 
 	private static final Sound sonidoHerido = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
 	private static final Sound sonidoDisparo = Gdx.audio.newSound(Gdx.files.internal("disparoNave.mp3"));
@@ -19,6 +22,9 @@ public class Nave extends FiguraForma implements Movil{
 	private final float tiempoHeridoMax = 0.8f;
 
 	private final float accel = 6f;
+	private final float ACELERACION = 300.f;
+
+
 	
 	private final float anchoBala = 10;
 	private final float altoBala = 30;
@@ -26,14 +32,14 @@ public class Nave extends FiguraForma implements Movil{
 	private final float anchoBalaSupernave = 10;
 	private final float altoBalaSupernave = 40;
 
-	int x1 = -20; int y1 = -20;
-	int x2 = 0; int y2 = 40;
-	int x3 = 20; int y3 = -20;
-	int x4 = 0; int y4 = -10;
+	int x1 = -20; int y1 = -30;
+	int x2 = 0; int y2 = 30;
+	int x3 = 20; int y3 = -30;
+	int x4 = 0; int y4 = -20;
 
-	int fx1 = -10; int fy1 = -15;
-	int fx2 = 10; int fy2 = -15;
-	int fx3 = 0; int fy3 = -30;
+	int fx1 = -10; int fy1 = -25;
+	int fx2 = 10; int fy2 = -25;
+	int fx3 = 0; int fy3 = -40;
 
 	
     private int vidas = 3;
@@ -44,9 +50,14 @@ public class Nave extends FiguraForma implements Movil{
     
     public Nave(int x, int y) {
     	super(x, y, anchoNave, altoNave);
+    	BodyDef bd = new BodyDef();
+    	bd.type = BodyDef.BodyType.DynamicBody;
+    	bd.position.set(x, y);
+    	this.setBodyDef(bd);
     }
     
-    @Override
+
+	@Override
     public void actualizar() {
     	if (estaHerida()) {
     		tiempoHerido -= Gdx.graphics.getDeltaTime();
@@ -54,14 +65,16 @@ public class Nave extends FiguraForma implements Movil{
     		return;
     	}
     	
-        setVelocidadX((float)Math.sin(Math.toRadians(this.getRotacion()))* velNave);
-        setVelocidadY((float)Math.cos(Math.toRadians(this.getRotacion()))* velNave);
         
     	if (esSupernave())
     		tiempoSupernave -= Gdx.graphics.getDeltaTime();
     	
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-        	if (this.aceleracion < 1) this.aceleracion += .16f;
+//        	if (this.aceleracion < 1) this.aceleracion += .16f; float fx = this.getCuerpo().getMass() * ACELERACION * (float)Math.sin(getCuerpo().getAngle());
+        	float fx = this.getCuerpo().getMass() * ACELERACION * (float)-Math.sin(getCuerpo().getAngle());
+        	float fy = this.getCuerpo().getMass() * ACELERACION * (float)Math.cos(getCuerpo().getAngle());
+        	this.getCuerpo().applyForceToCenter(fx, fy, true);
+
 
         }
         else {
@@ -70,12 +83,15 @@ public class Nave extends FiguraForma implements Movil{
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            float a = getRotacion() - 6f;
-            this.setRotacion(a);
+        	System.out.println("Se aplica torque.");
+        	System.out.println(getCuerpo().getType());
+        	System.out.println("Masa: " + getCuerpo().getMass() + "kg");
+            this.getCuerpo().applyAngularImpulse(-50.f, true);
         }
+
+        System.out.println("Body torque " +  Math.toDegrees((getCuerpo().getAngle())));
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            float a = getRotacion() + 6f;
-            this.setRotacion(a);
+            this.getCuerpo().applyAngularImpulse(50.f, true);
         }
 
         
@@ -88,13 +104,12 @@ public class Nave extends FiguraForma implements Movil{
     
     @Override
 	public void dibujar(ShapeRenderer sr) {
-		 Gdx.gl.glLineWidth(2.f);
 		 sr.begin(ShapeType.Line);
 		 sr.setColor(0xff, 0xff, 0xff, 1);
 
 		 sr.identity();
-		 sr.translate(getX() + getAncho()/2, getY() + getAlto()/2, 0);
-		 sr.rotate(0.0f, 0.0f, 1.0f, -getRotacion());
+		 sr.translate(getX(), getY(), 0);
+		 sr.rotate(0.0f, 0.0f, 1.0f, (float)Math.toDegrees(getCuerpo().getAngle()));
 		 
 		 sr.line(x1,y1,x2,y2);
 		 sr.line(x2, y2, x3, y3);
@@ -106,8 +121,8 @@ public class Nave extends FiguraForma implements Movil{
 
 		if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
 			sr.begin(ShapeType.Filled);
-			sr.translate(getX() + getAncho()/2, getY() + getAlto()/2, 0);
-			sr.rotate(0.0f, 0.0f, 1.0f, -getRotacion());
+			sr.translate(getX(), getY(), 0);
+			sr.rotate(0.0f, 0.0f, 1.0f, (float)Math.toDegrees(getCuerpo().getAngle()));
 			sr.triangle(fx1, fy1, fx2, fy2, x4, y4);
 			sr.triangle(fx1, fy1, fx2, fy2, fx3, fy3);
 			sr.end();
@@ -118,36 +133,38 @@ public class Nave extends FiguraForma implements Movil{
      * @return float: Posición de la Nave en el eje x.
      * */
     private float calcularPosicionX() {
-    	float x = getX() + getVelocidadX() * aceleracion * accel * Gdx.graphics.getDeltaTime();
-    	
-        if (x + getAncho() > Gdx.graphics.getWidth()) {
-        	x = Gdx.graphics.getWidth() - getAncho();
-        	setVelocidadX(0);
-        }
-        else if (x < 0) {
-        	x = 0;
-        	setVelocidadX(0);
-        }
+//    	float x = getX() + getVelocidadX() * aceleracion * accel * Gdx.graphics.getDeltaTime();
+//    	
+//        if (x + getAncho() > Gdx.graphics.getWidth()) {
+//        	x = Gdx.graphics.getWidth() - getAncho();
+//        	setVelocidadX(0);
+//        }
+//        else if (x < 0) {
+//        	x = 0;
+//        	setVelocidadX(0);
+//        }
         
-        return x;
+//        return x;
+    	return this.getCuerpo().getPosition().x;
     }
     
     /** Calcula la nueva posición en el eje y.
      * @return float: Posición de la Nave en el eje y.
      * */
     private float calcularPosicionY() {
-    	float y = getY() + getVelocidadY() * aceleracion * accel *  Gdx.graphics.getDeltaTime();
-    	
-        if (y + getAlto() > Gdx.graphics.getHeight()) {
-        	y = Gdx.graphics.getHeight() - getAlto();
-        	setVelocidadY(0);
-        }
-        else if (y < 0) {
-        	y = 0;
-        	setVelocidadY(0);
-        }
-        
-        return y;
+//    	float y = getY() + getVelocidadY() * aceleracion * accel *  Gdx.graphics.getDeltaTime();
+//    	
+//        if (y + getAlto() > Gdx.graphics.getHeight()) {
+//        	y = Gdx.graphics.getHeight() - getAlto();
+//        	setVelocidadY(0);
+//        }
+//        else if (y < 0) {
+//        	y = 0;
+//        	setVelocidadY(0);
+//        }
+//        
+//        return y;
+    	return this.getCuerpo().getPosition().y;
     }
     
     /** Genera una animación donde el Sprite Nave simula temblar en pantalla. */
