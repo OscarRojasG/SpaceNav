@@ -23,14 +23,8 @@ public abstract class Figura {
 	
 
 	public Figura(float x, float y, float ancho, float alto) {
-		this.posicion = new Vector2(x,y);
-		this.velocidad = new Vector2(0.f,0.f);
-		this.centroRotacion = new Vector2(0.f,0.f);
-
 		this.ancho = ancho;
 		this.alto = alto;
-
-		this.angulo = 0;
 	}
 	
 	/** Verifica si Figura ha salido de la pantalla
