@@ -33,6 +33,8 @@ public class PantallaJuego implements Screen {
 	private ColeccionConsumibles consumibles;
 	private ColeccionEnemigos enemigos;
 
+	private b2Modelo modelo;
+
 	public PantallaJuego(SpaceNav game) {
 		this(game, 1, 0);
 	}
@@ -41,22 +43,26 @@ public class PantallaJuego implements Screen {
 		this.game = game;
 		this.ronda = ronda;
 		this.puntaje = puntaje;
-		
+
+		this.shapeRenderer = game.getShapeRenderer();
+		this.batch = game.getBatch();
+
+		this.modelo = new b2Modelo();
+		this.shapeRenderer.setProjectionMatrix(modelo.getProjection());
 		this.font = game.getFont();
 		this.batch = game.getBatch();
-		this.shapeRenderer = game.getShapeRenderer();
 		this.game = game;
 		this.font = game.getFont();
-		this.batch = game.getBatch();
 		
 //		musica.setLooping(true);
 //		musica.setVolume(0.5f); // Debería ser parte del archivo
 //		musica.play();
 		
-		int navePosX = Gdx.graphics.getWidth()/2 - 50;
-		int navePosY = 30;
+		int navePosX = 0;
+		int navePosY = 0;
 		
 	    nave = new Nave(navePosX, navePosY);
+	    modelo.importarFigura(nave);
                
         asteroides = new ColeccionAsteroides();
         consumibles = new ColeccionConsumibles();
@@ -73,77 +79,81 @@ public class PantallaJuego implements Screen {
 	
 	@Override
 	public void render(float delta) {
+	    nave.actualizar();
+		modelo.actualizar();
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		batch.begin();
-		dibujarEncabezado();
-		
-		if (nave.estaDestruida()) {
-			finalizarJuego();
-		}
-		
-		if (asteroides.isEmpty() && enemigos.isEmpty()) {
-			avanzarRonda();
-		}
-		
-	    if (!nave.estaHerida()) {
-	    	Iterator<Movil> iteratorAsteroides = asteroides.getObjetos();
-	    	while(iteratorAsteroides.hasNext()) {
-	    		Asteroide asteroide = (Asteroide) iteratorAsteroides.next();
-	    		
-	    		if(balas.verificarColisiones(asteroide)) {
-	    			iteratorAsteroides.remove();
-	    			asteroides.eliminar(asteroide);
-	    			asteroide.explotar();
-	    			
-	    			consumibles.generar(asteroide.getX(), asteroide.getY(), 
-	    					asteroide.getVelocidadX(), asteroide.getVelocidadY());
-
-	    			agregarPuntaje(asteroide.getPuntaje());
-	    		}
-	    	}
-	    	
-	    	Iterator<Movil> iteratorEnemigos = enemigos.getObjetos();
-	    	while(iteratorEnemigos.hasNext()) {
-	    		Enemigo enemigo = (Enemigo) iteratorEnemigos.next();
-	    		
-	    		if(balas.verificarColisiones(enemigo)) {
-	    			iteratorEnemigos.remove();
-	    			enemigos.eliminar(enemigo);
-	    			enemigo.explotar();
-	    			
-	    			agregarPuntaje(enemigo.getPuntaje());
-	    		}
-	    	}
-	    	
-	    	if (asteroides.getCantidad() < 10 && enemigos.isEmpty())
-				enemigos.generar();
-	    	
-	    	consumibles.verificarColisiones(nave);
-		    asteroides.verificarColisiones(nave);
-		    enemigos.verificarColisiones(nave);
-	    	asteroides.verificarColisiones();
-	    	enemigos.verificarColisiones();
-	    	
-	    	if (nave.disparar()) {
-	    		Bala bala = nave.generarBala();
-	    		balas.agregar(bala);
-	    	}
-	    	
-		    asteroides.actualizar();
-		    enemigos.actualizar();
-		    consumibles.actualizar();
-		    balas.actualizar();
-	    }
-	    
-	    nave.actualizar();
-	    
-	    asteroides.dibujar(batch);
-	    enemigos.dibujar(batch);
-	    consumibles.dibujar(batch);
-	    batch.end();
+		modelo.render();
 	    nave.dibujar(shapeRenderer);
-	    balas.dibujar(shapeRenderer);
+
+//		batch.begin();
+//		dibujarEncabezado();
+//		
+//		if (nave.estaDestruida()) {
+//			finalizarJuego();
+//		}
+//		
+//		if (asteroides.isEmpty() && enemigos.isEmpty()) {
+//			avanzarRonda();
+//		}
+//		
+//	    if (!nave.estaHerida()) {
+//	    	Iterator<Movil> iteratorAsteroides = asteroides.getObjetos();
+//	    	while(iteratorAsteroides.hasNext()) {
+//	    		Asteroide asteroide = (Asteroide) iteratorAsteroides.next();
+//	    		
+//	    		if(balas.verificarColisiones(asteroide)) {
+//	    			iteratorAsteroides.remove();
+//	    			asteroides.eliminar(asteroide);
+//	    			asteroide.explotar();
+//	    			
+//	    			consumibles.generar(asteroide.getX(), asteroide.getY(), 
+//	    					asteroide.getVelocidadX(), asteroide.getVelocidadY());
+//
+//	    			agregarPuntaje(asteroide.getPuntaje());
+//	    		}
+//	    	}
+//	    	
+//	    	Iterator<Movil> iteratorEnemigos = enemigos.getObjetos();
+//	    	while(iteratorEnemigos.hasNext()) {
+//	    		Enemigo enemigo = (Enemigo) iteratorEnemigos.next();
+//	    		
+//	    		if(balas.verificarColisiones(enemigo)) {
+//	    			iteratorEnemigos.remove();
+//	    			enemigos.eliminar(enemigo);
+//	    			enemigo.explotar();
+//	    			
+//	    			agregarPuntaje(enemigo.getPuntaje());
+//	    		}
+//	    	}
+//	    	
+//	    	if (asteroides.getCantidad() < 10 && enemigos.isEmpty())
+//				enemigos.generar();
+//	    	
+//	    	consumibles.verificarColisiones(nave);
+//		    asteroides.verificarColisiones(nave);
+//		    enemigos.verificarColisiones(nave);
+//	    	asteroides.verificarColisiones();
+//	    	enemigos.verificarColisiones();
+//	    	
+//	    	if (nave.disparar()) {
+//	    		Bala bala = nave.generarBala();
+//	    		balas.agregar(bala);
+//	    	}
+//	    	
+//		    asteroides.actualizar();
+//		    enemigos.actualizar();
+//		    consumibles.actualizar();
+//		    balas.actualizar();
+//	    }
+//	    
+//	    
+//	    asteroides.dibujar(batch);
+//	    enemigos.dibujar(batch);
+//	    consumibles.dibujar(batch);
+//	    batch.end();
+//	    nave.dibujar(shapeRenderer);
+//	    balas.dibujar(shapeRenderer);
 	}
 	
 	@Override
