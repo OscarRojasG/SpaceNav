@@ -47,7 +47,7 @@ public class PantallaJuego implements Screen {
 		this.shapeRenderer = game.getShapeRenderer();
 		this.batch = game.getBatch();
 
-		this.modelo = new b2Modelo();
+		this.modelo =  b2Modelo.getModelo();
 		this.shapeRenderer.setProjectionMatrix(modelo.getProjection());
 		this.font = game.getFont();
 		this.batch = game.getBatch();
@@ -64,17 +64,17 @@ public class PantallaJuego implements Screen {
 	    nave = new Nave(navePosX, navePosY);
 	    modelo.importarFigura(nave);
                
-        asteroides = new ColeccionAsteroides();
-        consumibles = new ColeccionConsumibles();
-        enemigos = new ColeccionEnemigos();
-        balas = new ColeccionBalas();
+        // asteroides = new ColeccionAsteroides();
+        // consumibles = new ColeccionConsumibles();
+        // enemigos = new ColeccionEnemigos();
+        // balas = new ColeccionBalas();
         
         // Iniciar ronda
 
 		int cantAsteroides = 10 + (ronda - 1) * 2;
 		int velAsteroides = 120 + (ronda - 1) * 20;
 
-		asteroides.crear(cantAsteroides, velAsteroides, ronda);
+		// asteroides.crear(cantAsteroides, velAsteroides, ronda);
 	}
 	
 	@Override
