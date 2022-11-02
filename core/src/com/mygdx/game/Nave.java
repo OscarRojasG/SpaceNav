@@ -88,7 +88,7 @@ public class Nave extends FiguraForma implements Movil{
 		 sr.setColor(0xff, 0xff, 0xff, 1);
 
 		 sr.identity();
-		 sr.translate(getX(), getY(), 0);
+		 sr.translate(getXEscala(), getYEscala(), 0);
 		 sr.rotate(0.0f, 0.0f, 1.0f, (float)Math.toDegrees(getCuerpo().getAngle()));
 		 
 		 sr.line(x1,y1,x2,y2);
@@ -101,7 +101,7 @@ public class Nave extends FiguraForma implements Movil{
 
 		if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
 			sr.begin(ShapeType.Filled);
-			sr.translate(getX(), getY(), 0);
+			sr.translate(getXEscala(), getYEscala(), 0);
 			sr.rotate(0.0f, 0.0f, 1.0f, (float)Math.toDegrees(getCuerpo().getAngle()));
 			sr.triangle(fx1, fy1, fx2, fy2, x4, y4);
 			sr.triangle(fx1, fy1, fx2, fy2, fx3, fy3);
@@ -113,7 +113,7 @@ public class Nave extends FiguraForma implements Movil{
      * @return float: Posición de la Nave en el eje x.
      * */
     private float calcularPosicionX() {
-//    	float x = getX() + getVelocidadX() * aceleracion * accel * Gdx.graphics.getDeltaTime();
+//    	float x = getXEscala() + getVelocidadX() * aceleracion * accel * Gdx.graphics.getDeltaTime();
 //    	
 //        if (x + getAncho() > Gdx.graphics.getWidth()) {
 //        	x = Gdx.graphics.getWidth() - getAncho();
@@ -132,7 +132,7 @@ public class Nave extends FiguraForma implements Movil{
      * @return float: Posición de la Nave en el eje y.
      * */
     private float calcularPosicionY() {
-//    	float y = getY() + getVelocidadY() * aceleracion * accel *  Gdx.graphics.getDeltaTime();
+//    	float y = getYEscala() + getVelocidadY() * aceleracion * accel *  Gdx.graphics.getDeltaTime();
 //    	
 //        if (y + getAlto() > Gdx.graphics.getHeight()) {
 //        	y = Gdx.graphics.getHeight() - getAlto();

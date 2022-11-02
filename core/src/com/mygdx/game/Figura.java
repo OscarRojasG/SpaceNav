@@ -147,13 +147,27 @@ public abstract class Figura {
 	 * @return float: Posición de la Figura respecto al eje x.
 	 * */
 	public float getX() {
-		return this.cuerpo.getPosition().x * b2Modelo.getScale();
+		return this.cuerpo.getPosition().x;
 	}
 	
 	/** 
 	 * @return float: Posición de la Figura respecto al eje y.
 	 * */
 	public float getY() {
+		return this.cuerpo.getPosition().y;
+	}
+
+    /** 
+	 * @return float: Posición de la Figura respecto al eje x.
+	 * */
+	public float getXEscala() {
+		return this.cuerpo.getPosition().x * b2Modelo.getScale();
+	}
+	
+	/** 
+	 * @return float: Posición de la Figura respecto al eje y.
+	 * */
+	public float getYEscala() {
 		return this.cuerpo.getPosition().y * b2Modelo.getScale();
 	}
 	
