@@ -83,13 +83,6 @@ public class Nave extends FiguraForma implements Movil{
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             this.getCuerpo().applyAngularImpulse(-ROTACION, true);
         }
-
-        
-        float x = calcularPosicionX();
-        float y = calcularPosicionY(); 
-
-
-        setPosition(x, y);
     }
     
     @Override

@@ -124,28 +124,28 @@ public abstract class Figura {
 	 * @return float: Posición de la Figura respecto al eje x.
 	 * */
 	public float getX() {
-		return this.posicion.x;
+		return this.cuerpo.getPosition().x * b2Modelo.getScale();
 	}
 	
 	/** 
 	 * @return float: Posición de la Figura respecto al eje y.
 	 * */
 	public float getY() {
-		return this.posicion.y;
+		return this.cuerpo.getPosition().y * b2Modelo.getScale();
 	}
 	
 	/** 
 	 * @return float: Velocidad de la Figura en el eje x.
 	 * */
 	public float getVelocidadX() {
-		return this.velocidad.x;
+		return this.cuerpo.getLinearVelocity().x;
 	}
 	
 	/** 
 	 * @return float: Velocidad de la Figura en el eje y.
 	 * */
 	public float getVelocidadY() {
-		return this.velocidad.y;
+		return this.cuerpo.getLinearVelocity().y;
 	}
 	
 	/** 
