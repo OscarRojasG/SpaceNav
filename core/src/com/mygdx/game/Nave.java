@@ -5,13 +5,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 
 public class Nave extends FiguraForma implements Movil{
-	private static final int anchoNave = 20;
-	private static final int altoNave = 30;
+	private static final int anchoNave = 1;
+	private static final int altoNave = 2;
 
 	private static final Sound sonidoHerido = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
 	private static final Sound sonidoDisparo = Gdx.audio.newSound(Gdx.files.internal("disparoNave.mp3"));
@@ -86,12 +84,12 @@ public class Nave extends FiguraForma implements Movil{
         	System.out.println("Se aplica torque.");
         	System.out.println(getCuerpo().getType());
         	System.out.println("Masa: " + getCuerpo().getMass() + "kg");
-            this.getCuerpo().applyAngularImpulse(-50.f, true);
+            this.getCuerpo().applyAngularImpulse(50.f, true);
         }
 
         System.out.println("Body torque " +  Math.toDegrees((getCuerpo().getAngle())));
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            this.getCuerpo().applyAngularImpulse(50.f, true);
+            this.getCuerpo().applyAngularImpulse(-50.f, true);
         }
 
         
