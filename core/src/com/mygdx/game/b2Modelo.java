@@ -79,4 +79,22 @@ public class b2Modelo {
         return SCALE;
     }
 
+    public Body crearCuerpo(Figura f)  {
+		Body bodyd = mundo.createBody(f.getBodyDef());
+
+		bodyd.setFixedRotation(false);
+		bodyd.setLinearDamping(1.f);
+		bodyd.setAngularDamping(9.f);
+
+		f.setCuerpo(bodyd);
+ 
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(f.getAncho(), f.getAlto());
+ 
+		Fixture fixture = bodyd.createFixture(shape, 5.f);
+
+		shape.dispose();
+        return bodyd;
+    }
+
 }

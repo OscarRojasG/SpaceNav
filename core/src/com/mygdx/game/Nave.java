@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 public class Nave extends FiguraForma implements Movil{
 	private static final float anchoNave = 1.f;
@@ -26,8 +27,8 @@ public class Nave extends FiguraForma implements Movil{
 
 
 	
-	private final float anchoBala = 10;
-	private final float altoBala = 30;
+	private final float anchoBala = 0.1f;
+	private final float altoBala = 0.1f;
 	private final float velDisparoSupernave = 8.5f;
 	private final float anchoBalaSupernave = 10;
 	private final float altoBalaSupernave = 40;
@@ -49,11 +50,7 @@ public class Nave extends FiguraForma implements Movil{
     private float tiempoUltimoDisparo;
     
     public Nave(int x, int y) {
-    	super(x, y, anchoNave, altoNave);
-    	BodyDef bd = new BodyDef();
-    	bd.type = BodyDef.BodyType.DynamicBody;
-    	bd.position.set(x, y);
-    	this.setBodyDef(bd);
+    	super(x, y, anchoNave, altoNave, BodyType.DynamicBody);
     }
     
 
@@ -177,25 +174,25 @@ public class Nave extends FiguraForma implements Movil{
     	sonidoDisparo.play(0.01f);
     	
     	// Ubicación de la bala en el ángulo 0
-        float x = getX() + getAncho()/2 - anchoBala/2;
-        float y = getY() + getAlto();
+        float x = getX() - getAlto() * (float)Math.sin(this.getAngulo()); 
+        float y = getY() + getAlto() * (float)Math.cos(this.getAngulo()); 
         
         // Ubicación del centro de rotación respecto a la posición de la bala
         float centroX = anchoBala/2;
         float centroY = -altoNave/2;
         
         // Velocidad de la bala
-        float velBalaX = getVelocidadX() * accel *  1.5f * Gdx.graphics.getDeltaTime();
-        float velBalaY = getVelocidadY() * accel *  1.5f * Gdx.graphics.getDeltaTime();
+        float velBalaX = getVelocidadX() * 1.5f * Gdx.graphics.getDeltaTime();
+        float velBalaY = getVelocidadY() * 1.5f * Gdx.graphics.getDeltaTime();
 
     	if (esSupernave())
     		return new Bala(x, y, anchoBalaSupernave, altoBalaSupernave,
                         velBalaX * velNave, velBalaY * velNave,
-                        -getRotacion(), centroX, centroY);
+                        getAngulo(), centroX, centroY);
     	
     	return new Bala(x, y, anchoBala, altoBala,
                 velBalaX * velNave * 1.5f, velBalaY * velNave * 1.5f,
-                -getRotacion(), centroX, centroY);
+                getAngulo(), centroX, centroY);
     }
     
     /** Cambia el tiempo a permanecer herido de la nave, quita vida al herirse y reproduce el sonido de Nave herida. */

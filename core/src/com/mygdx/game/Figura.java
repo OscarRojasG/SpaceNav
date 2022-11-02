@@ -8,23 +8,34 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 public abstract class Figura {
 	private Vector2 posicion;
 	private Vector2 velocidad;
-	private Vector2 centroRotacion;
+	private Vector2 origen;
 
 	private float ancho;
 	private float alto;
 	private float angulo;
 
-	Body cuerpo;
-	BodyDef body_def = null;
-	
+	private Body cuerpo = null;
+	private BodyDef body_def = null;
 
-	public Figura(float x, float y, float ancho, float alto) {
+	public Figura(float x, float y, float ancho, float alto, BodyType type) {
 		this.ancho = ancho;
 		this.alto = alto;
+        this.origen = new Vector2(0, 0);
+
+    	BodyDef bd = new BodyDef();
+    	bd.type = type;
+    	bd.position.set(x, y);
+    	this.setBodyDef(bd);
+        setCuerpo(b2Modelo.getModelo().crearCuerpo(this));
+	}
+
+	public Figura(float x, float y, float ancho, float alto) {
+        this(x,y, ancho, alto, BodyType.StaticBody);
 	}
 	
 	/** Verifica si Figura ha salido de la pantalla
@@ -55,14 +66,26 @@ public abstract class Figura {
 	 * @return Polygon
 	 */
 	public Polygon getPoligono() {
-		Polygon polygon = new Polygon(new float[]{0,0,ancho,0,ancho,alto,0,alto});
-		polygon.setOrigin(centroRotacion.x, centroRotacion.y);
-		polygon.setRotation(angulo);
-		polygon.setPosition(posicion.x, posicion.y);
+		Polygon polygon = new Polygon(new float[]{0,0,getAnchoEscala(),0,getAnchoEscala(),getAltoEscala(),0,getAltoEscala()});
+		polygon.setOrigin(getOrigenX(), getOrigenY());
+		polygon.setRotation(getAngulo());
+		polygon.setPosition(getX(), getY());
 		return polygon;
 	}
 	
-	/** Sobrescribe la posición de la Figura por los parametros recibidos.
+	public float getAnchoEscala() {
+        return getAncho() * b2Modelo.getScale();
+    }
+
+	public float getAltoEscala() {
+        return getAlto() * b2Modelo.getScale();
+    }
+
+    public float getAngulo() {
+        return this.cuerpo.getAngle();
+    }
+
+    /** Sobrescribe la posición de la Figura por los parametros recibidos.
 	 * @param float x: Nueva posición para la Figura respecto al eje x.
 	 * @param float y: Nueva posición para la Figura respecto al eje y.
 	 * */
@@ -115,9 +138,9 @@ public abstract class Figura {
 		this.angulo = angulo;
 	}
     
-    public void setCentroRotacion(float x, float y) {
-    	this.centroRotacion.x = x;
-    	this.centroRotacion.y = y;
+    public void setOrigen(float x, float y) {
+    	this.origen.x = x;
+    	this.origen.y = y;
     }
 	
     /** 
@@ -169,12 +192,12 @@ public abstract class Figura {
 		return this.angulo;
 	}
 	
-	public float getCentroRotacionX() {
-		return this.centroRotacion.x;
+	public float getOrigenX() {
+		return this.origen.x;
 	}
 	
-	public float getCentroRotacionY() {
-		return this.centroRotacion.y;
+	public float getOrigenY() {
+		return this.origen.y;
 	}
 	
 	/** 
@@ -216,6 +239,9 @@ public abstract class Figura {
     	return this.body_def;
 		
 	}
+
+    public void init(BodyType type) {
+    }
 
 		
 

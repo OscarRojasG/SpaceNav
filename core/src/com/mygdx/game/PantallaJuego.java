@@ -62,12 +62,11 @@ public class PantallaJuego implements Screen {
 		int navePosY = 0;
 		
 	    nave = new Nave(navePosX, navePosY);
-	    modelo.importarFigura(nave);
                
         // asteroides = new ColeccionAsteroides();
         // consumibles = new ColeccionConsumibles();
         // enemigos = new ColeccionEnemigos();
-        // balas = new ColeccionBalas();
+        balas = new ColeccionBalas();
         
         // Iniciar ronda
 
@@ -136,10 +135,11 @@ public class PantallaJuego implements Screen {
 //	    	asteroides.verificarColisiones();
 //	    	enemigos.verificarColisiones();
 //	    	
-//	    	if (nave.disparar()) {
-//	    		Bala bala = nave.generarBala();
-//	    		balas.agregar(bala);
-//	    	}
+    	if (nave.disparar()) {
+            System.out.println("pium");
+    		Bala bala = nave.generarBala();
+    		balas.agregar(bala);
+    	}
 //	    	
 //		    asteroides.actualizar();
 //		    enemigos.actualizar();
@@ -153,7 +153,7 @@ public class PantallaJuego implements Screen {
 //	    consumibles.dibujar(batch);
 //	    batch.end();
 //	    nave.dibujar(shapeRenderer);
-//	    balas.dibujar(shapeRenderer);
+    balas.dibujar(shapeRenderer);
 	}
 	
 	@Override
