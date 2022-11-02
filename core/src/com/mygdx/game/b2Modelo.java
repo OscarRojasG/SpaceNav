@@ -20,7 +20,6 @@ public class b2Modelo {
 	private World mundo;
 	private Box2DDebugRenderer debugRenderer;
 	private OrthographicCamera cam;
-	private ArrayList<Fixture> fixtures;
 	private float fraccion_frame = 0;
     private static final int SCALE = 20;
 
