@@ -20,8 +20,9 @@ public class b2Modelo {
 	private World mundo;
 	private Box2DDebugRenderer debugRenderer;
 	private OrthographicCamera cam;
+    private static Matrix4 scaled_camera = null;
 	private float fraccion_frame = 0;
-    private static final int SCALE = 20;
+    private static final float SCALE = 25.f;
 
     private static b2Modelo ref = null;
 
@@ -31,8 +32,8 @@ public class b2Modelo {
     }
 
     private b2Modelo() {
-		mundo = new World(new Vector2(0.f, 0.f), false);
-		debugRenderer = new Box2DDebugRenderer(true,true,true,true,true,true);
+		mundo = new World(new Vector2(0.f, 0.f), false); // mundo sin gravedad
+		debugRenderer = new Box2DDebugRenderer(true,true,true,true,true,true); // camara debug
 		cam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
@@ -47,22 +48,23 @@ public class b2Modelo {
 	}
 
 	public void render() {
-		debugRenderer.render(mundo, cam.combined);
+        if (scaled_camera == null) scaled_camera = cam.combined.scale(SCALE, SCALE, 1.f);
+		debugRenderer.render(mundo, scaled_camera);
 	}
 
 	public void importarFigura(Figura f) {
 		Body bodyd = mundo.createBody(f.getBodyDef());
 
 		bodyd.setFixedRotation(false);
-		bodyd.setLinearDamping(0.f);
-		bodyd.setAngularDamping(10.f);
+		bodyd.setLinearDamping(1.f);
+		bodyd.setAngularDamping(9.f);
 
 		f.setCuerpo(bodyd);
  
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(f.getAncho(), f.getAlto());
  
-		Fixture fixture = bodyd.createFixture(shape, .0001f);
+		Fixture fixture = bodyd.createFixture(shape, 5.f);
 
 		// we no longer use the shape object here so dispose of it.
 		shape.dispose();
@@ -73,7 +75,7 @@ public class b2Modelo {
 		return this.cam.combined;
 	}
 
-	public static int getScale() {
+	public static float getScale() {
         return SCALE;
     }
 
