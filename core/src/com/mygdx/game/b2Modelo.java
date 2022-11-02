@@ -22,6 +22,7 @@ public class b2Modelo {
 	private OrthographicCamera cam;
 	private ArrayList<Fixture> fixtures;
 	private float fraccion_frame = 0;
+    private static final int SCALE = 20;
 
     private static b2Modelo ref = null;
 
@@ -72,5 +73,9 @@ public class b2Modelo {
 	public Matrix4 getProjection() {
 		return this.cam.combined;
 	}
+
+	public static int getScale() {
+        return SCALE;
+    }
 
 }
