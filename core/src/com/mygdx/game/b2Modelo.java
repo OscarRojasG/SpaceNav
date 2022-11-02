@@ -23,7 +23,14 @@ public class b2Modelo {
 	private ArrayList<Fixture> fixtures;
 	private float fraccion_frame = 0;
 
-	public b2Modelo() {
+    private static b2Modelo ref = null;
+
+    public static b2Modelo getModelo() {
+        if (ref == null)  ref = new b2Modelo();
+        return ref;
+    }
+
+    private b2Modelo() {
 		mundo = new World(new Vector2(0.f, 0.f), false);
 		debugRenderer = new Box2DDebugRenderer(true,true,true,true,true,true);
 		cam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -31,8 +38,6 @@ public class b2Modelo {
 
 	public void actualizar() {
 		float dt = Gdx.graphics.getDeltaTime();
-	    // fixed time step
-	    // max frame time to avoid spiral of death (on slow devices)
 	    float frameTime = Math.min(dt, 0.25f);
 	    fraccion_frame += frameTime;
 	    while (fraccion_frame >= 1/60f) {
@@ -46,7 +51,6 @@ public class b2Modelo {
 	}
 
 	public void importarFigura(Figura f) {
-		// add it to the world
 		Body bodyd = mundo.createBody(f.getBodyDef());
 
 		bodyd.setFixedRotation(false);
@@ -58,12 +62,6 @@ public class b2Modelo {
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(f.getAncho(), f.getAlto());
  
-		// set the properties of the object ( shape, weight, restitution(bouncyness)
-//		FixtureDef fixtureDef = new FixtureDef();
-//		fixtureDef.shape = shape;
- 
-		// create the physical object in our body)
-		// without this our body would just be data in the world
 		Fixture fixture = bodyd.createFixture(shape, .0001f);
 
 		// we no longer use the shape object here so dispose of it.
