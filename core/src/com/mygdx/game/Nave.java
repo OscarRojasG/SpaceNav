@@ -8,11 +8,14 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 
 public class Nave extends FiguraForma implements Movil{
-	private static final int anchoNave = 1;
-	private static final int altoNave = 2;
+	private static final float anchoNave = 1.f;
+	private static final float altoNave = 1.5f;
 
 	private static final Sound sonidoHerido = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
 	private static final Sound sonidoDisparo = Gdx.audio.newSound(Gdx.files.internal("disparoNave.mp3"));
+
+    private static final float ROTACION = 15f;
+    private static final float ACELERACION = 40.f;
 	
     private float aceleracion;
 
@@ -20,7 +23,6 @@ public class Nave extends FiguraForma implements Movil{
 	private final float tiempoHeridoMax = 0.8f;
 
 	private final float accel = 6f;
-	private final float ACELERACION = 300.f;
 
 
 	
@@ -68,28 +70,18 @@ public class Nave extends FiguraForma implements Movil{
     		tiempoSupernave -= Gdx.graphics.getDeltaTime();
     	
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-//        	if (this.aceleracion < 1) this.aceleracion += .16f; float fx = this.getCuerpo().getMass() * ACELERACION * (float)Math.sin(getCuerpo().getAngle());
         	float fx = this.getCuerpo().getMass() * ACELERACION * (float)-Math.sin(getCuerpo().getAngle());
         	float fy = this.getCuerpo().getMass() * ACELERACION * (float)Math.cos(getCuerpo().getAngle());
         	this.getCuerpo().applyForceToCenter(fx, fy, true);
 
 
         }
-        else {
-            if (this.aceleracion > 0) this.aceleracion -= .04f;
-            else if (this.aceleracion < 0) this.aceleracion = 0;
-        }
-
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-        	System.out.println("Se aplica torque.");
-        	System.out.println(getCuerpo().getType());
-        	System.out.println("Masa: " + getCuerpo().getMass() + "kg");
-            this.getCuerpo().applyAngularImpulse(50.f, true);
+            this.getCuerpo().applyAngularImpulse(ROTACION, true);
         }
 
-        System.out.println("Body torque " +  Math.toDegrees((getCuerpo().getAngle())));
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            this.getCuerpo().applyAngularImpulse(-50.f, true);
+            this.getCuerpo().applyAngularImpulse(-ROTACION, true);
         }
 
         
@@ -143,7 +135,7 @@ public class Nave extends FiguraForma implements Movil{
 //        }
         
 //        return x;
-    	return this.getCuerpo().getPosition().x;
+    	return this.getCuerpo().getPosition().x * b2Modelo.getScale();
     }
     
     /** Calcula la nueva posición en el eje y.
@@ -162,7 +154,7 @@ public class Nave extends FiguraForma implements Movil{
 //        }
 //        
 //        return y;
-    	return this.getCuerpo().getPosition().y;
+    	return this.getCuerpo().getPosition().y * b2Modelo.getScale();
     }
     
     /** Genera una animación donde el Sprite Nave simula temblar en pantalla. */
@@ -274,11 +266,11 @@ public class Nave extends FiguraForma implements Movil{
 	
 	/** Clase que se encarga de disminuir la velocidad general en 1 si que la Nave quede estatica. */
 	public void desacelerar() {
-		if(getVelocidadX() < 3) {
-			return;
-		}
-		setVelocidadX(getVelocidadX() - 1);
-		setVelocidadY(getVelocidadY() - 1);
+		// if(getVelocidadX() < 3) {
+		// 	return;
+		// }
+		// setVelocidadX(getVelocidadX() - 1);
+		// setVelocidadY(getVelocidadY() - 1);
 	}
 	
 }
