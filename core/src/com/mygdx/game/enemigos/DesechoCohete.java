@@ -9,10 +9,9 @@ public class DesechoCohete extends Enemigo {
 	private static final float ancho = 40;
 	private static final float alto = 60;
 	private static final int puntaje = 20;
-	private static final Texture image = new Texture(Gdx.files.internal("RocketEngine.png"));
 	
 	public DesechoCohete(float x, float y, float velX, float velY) {
-		super(x, y, ancho, alto, velX, velY, puntaje, image);
+		super(x, y, ancho, alto, velX, velY, puntaje);
 	}
 	
 	@Override

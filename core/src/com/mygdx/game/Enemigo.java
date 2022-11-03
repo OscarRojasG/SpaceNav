@@ -3,15 +3,17 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
-public abstract class Enemigo extends FiguraSprite implements Movil {
+public abstract class Enemigo extends FiguraForma implements Movil {
 	private int puntaje;
 //	private final static Sound sonidoExplosion = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
-    public Enemigo(float x, float y, float ancho, float alto, float velX, float velY, int puntaje, Texture tx) {
-    	super(x, y, ancho, alto, tx);
-    	setVelocidadX(velX);
-    	setVelocidadY(velY);
+    public Enemigo(float x, float y, float ancho, float alto, float velX, float velY, int puntaje) {
+    	super(x, y, ancho, alto, BodyType.DynamicBody);
     	setPuntaje(puntaje);
 //    	sonidoExplosion.setVolume(1, 0.5f);
     }

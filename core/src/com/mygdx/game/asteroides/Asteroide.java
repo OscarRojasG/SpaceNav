@@ -2,14 +2,21 @@ package com.mygdx.game.asteroides;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Polygon;
 import com.mygdx.game.Enemigo;
 import com.mygdx.game.Nave;
 
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+
 public class Asteroide extends Enemigo {
 	
-    public Asteroide(float x, float y, int ancho, int alto, float velX, float velY, int puntaje, Texture tx) {
-    	super(x, y, ancho, alto, velX, velY, puntaje, tx);
+    public Asteroide(float x, float y, float ancho, float alto, float velX, float velY, int puntaje, Texture tx) {
+    	super(x, y, ancho, alto, velX, velY, puntaje);
     }
+
     
     @Override
     public void setPosition(float x, float y) {

@@ -13,6 +13,10 @@ public class Util {
 	public static int generateRandomInt(int min, int max) {
 		return r.nextInt(max - min + 1) + min;
 	}
+
+	public static float generateRandomFloat(float min, float max) {
+		return r.nextFloat() % (max - min + 1f) + min;
+	}
 	
 	/**
 	 * @return boolean: true o false de forma aleatoria.
