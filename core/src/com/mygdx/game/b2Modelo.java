@@ -40,8 +40,8 @@ public class b2Modelo {
 	public void actualizar() {
 		float dt = Gdx.graphics.getDeltaTime();
 	    float frameTime = Math.min(dt, 0.25f);
-        System.out.println(1/dt);
-        System.out.println(dt);
+        // System.out.println(1/dt);
+        // System.out.println(dt);
 
 	    fraccion_frame += frameTime;
 	    while (fraccion_frame >= 1/60f) {
@@ -60,8 +60,8 @@ public class b2Modelo {
 		Body bodyd = mundo.createBody(f.getBodyDef());
 
 		bodyd.setFixedRotation(false);
-		bodyd.setLinearDamping(1.f);
-		bodyd.setAngularDamping(9.f);
+		bodyd.setLinearDamping(0.f);
+		bodyd.setAngularDamping(0.f);
 
 		f.setCuerpo(bodyd);
  
