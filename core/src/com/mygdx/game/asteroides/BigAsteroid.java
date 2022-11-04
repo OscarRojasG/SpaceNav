@@ -11,8 +11,11 @@ public class BigAsteroid extends Asteroide{
 	private static final int puntaje = 20;
 	
     public BigAsteroid(float velX, float velY) {
-    	super(Util.generateRandomFloat(0, Gdx.graphics.getWidth() - ancho),
-    		  Util.generateRandomFloat(0, Gdx.graphics.getHeight() - alto), 
+    	super(
+                Util.generateRandomFloat(-Gdx.graphics.getWidth()/(2*b2Modelo.getScale()),
+                    Gdx.graphics.getWidth()/(2*b2Modelo.getScale() - ancho)),
+                  Util.generateRandomFloat(-Gdx.graphics.getHeight()/(2*b2Modelo.getScale()),
+                    Gdx.graphics.getHeight()/(2*b2Modelo.getScale()) - alto), 
     		  ancho, alto, velX, velY, puntaje);
     }
     

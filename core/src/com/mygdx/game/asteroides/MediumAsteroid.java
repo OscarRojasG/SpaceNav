@@ -11,8 +11,11 @@ public class MediumAsteroid extends Asteroide{
 	private static final int puntaje = 10;
 	
     public MediumAsteroid(float velX, float velY) {
-    	super(Util.generateRandomFloat(ancho, Gdx.graphics.getWidth() - ancho),
-    		  Util.generateRandomFloat(alto, Gdx.graphics.getHeight() - alto), 
+    	super(
+                Util.generateRandomFloat(-Gdx.graphics.getWidth()/(2*b2Modelo.getScale()),
+                    Gdx.graphics.getWidth()/(2*b2Modelo.getScale() - ancho)),
+                  Util.generateRandomFloat(-Gdx.graphics.getHeight()/(2*b2Modelo.getScale()),
+                    Gdx.graphics.getHeight()/(2*b2Modelo.getScale()) - alto), 
     		  ancho, alto, velX, velY, puntaje);
     }
     
