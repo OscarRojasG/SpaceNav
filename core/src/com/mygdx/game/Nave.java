@@ -51,6 +51,8 @@ public class Nave extends FiguraForma implements Movil{
     
     public Nave(int x, int y) {
     	super(x, y, anchoNave, altoNave, BodyType.DynamicBody);
+		this.getCuerpo().setLinearDamping(1.f);
+		this.getCuerpo().setAngularDamping(9.f);
     }
     
 

@@ -12,8 +12,11 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 public abstract class Enemigo extends FiguraForma implements Movil {
 	private int puntaje;
 //	private final static Sound sonidoExplosion = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
-    public Enemigo(float x, float y, float ancho, float alto, float velX, float velY, int puntaje) {
+    public Enemigo(float x, float y, float ancho, float alto, float accX, float accY, int puntaje) {
     	super(x, y, ancho, alto, BodyType.DynamicBody);
+        this.getCuerpo().applyForceToCenter(this.getCuerpo().getMass() * accX, this.getCuerpo().getMass()*accY, true);
+        this.getCuerpo().setLinearDamping(0);
+        this.getCuerpo().setAngularDamping(0);
     	setPuntaje(puntaje);
 //    	sonidoExplosion.setVolume(1, 0.5f);
     }
