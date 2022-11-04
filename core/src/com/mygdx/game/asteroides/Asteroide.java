@@ -13,7 +13,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 public class Asteroide extends Enemigo {
 	
-    public Asteroide(float x, float y, float ancho, float alto, float velX, float velY, int puntaje, Texture tx) {
+    public Asteroide(float x, float y, float ancho, float alto, float velX, float velY, int puntaje) {
     	super(x, y, ancho, alto, velX, velY, puntaje);
     }
 

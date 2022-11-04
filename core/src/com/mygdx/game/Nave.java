@@ -15,8 +15,8 @@ public class Nave extends FiguraForma implements Movil{
 	private static final Sound sonidoHerido = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
 	private static final Sound sonidoDisparo = Gdx.audio.newSound(Gdx.files.internal("disparoNave.mp3"));
 
-    private static final float ROTACION = 15f;
-    private static final float ACELERACION = 40.f;
+    private static final float ROTACION = 18f;
+    private static final float ACELERACION = 45.f;
 	
     private float aceleracion;
 
@@ -108,45 +108,7 @@ public class Nave extends FiguraForma implements Movil{
 			sr.end();
 		}
 	}
-    
-    /** Calcula la nueva posición en el eje x.
-     * @return float: Posición de la Nave en el eje x.
-     * */
-    private float calcularPosicionX() {
-//    	float x = getXEscala() + getVelocidadX() * aceleracion * accel * Gdx.graphics.getDeltaTime();
-//    	
-//        if (x + getAncho() > Gdx.graphics.getWidth()) {
-//        	x = Gdx.graphics.getWidth() - getAncho();
-//        	setVelocidadX(0);
-//        }
-//        else if (x < 0) {
-//        	x = 0;
-//        	setVelocidadX(0);
-//        }
-        
-//        return x;
-    	return this.getCuerpo().getPosition().x * b2Modelo.getScale();
-    }
-    
-    /** Calcula la nueva posición en el eje y.
-     * @return float: Posición de la Nave en el eje y.
-     * */
-    private float calcularPosicionY() {
-//    	float y = getYEscala() + getVelocidadY() * aceleracion * accel *  Gdx.graphics.getDeltaTime();
-//    	
-//        if (y + getAlto() > Gdx.graphics.getHeight()) {
-//        	y = Gdx.graphics.getHeight() - getAlto();
-//        	setVelocidadY(0);
-//        }
-//        else if (y < 0) {
-//        	y = 0;
-//        	setVelocidadY(0);
-//        }
-//        
-//        return y;
-    	return this.getCuerpo().getPosition().y * b2Modelo.getScale();
-    }
-    
+
     /** Genera una animación donde el Sprite Nave simula temblar en pantalla. */
     private void animarNaveHerida() {
     	setX(getX() + Util.generateRandomInt(-2, 2));
@@ -164,7 +126,7 @@ public class Nave extends FiguraForma implements Movil{
     		return false;
     	}
     	
-        return Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
+        return Gdx.input.isKeyJustPressed(Input.Keys.Z);
     }
     
     /**

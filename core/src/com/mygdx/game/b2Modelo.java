@@ -40,15 +40,19 @@ public class b2Modelo {
 	public void actualizar() {
 		float dt = Gdx.graphics.getDeltaTime();
 	    float frameTime = Math.min(dt, 0.25f);
+        System.out.println(1/dt);
+        System.out.println(dt);
+
 	    fraccion_frame += frameTime;
 	    while (fraccion_frame >= 1/60f) {
-	        mundo.step(1/60f, 8, 3);
+	        mundo.step(1/60f, 4, 2);
 	        fraccion_frame -= 1/60f;
 	    }
 	}
 
 	public void render() {
         if (scaled_camera == null) scaled_camera = cam.combined.scale(SCALE, SCALE, 1.f);
+		// debugRenderer.render(mundo, scaled_camera);
 		debugRenderer.render(mundo, scaled_camera);
 	}
 

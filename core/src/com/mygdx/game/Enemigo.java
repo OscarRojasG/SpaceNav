@@ -19,7 +19,19 @@ public abstract class Enemigo extends FiguraForma implements Movil {
     }
     
     public abstract void agregarEfecto(Nave nave);
-    
+
+    @Override
+    public void dibujar(ShapeRenderer sr) {
+        Polygon p = this.getPoligono();
+        sr.begin(ShapeType.Line);
+        sr.setColor(0xff, 0xff, 0xff, 1);
+        sr.identity();
+		// sr.translate(getOrigenX(), getOrigenY(), 0);
+        sr.polygon(p.getTransformedVertices());
+
+        sr.end();	
+    }
+
     @Override
     public void actualizar() {
         float x = getX() + getVelocidadX() * Gdx.graphics.getDeltaTime();

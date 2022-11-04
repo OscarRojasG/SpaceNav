@@ -73,11 +73,11 @@ public class ColeccionEnemigos extends ColeccionMovil {
 		agregar(enemigo);
 	}
 	
-	public void dibujar(SpriteBatch batch) {
+	public void dibujar(ShapeRenderer sp) {
 		Iterator<Movil> enemigos = getObjetos(); 
 		while(enemigos.hasNext()) {
 			Enemigo enemigo = (Enemigo) enemigos.next();
-			enemigo.dibujar(batch);
+			enemigo.dibujar(sp);
 		}
 	}
 	

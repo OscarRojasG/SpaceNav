@@ -31,6 +31,7 @@ public class PantallaJuego implements Screen {
 	private ColeccionEnemigos enemigos;
 
 	private b2Modelo modelo;
+    private boolean debugEnabled = true;
 
 	public PantallaJuego(SpaceNav game) {
 		this(game, 1, 0);
@@ -64,13 +65,14 @@ public class PantallaJuego implements Screen {
         // consumibles = new ColeccionConsumibles();
         // enemigos = new ColeccionEnemigos();
         balas = new ColeccionBalas();
+        asteroides = new ColeccionAsteroides();
         
         // Iniciar ronda
 
 		int cantAsteroides = 10 + (ronda - 1) * 2;
 		int velAsteroides = 120 + (ronda - 1) * 20;
 
-		// asteroides.crear(cantAsteroides, velAsteroides, ronda);
+		asteroides.crear(cantAsteroides, velAsteroides, ronda);
 	}
 	
 	@Override
@@ -79,9 +81,25 @@ public class PantallaJuego implements Screen {
 		modelo.actualizar();
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		modelo.render();
+        if (debugEnabled) {
+            modelo.render();
+        }
+
+
+        balas.dibujar(shapeRenderer);
+        asteroides.dibujar(shapeRenderer);
 	    nave.dibujar(shapeRenderer);
 
+
+    	if (nave.disparar()) {
+    		Bala bala = nave.generarBala();
+    		balas.agregar(bala);
+    	}
+
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.TAB))
+            debugEnabled = !debugEnabled;
+        
 //		batch.begin();
 //		dibujarEncabezado();
 //		
@@ -132,11 +150,6 @@ public class PantallaJuego implements Screen {
 //	    	asteroides.verificarColisiones();
 //	    	enemigos.verificarColisiones();
 //	    	
-    	if (nave.disparar()) {
-            System.out.println("pium");
-    		Bala bala = nave.generarBala();
-    		balas.agregar(bala);
-    	}
 //	    	
 //		    asteroides.actualizar();
 //		    enemigos.actualizar();
@@ -145,7 +158,6 @@ public class PantallaJuego implements Screen {
 //	    }
 //	    
 //	    
-//	    asteroides.dibujar(batch);
 //	    enemigos.dibujar(batch);
 //	    consumibles.dibujar(batch);
 //	    batch.end();

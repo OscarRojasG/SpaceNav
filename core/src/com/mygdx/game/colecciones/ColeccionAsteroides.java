@@ -49,12 +49,16 @@ public class ColeccionAsteroides extends ColeccionMovil {
   	    this.agregar(asteroide);
 	}
 	
-	public void dibujar(SpriteBatch batch) { 
+	public void dibujar(ShapeRenderer sp) { 
 		Iterator<Movil> asteroides = getObjetos(); 
-		while(asteroides.hasNext()) {
-			Asteroide asteroide = (Asteroide) asteroides.next();
-			asteroide.dibujar(batch);
-		}
+        Asteroide asteroide;
+        try {
+
+		while((asteroide = (Asteroide)asteroides.next()) != null)
+			asteroide.dibujar(sp);
+        } catch(Exception e) {
+            return;
+        }
 	}
 	
 	public void verificarColisiones() {

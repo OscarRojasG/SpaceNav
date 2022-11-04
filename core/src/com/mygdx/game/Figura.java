@@ -66,10 +66,15 @@ public abstract class Figura {
 	 * @return Polygon
 	 */
 	public Polygon getPoligono() {
-		Polygon polygon = new Polygon(new float[]{0,0,getAnchoEscala(),0,getAnchoEscala(),getAltoEscala(),0,getAltoEscala()});
+		Polygon polygon = new Polygon(new float[]{
+            -getAnchoEscala(),-getAltoEscala(),
+            -getAnchoEscala(),getAltoEscala(),
+            getAnchoEscala(),getAltoEscala(),
+            getAnchoEscala(),-getAltoEscala()});
+
 		polygon.setOrigin(getOrigenX(), getOrigenY());
-		polygon.setRotation(getAngulo());
-		polygon.setPosition(getX(), getY());
+		polygon.setRotation((float)Math.toDegrees(getAngulo()));
+		polygon.setPosition(getXEscala(), getYEscala());
 		return polygon;
 	}
 	
@@ -203,7 +208,7 @@ public abstract class Figura {
 	 * @return float: Angulo de la Figura respecto a si mismo.
 	 * */
 	public float getRotacion() {
-		return this.angulo;
+		return this.getCuerpo().getAngle();
 	}
 	
 	public float getOrigenX() {

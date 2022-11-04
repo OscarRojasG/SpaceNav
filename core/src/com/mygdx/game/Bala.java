@@ -9,20 +9,17 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 public class Bala extends FiguraForma implements Movil {
 	private final static Texture image = new Texture(Gdx.files.internal("Rocket2.png"));
-    private final static float ACELERACION = 20.f;
+    private final static float ACELERACION = 100.f;
 	
     public Bala(float x, float y, float ancho, float alto, float velx, float vely, float angulo,
     		float centroRotacionX, float centroRotacionY) {
     	super(x, y, ancho, alto, BodyType.DynamicBody);
-        this.getCuerpo().setLinearVelocity(30 * (float)-Math.sin(angulo), 30 * (float)Math.cos(angulo));
+        this.getCuerpo().setLinearVelocity(ACELERACION * (float)-Math.sin(angulo),ACELERACION * (float)Math.cos(angulo));
     }
     
 	@Override
 	public void actualizar() {
-        // float x = getX() + getVelocidadX() * Gdx.graphics.getDeltaTime();
-        // float y = getY() + getVelocidadY() * Gdx.graphics.getDeltaTime();
-        // setX(x);
-        // setY(y);
+        System.out.println(this.getCuerpo().getLinearVelocity().dst(0, 0));
 	}
 	
 	/** Envia la imagen que utiliza bala en pantalla
