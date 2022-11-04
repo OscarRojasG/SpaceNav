@@ -13,8 +13,8 @@ import com.mygdx.game.asteroides.MediumAsteroid;
 import com.mygdx.game.asteroides.SmallAsteroid;
 
 public class ColeccionAsteroides extends ColeccionMovil {
-	private final int ASTEROID_MIN_ANGLE = 20;
-	private final int ASTEROID_MAX_ANGLE = 70;
+	private final int ASTEROID_MIN_ANGLE = -90;
+	private final int ASTEROID_MAX_ANGLE = 90;
 	private final int ASTEROID_SIZE_SMALL = 1;
 	private final int ASTEROID_SIZE_MEDIUM = 2;
 	private final int ASTEROID_SIZE_BIG = 3;
@@ -28,8 +28,8 @@ public class ColeccionAsteroides extends ColeccionMovil {
 		float angle = Util.generateRandomInt(ASTEROID_MIN_ANGLE, ASTEROID_MAX_ANGLE);
 		angle = (float)Math.toRadians(angle);
 		
-		float velXAsteroides = velocidad * (float)Math.cos(angle);
-		float velYAsteroides = velocidad * (float)Math.sin(angle);
+		float velXAsteroides = velocidad * (float)Math.sin(angle);
+		float velYAsteroides = velocidad * (float)Math.cos(angle);
 		
 		int size = generarAsteroideAleatorio(ronda);
 		Asteroide asteroide = null;
