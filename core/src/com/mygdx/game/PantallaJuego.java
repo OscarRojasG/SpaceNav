@@ -70,7 +70,7 @@ public class PantallaJuego implements Screen {
         // Iniciar ronda
 
 		int cantAsteroides = 10 + (ronda - 1) * 2;
-		int velAsteroides = 120 + (ronda - 1) * 20;
+		int velAsteroides = 120 + (ronda - 1) * 200;
 
 		asteroides.crear(cantAsteroides, velAsteroides, ronda);
 	}
