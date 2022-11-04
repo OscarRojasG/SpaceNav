@@ -15,8 +15,8 @@ public class Util {
 	}
 
 	public static float generateRandomFloat(float min, float max) {
-		return r.nextFloat() % (max - min + 1f) + min;
-	}
+		return min + (float)Math.random() * (max - min);	
+    }
 	
 	/**
 	 * @return boolean: true o false de forma aleatoria.
