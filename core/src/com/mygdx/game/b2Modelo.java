@@ -45,7 +45,7 @@ public class b2Modelo {
 
 	    fraccion_frame += frameTime;
 	    while (fraccion_frame >= 1/60f) {
-	        mundo.step(1/60f, 4, 2);
+	        mundo.step(1/60f, 8, 4);
 	        fraccion_frame -= 1/60f;
 	    }
 	}

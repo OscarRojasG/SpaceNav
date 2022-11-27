@@ -32,9 +32,11 @@ public class PantallaJuego implements Screen {
 
 	private b2Modelo modelo;
     private boolean debugEnabled = true;
+    private Borde bordes;
 
 	public PantallaJuego(SpaceNav game) {
-		this(game, 1, 0);
+		this(game, 1, 0); // iniciar por defecto en la primera ronda y sin puntaje
+        bordes = new Borde();
 	}
 
 	public PantallaJuego(SpaceNav game, int ronda, int puntaje) {
@@ -70,7 +72,7 @@ public class PantallaJuego implements Screen {
         // Iniciar ronda
 
 		int cantAsteroides = 10 + (ronda - 1) * 2;
-		int velAsteroides = 120 + (ronda - 1) * 200;
+		int velAsteroides = 140 + (ronda - 1) * 20;
 
 		asteroides.crear(cantAsteroides, velAsteroides, ronda);
 	}
@@ -86,8 +88,8 @@ public class PantallaJuego implements Screen {
         }
 
 
-        balas.dibujar(shapeRenderer);
         asteroides.dibujar(shapeRenderer);
+        balas.dibujar(shapeRenderer);
 	    nave.dibujar(shapeRenderer);
 
 
