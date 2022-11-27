@@ -31,13 +31,13 @@ public class Bala extends FiguraForma implements Movil {
 
   @Override
 	public void dibujar(ShapeRenderer sr) {
-	  	 Polygon p = this.getPoligono();
-		 sr.begin(ShapeType.Line);
-		 sr.setColor(0xff, 0xff, 0xff, 1);
-		 sr.identity();
-		 sr.polygon(p.getTransformedVertices());
-
-		 sr.end();	
+        Polygon p = this.getPoligono();
+        sr.begin(ShapeType.Line);
+        sr.setColor(0xff, 0xff, 0xff, 1);
+        sr.identity();
+		// sr.translate(getOrigenX(), getOrigenY(), 0);
+        sr.polygon(p.getTransformedVertices());
+        sr.end();	
 	}
 	
 }
