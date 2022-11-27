@@ -5,12 +5,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 public class Nave extends FiguraForma implements Movil{
-	private static final float anchoNave = 1.f;
-	private static final float altoNave = 1.5f;
+	private static final float anchoNave = .9f;
+	private static final float altoNave = 1.3f;
 
 	private static final Sound sonidoHerido = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
 	private static final Sound sonidoDisparo = Gdx.audio.newSound(Gdx.files.internal("disparoNave.mp3"));
@@ -18,20 +17,14 @@ public class Nave extends FiguraForma implements Movil{
     private static final float ROTACION = 18f;
     private static final float ACELERACION = 45.f;
 	
-    private float aceleracion;
-
 	private final float velNave = 60.f;
 	private final float tiempoHeridoMax = 0.8f;
-
-	private final float accel = 6f;
-
-
 	
 	private final float anchoBala = 0.1f;
 	private final float altoBala = 0.1f;
 	private final float velDisparoSupernave = 8.5f;
-	private final float anchoBalaSupernave = 10;
-	private final float altoBalaSupernave = 40;
+	private final float anchoBalaSupernave = 0.2f;
+	private final float altoBalaSupernave = 0.2f;
 
 	int x1 = -20; int y1 = -30;
 	int x2 = 0; int y2 = 30;
@@ -63,6 +56,7 @@ public class Nave extends FiguraForma implements Movil{
     		animarNaveHerida();
     		return;
     	}
+
     	
         
     	if (esSupernave())
@@ -109,6 +103,10 @@ public class Nave extends FiguraForma implements Movil{
 			sr.triangle(fx1, fy1, fx2, fy2, fx3, fy3);
 			sr.end();
 		}
+
+        if (this.getXEscala() < -Gdx.graphics.getWidth()/2) {
+            System.out.println("out left\n");
+        }
 	}
 
     /** Genera una animación donde el Sprite Nave simula temblar en pantalla. */
