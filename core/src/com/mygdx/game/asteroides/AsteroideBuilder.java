@@ -34,10 +34,11 @@ public class AsteroideBuilder implements IAsteroideBuilder {
         return new Asteroide(
                 this.posicion.x,
                 this.posicion.y,
+                this.porte, this.porte,
                 this.velocidad.x,
                 this.velocidad.y,
                 this.tipo,
-                1f //tmp
+                1 //tmp
                 );
     }
 }

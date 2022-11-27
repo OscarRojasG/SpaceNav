@@ -2,15 +2,17 @@ package com.mygdx.game.colecciones;
 
 import java.util.Iterator;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Movil;
 import com.mygdx.game.Nave;
 import com.mygdx.game.Util;
+import com.mygdx.game.b2Modelo;
 import com.mygdx.game.asteroides.Asteroide;
-import com.mygdx.game.asteroides.BigAsteroid;
-import com.mygdx.game.asteroides.MediumAsteroid;
-import com.mygdx.game.asteroides.SmallAsteroid;
+import com.mygdx.game.asteroides.AsteroideBuilder;
+import com.mygdx.game.asteroides.AsteroideTipo;
 
 public class ColeccionAsteroides extends ColeccionMovil {
 	private final int ASTEROID_MIN_ANGLE = -90;
@@ -25,27 +27,49 @@ public class ColeccionAsteroides extends ColeccionMovil {
 	}
 	
 	public void crear(int velocidad, int ronda) {
+        AsteroideBuilder builder = new AsteroideBuilder();
+        // Velocidad inicial
 		float angle = Util.generateRandomInt(ASTEROID_MIN_ANGLE, ASTEROID_MAX_ANGLE);
 		angle = (float)Math.toRadians(angle);
-		
-		float velXAsteroides = velocidad * (float)Math.sin(angle);
-		float velYAsteroides = velocidad * (float)Math.cos(angle);
+        Vector2 vel = new Vector2(
+                velocidad * (float)Math.sin(angle), 
+                velocidad * (float)Math.cos(angle)
+                );
+        builder.setVelocidad(vel);
+
+        // Posicion inicial
+        Vector2 pos = new Vector2(
+                Util.generateRandomFloat(
+                    -Gdx.graphics.getWidth()/(2*b2Modelo.getScale()),
+                     Gdx.graphics.getWidth()/(2*b2Modelo.getScale())
+                     ),
+                Util.generateRandomFloat(
+                    -Gdx.graphics.getHeight()/(2*b2Modelo.getScale()),
+                     Gdx.graphics.getHeight()/(2*b2Modelo.getScale())
+                     )
+                );
+
+        builder.setPosicion(pos);
 		
 		int size = generarAsteroideAleatorio(ronda);
 		Asteroide asteroide = null;
 		
 		switch(size) {
 			case ASTEROID_SIZE_SMALL:
-				asteroide = new SmallAsteroid(velXAsteroides - 20, velYAsteroides - 20);
+                builder.setPorte( 20/b2Modelo.getScale());
+                builder.setTipo(AsteroideTipo.CHICO);
 				break;
 			case ASTEROID_SIZE_MEDIUM:
-				asteroide = new MediumAsteroid(velXAsteroides, velYAsteroides);
+                builder.setPorte( 40/b2Modelo.getScale());
+                builder.setTipo(AsteroideTipo.MEDIO);
 				break;
 			case ASTEROID_SIZE_BIG:
-				asteroide = new BigAsteroid(velXAsteroides + 20, velYAsteroides + 20);
+                builder.setPorte( 60/b2Modelo.getScale());
+                builder.setTipo(AsteroideTipo.GRANDE);
 				break;		
 		}
         
+        asteroide = builder.build();
   	    this.agregar(asteroide);
 	}
 	
