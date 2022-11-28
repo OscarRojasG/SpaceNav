@@ -87,11 +87,12 @@ public class PantallaJuego implements Screen {
             modelo.render();
         }
 
-
         asteroides.dibujar(shapeRenderer);
         balas.dibujar(shapeRenderer);
 	    nave.dibujar(shapeRenderer);
-	    if (basura.isEmpty()) {
+	    basura.dibujar(shapeRenderer);
+	    
+	    if (basura.isEmpty()){
 	    	basura.generar(200 + (ronda - 1) * 20, ronda);
 	    }
 	    basura.dibujar(shapeRenderer);
@@ -167,7 +168,7 @@ public class PantallaJuego implements Screen {
 //	    consumibles.dibujar(batch);
 //	    batch.end();
 //	    nave.dibujar(shapeRenderer);
-    balas.dibujar(shapeRenderer);
+        balas.dibujar(shapeRenderer);
 	}
 	
 	@Override
