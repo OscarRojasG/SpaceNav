@@ -90,7 +90,9 @@ public class PantallaJuego implements Screen {
         enemigos.dibujar(shapeRenderer);
         balas.dibujar(shapeRenderer);
 	    nave.dibujar(shapeRenderer);
-	    if (basura.isEmpty()) {
+	    basura.dibujar(shapeRenderer);
+	    
+	    if (basura.isEmpty()){
 	    	basura.generar(200 + (ronda - 1) * 20, ronda);
 	    }
 	    basura.dibujar(shapeRenderer);
@@ -127,6 +129,69 @@ public class PantallaJuego implements Screen {
 	    }
 	    */
 		
+//		batch.begin();
+//		dibujarEncabezado();
+//		
+//		if (nave.estaDestruida()) {
+//			finalizarJuego();
+//		}
+//		
+//		if (asteroides.isEmpty() && enemigos.isEmpty()) {
+//			avanzarRonda();
+//		}
+//		
+//	    if (!nave.estaHerida()) {
+//	    	Iterator<Movil> iteratorAsteroides = asteroides.getObjetos();
+//	    	while(iteratorAsteroides.hasNext()) {
+//	    		Asteroide asteroide = (Asteroide) iteratorAsteroides.next();
+//	    		
+//	    		if(balas.verificarColisiones(asteroide)) {
+//	    			iteratorAsteroides.remove();
+//	    			asteroides.eliminar(asteroide);
+//	    			asteroide.explotar();
+//	    			
+//	    			consumibles.generar(asteroide.getX(), asteroide.getY(), 
+//	    					asteroide.getVelocidadX(), asteroide.getVelocidadY());
+//
+//	    			agregarPuntaje(asteroide.getPuntaje());
+//	    		}
+//	    	}
+//	    	
+//	    	Iterator<Movil> iteratorEnemigos = enemigos.getObjetos();
+//	    	while(iteratorEnemigos.hasNext()) {
+//	    		Enemigo enemigo = (Enemigo) iteratorEnemigos.next();
+//	    		
+//	    		if(balas.verificarColisiones(enemigo)) {
+//	    			iteratorEnemigos.remove();
+//	    			enemigos.eliminar(enemigo);
+//	    			enemigo.explotar();
+//	    			
+//	    			agregarPuntaje(enemigo.getPuntaje());
+//	    		}
+//	    	}
+//	    	
+//	    	if (asteroides.getCantidad() < 10 && enemigos.isEmpty())
+//				enemigos.generar();
+//	    	
+//	    	consumibles.verificarColisiones(nave);
+//		    asteroides.verificarColisiones(nave);
+//		    enemigos.verificarColisiones(nave);
+//	    	asteroides.verificarColisiones();
+//	    	enemigos.verificarColisiones();
+//	    	
+//	    	
+//		    asteroides.actualizar();
+//		    enemigos.actualizar();
+//		    consumibles.actualizar();
+//		    balas.actualizar();
+//	    }
+//	    
+//	    
+//	    enemigos.dibujar(batch);
+//	    consumibles.dibujar(batch);
+//	    batch.end();
+//	    nave.dibujar(shapeRenderer);
+        balas.dibujar(shapeRenderer);
 	}
 	
 	@Override

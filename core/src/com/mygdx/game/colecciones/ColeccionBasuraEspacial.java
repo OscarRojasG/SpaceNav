@@ -35,16 +35,16 @@ public class ColeccionBasuraEspacial extends ColeccionMovil {
 		int p = Util.generateRandomInt(1, 20);
 		if(p != 1) return;
 		
-		System.out.println("Creo Basura");
+		System.out.println("Creo Basura Nueva");
 		BasuraBuilder builder = new BasuraBuilder();
 		
 		int n = generarEnemigoAleatorio();
 		
 		int option = Util.generateRandomBetween(SALIDA_HORIZONTAL, SALIDA_VERTICAL);
-		int x;
-		int y;
-		int velX = velocidad;
-		int velY = velocidad;
+		float x;
+		float y;
+		float velX = velocidad;
+		float velY = velocidad;
 		
 		if (option == SALIDA_HORIZONTAL) {
 			// Se decide desde que lado aparece
@@ -53,7 +53,7 @@ public class ColeccionBasuraEspacial extends ColeccionMovil {
 			
 			// Se decide en que parte del lado
 			y = Util.generateRandomInt(INICIO_SALIDA, FINAL_SALIDA_VERTICAL);
-			velY = 0;	
+			velY = 0;
 		}
 		else {
 			// Se decide desde que lado aparece
@@ -68,20 +68,14 @@ public class ColeccionBasuraEspacial extends ColeccionMovil {
 		
 		// Posicion inicial
 		Vector2 vel = new Vector2(
-                velocidad, 
-                velocidad
+                velX, 
+                velY
                 );
         builder.setVelocidad(vel);
         // Posicion inicial
         Vector2 pos = new Vector2(
-                Util.generateRandomFloat(
-                    -Gdx.graphics.getWidth()/(2*b2Modelo.getScale()),
-                    Gdx.graphics.getWidth()/(2*b2Modelo.getScale())
-                    ),
-                Util.generateRandomFloat(
-                    -Gdx.graphics.getHeight()/(2*b2Modelo.getScale()),
-                    Gdx.graphics.getHeight()/(2*b2Modelo.getScale())
-                    )
+        		x/(2*b2Modelo.getScale()),
+        		y/(2*b2Modelo.getScale())
                 );
         builder.setPosicion(pos);
 		
