@@ -1,19 +1,14 @@
-package com.mygdx.game.asteroides;
+package com.mygdx.game.enemigos.Asteroides;
 
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.enemigos.EnemigoBuilder;
 
-public class AsteroideBuilder implements IAsteroideBuilder {
-
-    private AsteroideTipo tipo;
+public class AsteroideBuilder implements EnemigoBuilder {
+	
     private Vector2 posicion;
     private Vector2 velocidad;
     private float porte;
-
-    @Override
-    public void setTipo(AsteroideTipo t) {
-        this.tipo = t;
-
-    }
+    private int puntaje;
 
     @Override
     public void setPosicion(Vector2 pos) {
@@ -29,6 +24,11 @@ public class AsteroideBuilder implements IAsteroideBuilder {
     public void setPorte(float porte) {
         this.porte = porte;
     }
+    
+    @Override
+    public void setPuntaje(int puntaje) {
+    	this.puntaje = puntaje;
+    }
 
     public Asteroide build() {
         return new Asteroide(
@@ -37,8 +37,7 @@ public class AsteroideBuilder implements IAsteroideBuilder {
                 this.porte, this.porte,
                 this.velocidad.x,
                 this.velocidad.y,
-                this.tipo,
-                1 //tmp
+                this.puntaje //tmp
                 );
     }
 }

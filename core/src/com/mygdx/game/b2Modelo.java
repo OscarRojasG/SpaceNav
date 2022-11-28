@@ -52,7 +52,6 @@ public class b2Modelo {
 
 	public void render() {
         if (scaled_camera == null) scaled_camera = cam.combined.scale(SCALE, SCALE, 1.f);
-		// debugRenderer.render(mundo, scaled_camera);
 		debugRenderer.render(mundo, scaled_camera);
 	}
 

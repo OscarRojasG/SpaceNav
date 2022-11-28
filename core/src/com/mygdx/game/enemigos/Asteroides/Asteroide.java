@@ -1,4 +1,4 @@
-package com.mygdx.game.asteroides;
+package com.mygdx.game.enemigos.Asteroides;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,16 +12,12 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 public class Asteroide extends Enemigo {
-
-    private AsteroideTipo tipo;
 	
-    public Asteroide(float x, float y, float ancho, float alto, float velX, float velY, AsteroideTipo tipo, int puntaje) {
+    public Asteroide(float x, float y, float ancho, float alto, float velX, float velY, int puntaje) {
     	super(x, y, ancho, alto, velX, velY, puntaje);
         float r = Util.generateRandomFloat(0, 1);
         this.getCuerpo().setAngularVelocity(r);
-        this.tipo = tipo;
         System.out.println("R:" + r);
-
     }
 
     
