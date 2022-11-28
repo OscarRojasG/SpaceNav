@@ -5,11 +5,13 @@ import java.util.Iterator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Enemigo;
 import com.mygdx.game.Movil;
 import com.mygdx.game.Nave;
 import com.mygdx.game.Util;
 import com.mygdx.game.b2Modelo;
+import com.mygdx.game.enemigos.basuraEspacial.BasuraBuilder;
 import com.mygdx.game.enemigos.basuraEspacial.BasuraEspacial;
 
 public class ColeccionBasuraEspacial extends ColeccionMovil {
@@ -29,18 +31,18 @@ public class ColeccionBasuraEspacial extends ColeccionMovil {
 	private final static int FINAL_SALIDA_VERTICAL = Gdx.graphics.getHeight()-10;
 	private final static int FINAL_SALIDA_HORIZONTAL = Gdx.graphics.getWidth()-10;;
 	
-	public void generar() {
+	public void generar(int velocidad, int ronda) {
+		BasuraBuilder builder = new BasuraBuilder();
 		int p = Util.generateRandomInt(1, 20);
 		if(p != 1) return;
 		
-		int n = generarEnemigoAleatorio();	
-		Enemigo enemigo = null;
+		int n = generarEnemigoAleatorio();
 		
 		int option = Util.generateRandomBetween(SALIDA_HORIZONTAL, SALIDA_VERTICAL);
 		int x;
 		int y;
-		int velX = 200;
-		int velY = 200;
+		int velX = velocidad;
+		int velY = velocidad;
 		
 		if (option == SALIDA_HORIZONTAL) {
 			// Se decide desde que lado aparece
@@ -61,21 +63,38 @@ public class ColeccionBasuraEspacial extends ColeccionMovil {
 			velX = 0;
 		}
 		
+		
+		// Posicion inicial
+		Vector2 vel = new Vector2(
+                velocidad, 
+                velocidad
+                );
+        builder.setVelocidad(vel);
+        // Posicion inicial
+        Vector2 pos = new Vector2(
+                Util.generateRandomFloat(
+                    -Gdx.graphics.getWidth()/(2*b2Modelo.getScale()),
+                    Gdx.graphics.getWidth()/(2*b2Modelo.getScale())
+                    ),
+                Util.generateRandomFloat(
+                    -Gdx.graphics.getHeight()/(2*b2Modelo.getScale()),
+                    Gdx.graphics.getHeight()/(2*b2Modelo.getScale())
+                    )
+                );
+        builder.setPosicion(pos);
+		
 		switch(n) {
 			case HIRIENTE_DESECHO_COHETE:
-				enemigo = new BasuraEspacial(x, y, 
-						40/b2Modelo.getScale(), 60/b2Modelo.getScale(),
-						velX, velY,
-						30);
+				builder.setPorte(35/b2Modelo.getScale());
+				builder.setPuntaje(30);
 				break;
 			case HIRIENTE_SATELITE:
-				enemigo = new BasuraEspacial(x, y, 
-						60/b2Modelo.getScale(), 40/b2Modelo.getScale(),
-						velX, velY,
-						25);
+				builder.setPorte(25/b2Modelo.getScale());
+				builder.setPuntaje(25);
 				break;
 		}
 		
+		BasuraEspacial enemigo = builder.build();
 		agregar(enemigo);
 	}
 	

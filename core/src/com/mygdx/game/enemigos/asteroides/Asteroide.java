@@ -1,4 +1,4 @@
-package com.mygdx.game.enemigos.Asteroides;
+package com.mygdx.game.enemigos.asteroides;
 
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.Bala;
