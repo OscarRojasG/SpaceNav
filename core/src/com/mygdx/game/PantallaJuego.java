@@ -28,7 +28,7 @@ public class PantallaJuego implements Screen {
 	private ColeccionAsteroides asteroides;
 	private ColeccionBalas balas;
 	private ColeccionConsumibles consumibles;
-	private ColeccionBasuraEspacial enemigos;
+	private ColeccionBasuraEspacial basura;
 
 	private b2Modelo modelo;
     private boolean debugEnabled = false;
@@ -61,8 +61,11 @@ public class PantallaJuego implements Screen {
                
         consumibles = new ColeccionConsumibles();
         enemigos = new ColeccionEnemigos();
+        // asteroides = new ColeccionAsteroides();
+        // consumibles = new ColeccionConsumibles();
         balas = new ColeccionBalas();
         asteroides = new ColeccionAsteroides();
+        basura = new ColeccionBasuraEspacial();
         
         // Iniciar ronda
 
@@ -87,6 +90,10 @@ public class PantallaJuego implements Screen {
         enemigos.dibujar(shapeRenderer);
         balas.dibujar(shapeRenderer);
 	    nave.dibujar(shapeRenderer);
+	    if (basura.isEmpty()) {
+	    	basura.generar(200 + (ronda - 1) * 20, ronda);
+	    }
+	    basura.dibujar(shapeRenderer);
 
     	if (nave.disparar()) {
     		Bala bala = nave.generarBala();

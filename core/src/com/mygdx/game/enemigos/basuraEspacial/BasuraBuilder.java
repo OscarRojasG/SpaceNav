@@ -1,6 +1,7 @@
 package com.mygdx.game.enemigos.basuraEspacial;
 
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.b2Modelo;
 import com.mygdx.game.enemigos.EnemigoBuilder;
 import com.mygdx.game.enemigos.asteroides.Asteroide;
 
@@ -35,7 +36,8 @@ public class BasuraBuilder implements EnemigoBuilder {
         return new BasuraEspacial(
                 this.posicion.x,
                 this.posicion.y,
-                this.porte, this.porte,
+                this.porte - (10.0f/b2Modelo.getScale()), //Ancho
+                this.porte,
                 this.velocidad.x,
                 this.velocidad.y,
                 this.puntaje //tmp

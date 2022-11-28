@@ -32,9 +32,11 @@ public class ColeccionBasuraEspacial extends ColeccionMovil {
 	private final static int FINAL_SALIDA_HORIZONTAL = Gdx.graphics.getWidth()-10;;
 	
 	public void generar(int velocidad, int ronda) {
-		BasuraBuilder builder = new BasuraBuilder();
 		int p = Util.generateRandomInt(1, 20);
 		if(p != 1) return;
+		
+		System.out.println("Creo Basura");
+		BasuraBuilder builder = new BasuraBuilder();
 		
 		int n = generarEnemigoAleatorio();
 		
@@ -99,11 +101,16 @@ public class ColeccionBasuraEspacial extends ColeccionMovil {
 	}
 	
 	public void dibujar(ShapeRenderer sp) {
-		Iterator<Movil> enemigos = getObjetos(); 
-		while(enemigos.hasNext()) {
-			Enemigo enemigo = (Enemigo) enemigos.next();
-			enemigo.dibujar(sp);
-		}
+		Iterator<Movil> enemigos = getObjetos();
+		BasuraEspacial enemigo;
+		try {
+			while(enemigos.hasNext()) {
+				enemigo = (BasuraEspacial) enemigos.next();
+				enemigo.dibujar(sp);
+			}
+		} catch(Exception e) {
+            return;
+        }
 	}
 	
 	public void verificarColisiones() {

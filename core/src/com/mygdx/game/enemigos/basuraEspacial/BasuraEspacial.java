@@ -9,9 +9,7 @@ public class BasuraEspacial extends Enemigo {
 	
     public BasuraEspacial(float x, float y, float ancho, float alto, float velX, float velY, int puntaje) {
     	super(x, y, ancho, alto, velX, velY, puntaje);
-        float r = Util.generateRandomFloat(0, 1);
-        this.getCuerpo().setAngularVelocity(r);
-        System.out.println("R:" + r);
+        this.getCuerpo().setAngularVelocity(0.0f);
     }
 
     @Override
