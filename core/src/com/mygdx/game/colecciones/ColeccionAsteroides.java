@@ -10,8 +10,8 @@ import com.mygdx.game.Movil;
 import com.mygdx.game.Nave;
 import com.mygdx.game.Util;
 import com.mygdx.game.b2Modelo;
-import com.mygdx.game.enemigos.Asteroides.Asteroide;
-import com.mygdx.game.enemigos.Asteroides.AsteroideBuilder;
+import com.mygdx.game.enemigos.asteroides.Asteroide;
+import com.mygdx.game.enemigos.asteroides.AsteroideBuilder;
 
 public class ColeccionAsteroides extends ColeccionMovil {
     private final int ASTEROID_MIN_ANGLE = -90;

@@ -2,6 +2,7 @@ package com.mygdx.game.enemigos.basuraEspacial;
 
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.enemigos.EnemigoBuilder;
+import com.mygdx.game.enemigos.asteroides.Asteroide;
 
 public class BasuraBuilder implements EnemigoBuilder {
 	
@@ -28,5 +29,16 @@ public class BasuraBuilder implements EnemigoBuilder {
     @Override
     public void setPuntaje(int puntaje) {
     	this.puntaje = puntaje;
+    }
+    
+    public BasuraEspacial build() {
+        return new BasuraEspacial(
+                this.posicion.x,
+                this.posicion.y,
+                this.porte, this.porte,
+                this.velocidad.x,
+                this.velocidad.y,
+                this.puntaje //tmp
+                );
     }
 }
