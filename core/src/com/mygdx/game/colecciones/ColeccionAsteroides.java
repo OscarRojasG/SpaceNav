@@ -75,13 +75,9 @@ public class ColeccionAsteroides extends ColeccionMovil {
 
     public void dibujar(ShapeRenderer sp) { 
         Iterator<Movil> asteroides = getObjetos(); 
-        Asteroide asteroide;
-        try {
-
-            while((asteroide = (Asteroide)asteroides.next()) != null)
-                asteroide.dibujar(sp);
-        } catch(Exception e) {
-            return;
+        while(asteroides.hasNext()) {
+        	Asteroide asteroide = (Asteroide) asteroides.next();
+        	asteroide.dibujar(sp);
         }
     }
 
@@ -115,7 +111,7 @@ public class ColeccionAsteroides extends ColeccionMovil {
 
     private int generarAsteroideAleatorio(int nivel) {
         if(nivel > 20) return ASTEROID_SIZE_SMALL;
-        if (nivel > 10) return Util.generateRandomInt(ASTEROID_SIZE_SMALL, ASTEROID_SIZE_MEDIUM);
+        if(nivel > 10) return Util.generateRandomInt(ASTEROID_SIZE_SMALL, ASTEROID_SIZE_MEDIUM);
 
         return Util.generateRandomInt(ASTEROID_SIZE_SMALL, ASTEROID_SIZE_BIG);
     }

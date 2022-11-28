@@ -8,7 +8,7 @@ public class FiguraSprite extends Figura {
 	private Sprite sprite;
 
 	public FiguraSprite(float x, float y, float ancho, float alto, Texture tx) {
-		super(x,y,ancho,alto);
+		super(x, y, ancho, alto);
 		sprite = new Sprite(tx);
 	}
 	

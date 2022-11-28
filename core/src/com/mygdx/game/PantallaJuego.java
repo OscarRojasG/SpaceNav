@@ -32,11 +32,10 @@ public class PantallaJuego implements Screen {
 
 	private b2Modelo modelo;
     private boolean debugEnabled = true;
-    private Borde bordes;
+    private BordePantalla borde;
 
 	public PantallaJuego(SpaceNav game) {
 		this(game, 1, 0); // iniciar por defecto en la primera ronda y sin puntaje
-        bordes = new Borde();
 	}
 
 	public PantallaJuego(SpaceNav game, int ronda, int puntaje) {
@@ -48,6 +47,8 @@ public class PantallaJuego implements Screen {
 		this.batch = game.getBatch();
 
 		this.modelo =  b2Modelo.getModelo();
+		borde = new BordePantalla();
+		
 		this.shapeRenderer.setProjectionMatrix(modelo.getProjection());
 		this.font = game.getFont();
 		this.batch = game.getBatch();

@@ -46,6 +46,7 @@ public class Nave extends FiguraForma implements Movil{
     	super(x, y, anchoNave, altoNave, BodyType.DynamicBody);
 		this.getCuerpo().setLinearDamping(1.f);
 		this.getCuerpo().setAngularDamping(9.f);
+		this.setCollisionData(FiguraBits.NAVE.bit, (short) (FiguraBits.BORDE.bit | FiguraBits.ENEMIGO.bit));
     }
     
 
@@ -126,7 +127,7 @@ public class Nave extends FiguraForma implements Movil{
     		return false;
     	}
     	
-        return Gdx.input.isKeyJustPressed(Input.Keys.Z);
+        return Gdx.input.isKeyJustPressed(Input.Keys.Z) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
     }
     
     /**

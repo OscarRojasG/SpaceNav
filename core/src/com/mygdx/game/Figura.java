@@ -7,8 +7,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Fixture;
 
 public abstract class Figura {
 	private Vector2 posicion;
@@ -21,7 +23,7 @@ public abstract class Figura {
 
 	private Body cuerpo = null;
 	private BodyDef body_def = null;
-
+	
 	public Figura(float x, float y, float ancho, float alto, BodyType type) {
 		this.ancho = ancho;
 		this.alto = alto;
@@ -31,11 +33,12 @@ public abstract class Figura {
     	bd.type = type;
     	bd.position.set(x, y);
     	this.setBodyDef(bd);
+    	
         setCuerpo(b2Modelo.getModelo().crearCuerpo(this));
 	}
 
 	public Figura(float x, float y, float ancho, float alto) {
-        this(x,y, ancho, alto, BodyType.StaticBody);
+		this(x, y, ancho, alto, BodyType.StaticBody);
 	}
 	
 	/** Verifica si Figura ha salido de la pantalla
@@ -242,6 +245,18 @@ public abstract class Figura {
 		} catch(NullPointerException e) {
 			throw new RuntimeException("Cuerpo sin definir");
 		}
+	}
+	
+	public void setCollisionData(short categoryBits, short maskBits) {
+		Fixture fixture = getFixture();
+		Filter filter = new Filter();
+		filter.maskBits = maskBits;
+		filter.categoryBits = categoryBits;
+		fixture.setFilterData(filter);
+	}
+	
+	public Fixture getFixture() {
+		return cuerpo.getFixtureList().get(0);
 	}
 
 	public void update() {

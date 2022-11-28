@@ -15,6 +15,7 @@ public class Bala extends FiguraForma implements Movil {
     		float centroRotacionX, float centroRotacionY) {
     	super(x, y, ancho, alto, BodyType.DynamicBody);
         this.getCuerpo().setLinearVelocity(ACELERACION * (float)-Math.sin(angulo),ACELERACION * (float)Math.cos(angulo));
+        this.setCollisionData(FiguraBits.BALA.bit, FiguraBits.ENEMIGO.bit);
     }
     
 	@Override

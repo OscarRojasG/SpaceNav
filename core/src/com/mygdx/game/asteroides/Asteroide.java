@@ -24,7 +24,6 @@ public class Asteroide extends Enemigo {
 
     }
 
-    
     @Override
     public void setPosition(float x, float y) {
     	if (x + getAncho() > Gdx.graphics.getWidth()) {

@@ -17,6 +17,7 @@ public abstract class Enemigo extends FiguraForma implements Movil {
         this.getCuerpo().applyForceToCenter(this.getCuerpo().getMass() * accX, this.getCuerpo().getMass()*accY, true);
         this.getCuerpo().setLinearDamping(0);
         this.getCuerpo().setAngularDamping(0);
+        this.setCollisionData(FiguraBits.ENEMIGO.bit, (short) (FiguraBits.BALA.bit | FiguraBits.NAVE.bit | FiguraBits.BORDE.bit | FiguraBits.ENEMIGO.bit));
     	setPuntaje(puntaje);
 //    	sonidoExplosion.setVolume(1, 0.5f);
     }
