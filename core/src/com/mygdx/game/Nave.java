@@ -134,23 +134,11 @@ public class Nave extends FiguraForma implements Movil{
     	// Ubicación de la bala en el ángulo 0
         float x = getX() - getAlto() * (float)Math.sin(this.getAngulo()); 
         float y = getY() + getAlto() * (float)Math.cos(this.getAngulo()); 
-        
-        // Ubicación del centro de rotación respecto a la posición de la bala
-        float centroX = anchoBala/2;
-        float centroY = -altoNave/2;
-        
-        // Velocidad de la bala
-        float velBalaX = getVelocidadX() * 1.5f * Gdx.graphics.getDeltaTime();
-        float velBalaY = getVelocidadY() * 1.5f * Gdx.graphics.getDeltaTime();
 
     	if (esSupernave())
-    		return new Bala(x, y, anchoBalaSupernave, altoBalaSupernave,
-                        velBalaX * velNave, velBalaY * velNave,
-                        getAngulo(), centroX, centroY);
+    		return new Bala(x, y, anchoBalaSupernave, altoBalaSupernave, 70f, getAngulo());
     	
-    	return new Bala(x, y, anchoBala, altoBala,
-                velBalaX * velNave * 1.5f, velBalaY * velNave * 1.5f,
-                getAngulo(), centroX, centroY);
+    	return new Bala(x, y, anchoBala, altoBala, 50f, getAngulo());
     }
     
     /** Cambia el tiempo a permanecer herido de la nave, quita vida al herirse y reproduce el sonido de Nave herida. */

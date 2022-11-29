@@ -1,9 +1,6 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -13,13 +10,10 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Fixture;
 
 public abstract class Figura {
-	private Vector2 posicion;
-	private Vector2 velocidad;
 	private Vector2 origen;
 
 	private float ancho;
 	private float alto;
-	private float angulo;
 
 	private Body cuerpo;
 	private BodyDef bodyDef;
@@ -51,17 +45,6 @@ public abstract class Figura {
         return false;
     }
 	
-    /** Método para verificar colisión entre Figura y Figura.
-	 * @param Figura: Un parametro clase Figura que contiene su posición y área
-	 * @return boolean: Manda true si la posición de Enemigo coincide con el área de la Figura, false en caso contrario.
-	 * */
-	public boolean verificarColision(Figura figura) {
-		Polygon p1 = this.getPoligono();
-		Polygon p2 = figura.getPoligono();
-		
-		return Intersector.overlapConvexPolygons(p1, p2);
-	}
-	
 	/** Método utilizado para generar un objeto Polygon con los atributos de la clase
 	 * @return Polygon
 	 */
@@ -73,8 +56,8 @@ public abstract class Figura {
             getAnchoEscala(),-getAltoEscala()});
 
 		polygon.setOrigin(getOrigenX(), getOrigenY());
-		polygon.setRotation((float)Math.toDegrees(getAngulo()));
 		polygon.setPosition(getXEscala(), getYEscala());
+		polygon.setRotation((float)Math.toDegrees(getAngulo()));
 		return polygon;
 	}
 	
@@ -84,19 +67,6 @@ public abstract class Figura {
 
 	public float getAltoEscala() {
         return getAlto() * b2Modelo.getScale();
-    }
-
-    public float getAngulo() {
-        return this.cuerpo.getAngle();
-    }
-
-    /** Sobrescribe la posición de la Figura por los parametros recibidos.
-	 * @param float x: Nueva posición para la Figura respecto al eje x.
-	 * @param float y: Nueva posición para la Figura respecto al eje y.
-	 * */
-    public void setPosition(float x, float y) {
-    	this.posicion.x = x;
-    	this.posicion.y = y;
     }
     
     /** Sobrescribe la posición de la Figura en el eje x por el parametro recibido.
@@ -135,13 +105,6 @@ public abstract class Figura {
     	this.ancho = ancho; 
     	this.alto = alto;
     }
-    
-    /** Sobrescribe la rotación de la Figura en el espacio por el angulo recibido.
-	 * @param float: Nuevo ángulo en que estara rotada la Figura.
-	 * */
-    public void setRotacion(float angulo) {
-		this.angulo = angulo;
-	}
     
     public void setOrigen(float x, float y) {
     	this.origen.x = x;
@@ -204,13 +167,6 @@ public abstract class Figura {
 		return this.alto;
 	}
 	
-	/** 
-	 * @return float: Angulo de la Figura respecto a si mismo.
-	 * */
-	public float getRotacion() {
-		return this.getCuerpo().getAngle();
-	}
-	
 	public float getOrigenX() {
 		return this.origen.x;
 	}
@@ -218,14 +174,6 @@ public abstract class Figura {
 	public float getOrigenY() {
 		return this.origen.y;
 	}
-	
-	/** 
-	 * @return Rectangle: Atributo clase Rectangulo con la posición (ejes x,y) y tamaño (ancho,alto) de la Figura.
-	 * */
-    public Rectangle getArea() {
-    	return new Rectangle(this.posicion.x, this.posicion.y,
-    			this.ancho, this.alto);
-    }
 
 	public Body getCuerpo() {
 		return cuerpo;
@@ -253,27 +201,21 @@ public abstract class Figura {
 		this.categoryBits = categoryBits;
 	}
 	
+    public float getAngulo() {
+        return this.cuerpo.getAngle();
+    }
+	
 	public Fixture getFixture() {
 		return cuerpo.getFixtureList().get(0);
 	}
 
-	public void update() {
-
-	}
-
     public void setBodyDef(BodyDef bodyDef) {
-    	this.bodyDef = bodyDef;
-		
+    	this.bodyDef = bodyDef;	
 	}
 
     public BodyDef getBodyDef() {
     	return this.bodyDef;
-		
 	}
-
-    public void init(BodyType type) {
-    	
-    }
     
     public short getCategoryBits() {
     	return categoryBits;

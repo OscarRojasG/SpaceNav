@@ -17,8 +17,7 @@ public class FiguraSprite extends Figura {
 	/** Dibuja el sprite de la Figura en pantalla sobre su forma .*/
 	public void dibujar(SpriteBatch batch) {
 		sprite.setPosition(getXEscala() + Gdx.graphics.getWidth()/2, getYEscala() + Gdx.graphics.getHeight()/2);
-		sprite.setSize(getAnchoEscala(), getAltoEscala());
-		sprite.setRotation(getRotacion());	
+		sprite.setSize(getAnchoEscala(), getAltoEscala());	
 		sprite.draw(batch);
     }
 	
