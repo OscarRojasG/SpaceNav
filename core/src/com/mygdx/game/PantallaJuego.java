@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.colecciones.ColeccionAsteroides;
 import com.mygdx.game.colecciones.ColeccionBalas;
 import com.mygdx.game.colecciones.ColeccionConsumibles;
-import com.mygdx.game.colecciones.ColeccionEnemigos;
+import com.mygdx.game.colecciones.ColeccionBasuraEspacial;
 
 public class PantallaJuego implements Screen {
 //	private static final Music musica = Gdx.audio.newMusic(Gdx.files.internal("piano-loops.wav"));
@@ -28,7 +28,7 @@ public class PantallaJuego implements Screen {
 	private ColeccionAsteroides asteroides;
 	private ColeccionBalas balas;
 	private ColeccionConsumibles consumibles;
-	private ColeccionEnemigos enemigos;
+	private ColeccionBasuraEspacial enemigos;
 
 	private b2Modelo modelo;
     private boolean debugEnabled = false;

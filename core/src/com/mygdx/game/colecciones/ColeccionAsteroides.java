@@ -3,18 +3,13 @@ package com.mygdx.game.colecciones;
 import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.Figura;
 import com.mygdx.game.Movil;
-import com.mygdx.game.Nave;
 import com.mygdx.game.Util;
 import com.mygdx.game.b2Modelo;
-import com.mygdx.game.asteroides.Asteroide;
-import com.mygdx.game.asteroides.AsteroideBuilder;
-import com.mygdx.game.asteroides.AsteroideTipo;
-import com.mygdx.game.consumibles.Consumible;
+import com.mygdx.game.enemigos.Asteroides.Asteroide;
+import com.mygdx.game.enemigos.Asteroides.AsteroideBuilder;
 
 public class ColeccionAsteroides extends ColeccionMovil {
     private final int ASTEROID_MIN_ANGLE = -90;
@@ -59,16 +54,16 @@ public class ColeccionAsteroides extends ColeccionMovil {
         switch(size) {
             case ASTEROID_SIZE_SMALL:
                 builder.setPorte( 20/b2Modelo.getScale());
-                builder.setTipo(AsteroideTipo.CHICO);
+                builder.setPuntaje(10);
                 break;
             case ASTEROID_SIZE_MEDIUM:
                 builder.setPorte( 40/b2Modelo.getScale());
-                builder.setTipo(AsteroideTipo.MEDIO);
+                builder.setPuntaje(20);
                 break;
             case ASTEROID_SIZE_BIG:
                 builder.setPorte( 60/b2Modelo.getScale());
-                builder.setTipo(AsteroideTipo.GRANDE);
-                break;		
+                builder.setPuntaje(30);
+                break;
         }
 
         asteroide = builder.build();

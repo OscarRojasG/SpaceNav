@@ -9,10 +9,10 @@ import com.mygdx.game.Enemigo;
 import com.mygdx.game.Movil;
 import com.mygdx.game.Nave;
 import com.mygdx.game.Util;
-import com.mygdx.game.enemigos.DesechoCohete;
-import com.mygdx.game.enemigos.Satelite;
+import com.mygdx.game.b2Modelo;
+import com.mygdx.game.enemigos.basuraEspacial.BasuraEspacial;
 
-public class ColeccionEnemigos extends ColeccionMovil {
+public class ColeccionBasuraEspacial extends ColeccionMovil {
 	private final static int HIRIENTE_DESECHO_COHETE = 1;
 	private final static int HIRIENTE_SATELITE = 2;
 	
@@ -63,10 +63,16 @@ public class ColeccionEnemigos extends ColeccionMovil {
 		
 		switch(n) {
 			case HIRIENTE_DESECHO_COHETE:
-				enemigo = new DesechoCohete(x, y, velX, velY);
+				enemigo = new BasuraEspacial(x, y, 
+						40/b2Modelo.getScale(), 60/b2Modelo.getScale(),
+						velX, velY,
+						30);
 				break;
 			case HIRIENTE_SATELITE:
-				enemigo = new Satelite(x, y,velX, velY);
+				enemigo = new BasuraEspacial(x, y, 
+						60/b2Modelo.getScale(), 40/b2Modelo.getScale(),
+						velX, velY,
+						25);
 				break;
 		}
 		
