@@ -60,7 +60,6 @@ public class PantallaJuego implements Screen {
 	    nave = new Nave(navePosX, navePosY);
                
         consumibles = new ColeccionConsumibles();
-        enemigos = new ColeccionEnemigos();
         // asteroides = new ColeccionAsteroides();
         // consumibles = new ColeccionConsumibles();
         balas = new ColeccionBalas();
@@ -87,7 +86,6 @@ public class PantallaJuego implements Screen {
         }
 
         asteroides.dibujar(shapeRenderer);
-        enemigos.dibujar(shapeRenderer);
         balas.dibujar(shapeRenderer);
 	    nave.dibujar(shapeRenderer);
 	    basura.dibujar(shapeRenderer);
@@ -115,7 +113,7 @@ public class PantallaJuego implements Screen {
 		consumibles.dibujar(batch);
 	    batch.end();
 	    
-		if (asteroides.isEmpty() && enemigos.isEmpty()) {
+		if (asteroides.isEmpty() && basura.isEmpty()) {
 			avanzarRonda();
 		}
 		
