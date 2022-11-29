@@ -7,7 +7,7 @@ import com.mygdx.game.Figura;
 import com.mygdx.game.Movil;
 import com.mygdx.game.Nave;
 import com.mygdx.game.b2Modelo;
-import com.mygdx.game.asteroides.Asteroide;
+import com.mygdx.game.enemigos.asteroides.Asteroide;
 
 public class ColeccionMovil {
 	private ArrayList<Movil> moviles;
