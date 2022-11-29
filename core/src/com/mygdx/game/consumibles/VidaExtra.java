@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Nave;
 
 public class VidaExtra extends Consumible {
-	private final static int ancho = 40;
-	private final static int alto = 40;
+	private final static float ancho = 1.2f;
+	private final static float alto = 1.2f;
 	private final static float tiempoMaximo = 3;
 	private final static Texture image = new Texture(Gdx.files.internal("health.png"));
 	

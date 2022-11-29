@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.Figura;
 import com.mygdx.game.Movil;
 import com.mygdx.game.Nave;
 import com.mygdx.game.Util;
@@ -13,6 +14,7 @@ import com.mygdx.game.b2Modelo;
 import com.mygdx.game.asteroides.Asteroide;
 import com.mygdx.game.asteroides.AsteroideBuilder;
 import com.mygdx.game.asteroides.AsteroideTipo;
+import com.mygdx.game.consumibles.Consumible;
 
 public class ColeccionAsteroides extends ColeccionMovil {
     private final int ASTEROID_MIN_ANGLE = -90;
@@ -72,28 +74,26 @@ public class ColeccionAsteroides extends ColeccionMovil {
         asteroide = builder.build();
         this.agregar(asteroide);
     }
+    
+    public void eliminarDestruidos(ColeccionConsumibles consumibles) {
+		Iterator<Movil> asteroides = getObjetos(); 
+		while(asteroides.hasNext()) {
+			Asteroide asteroide = (Asteroide) asteroides.next();			
+			if (asteroide.estaDestruida()) {
+				asteroides.remove();
+				eliminar(asteroide);
+				b2Modelo.getModelo().eliminarCuerpo((Figura) asteroide);
+				consumibles.generar(asteroide.getX(), asteroide.getY(), 
+									asteroide.getVelocidadX(), asteroide.getVelocidadY());
+			}	
+		}
+    }
 
     public void dibujar(ShapeRenderer sp) { 
         Iterator<Movil> asteroides = getObjetos(); 
         while(asteroides.hasNext()) {
         	Asteroide asteroide = (Asteroide) asteroides.next();
         	asteroide.dibujar(sp);
-        }
-    }
-
-    public void verificarColisiones() {
-        Iterator<Movil> asteroides = getObjetos(); 
-        while(asteroides.hasNext()) {
-            Asteroide asteroide = (Asteroide) asteroides.next();
-            Iterator<Movil> asteroides2 = getObjetos();
-
-            while(asteroides2.hasNext()) {
-                Asteroide asteroide2 = (Asteroide) asteroides2.next();
-
-                if (asteroide != asteroide2) {
-                    asteroide.verificarColision(asteroide2);
-                }
-            }
         }
     }
 

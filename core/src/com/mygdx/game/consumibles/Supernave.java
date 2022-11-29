@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Nave;
 
 public class Supernave extends Consumible {
-	private final static float ancho =  35 ;
-	private final static float alto = 42.24f;
+	private final static float ancho =  35f/26;
+	private final static float alto = 42.24f/26;
 	private final static float tiempoMaximo = 6;
 	private final static Texture image = new Texture(Gdx.files.internal("supernave.png"));
 	

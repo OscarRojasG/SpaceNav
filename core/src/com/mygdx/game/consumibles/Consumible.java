@@ -3,11 +3,13 @@ package com.mygdx.game.consumibles;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.mygdx.game.FiguraBits;
 import com.mygdx.game.FiguraSprite;
 import com.mygdx.game.Movil;
 import com.mygdx.game.Nave;
+import com.mygdx.game.NaveColisionable;
 
-public abstract class Consumible extends FiguraSprite implements Movil {
+public abstract class Consumible extends FiguraSprite implements Movil, NaveColisionable {
 	private long tiempoInicio;
 	private float tiempoMaximo;
 	
@@ -15,6 +17,7 @@ public abstract class Consumible extends FiguraSprite implements Movil {
 		super(x, y, ancho, alto, tx);
 		this.tiempoMaximo = tiempoMaximo;
 		this.tiempoInicio = TimeUtils.millis();
+		this.setCollisionData(FiguraBits.CONSUMIBLE.bit, (short) (FiguraBits.NAVE.bit));
 	}
 
 	/** Clase usada para aplicar un efecto al colicionar con la nave
@@ -33,6 +36,11 @@ public abstract class Consumible extends FiguraSprite implements Movil {
 		float x = getX() + getVelocidadX() * Gdx.graphics.getDeltaTime();
         float y = getY() + getVelocidadY() * Gdx.graphics.getDeltaTime();
         setPosition(x,y);
+	}
+	
+	public void enColisionNave(Nave nave) {
+		setDestruida(true);
+		agregarEfecto(nave);
 	}
 	
 }

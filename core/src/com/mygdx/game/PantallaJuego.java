@@ -31,7 +31,7 @@ public class PantallaJuego implements Screen {
 	private ColeccionEnemigos enemigos;
 
 	private b2Modelo modelo;
-    private boolean debugEnabled = true;
+    private boolean debugEnabled = false;
     private BordePantalla borde;
 
 	public PantallaJuego(SpaceNav game) {
@@ -64,8 +64,8 @@ public class PantallaJuego implements Screen {
 		
 	    nave = new Nave(navePosX, navePosY);
                
-        // consumibles = new ColeccionConsumibles();
-        // enemigos = new ColeccionEnemigos();
+        consumibles = new ColeccionConsumibles();
+        enemigos = new ColeccionEnemigos();
         balas = new ColeccionBalas();
         asteroides = new ColeccionAsteroides();
         
@@ -89,6 +89,7 @@ public class PantallaJuego implements Screen {
         }
 
         asteroides.dibujar(shapeRenderer);
+        enemigos.dibujar(shapeRenderer);
         balas.dibujar(shapeRenderer);
 	    nave.dibujar(shapeRenderer);
 
@@ -101,11 +102,13 @@ public class PantallaJuego implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.TAB))
             debugEnabled = !debugEnabled;
         
-        asteroides.eliminarDestruidos();
+        asteroides.eliminarDestruidos(consumibles);
         balas.eliminarDestruidos();
+        consumibles.eliminarDestruidos();
         
-//		batch.begin();
-//		dibujarEncabezado();
+		batch.begin();
+		dibujarEncabezado();
+		consumibles.dibujar(batch);
 //		
 //		if (nave.estaDestruida()) {
 //			finalizarJuego();
@@ -163,9 +166,7 @@ public class PantallaJuego implements Screen {
 //	    
 //	    enemigos.dibujar(batch);
 //	    consumibles.dibujar(batch);
-//	    batch.end();
-//	    nave.dibujar(shapeRenderer);
-    balas.dibujar(shapeRenderer);
+	    batch.end();
 	}
 	
 	@Override

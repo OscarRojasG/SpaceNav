@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.mygdx.game.asteroides.Asteroide;
+import com.mygdx.game.consumibles.Consumible;
 
 public class b2ContactListener implements ContactListener {
 
@@ -27,6 +28,15 @@ public class b2ContactListener implements ContactListener {
 		}
 		if (categoryA == FiguraBits.BALA.bit && categoryB == FiguraBits.ASTEROIDE.bit ) {
 			((Asteroide) figuraB).enColisionBala((Bala) figuraA);
+		}
+		
+		if (categoryA == FiguraBits.NAVE.bit && categoryB == FiguraBits.CONSUMIBLE.bit) {
+			((Consumible) figuraB).enColisionNave((Nave) figuraA);
+			contact.setEnabled(false);
+		}
+		if (categoryA == FiguraBits.CONSUMIBLE.bit && categoryB == FiguraBits.NAVE.bit) {
+			((Consumible) figuraA).enColisionNave((Nave) figuraB);
+			contact.setEnabled(false);
 		}
 		
 	}

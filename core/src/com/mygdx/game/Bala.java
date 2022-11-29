@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 public class Bala extends FiguraForma implements Movil {
 	private final static Texture image = new Texture(Gdx.files.internal("Rocket2.png"));
-    private final static float ACELERACION = 100.f;
+    private final static float ACELERACION = 70.f;
 	
     public Bala(float x, float y, float ancho, float alto, float velx, float vely, float angulo,
     		float centroRotacionX, float centroRotacionY) {

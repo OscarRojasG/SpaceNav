@@ -117,14 +117,14 @@ public abstract class Figura {
 	 * @param float: Nueva velocidad de la Figura en el eje x.
 	 * */
 	public void setVelocidadX(float velX) {
-		this.velocidad.x = velX;
+		this.cuerpo.setLinearVelocity(velX, getVelocidadY());
 	}
 	
 	/** Sobrescribe la velocidad de la Figura respecto al eje y.
 	 * @param float: Nueva velocidad de la Figura en el eje y.
 	 * */
 	public void setVelocidadY(float velY) {
-		this.velocidad.y = velY;
+		this.cuerpo.setLinearVelocity(getVelocidadX(), velY);
 	}
     
     /** Sobrescribe el tamaño de la Figura por los parametros recibidos.

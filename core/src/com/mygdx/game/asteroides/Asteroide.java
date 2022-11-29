@@ -6,7 +6,6 @@ import com.mygdx.game.Enemigo;
 import com.mygdx.game.FiguraBits;
 import com.mygdx.game.Nave;
 import com.mygdx.game.Util;
-import com.mygdx.game.b2Modelo;
 
 public class Asteroide extends Enemigo {
 

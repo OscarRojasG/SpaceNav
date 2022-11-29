@@ -3,9 +3,11 @@ package com.mygdx.game.colecciones;
 import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.Figura;
 import com.mygdx.game.Movil;
 import com.mygdx.game.Nave;
 import com.mygdx.game.Util;
+import com.mygdx.game.b2Modelo;
 import com.mygdx.game.consumibles.Consumible;
 import com.mygdx.game.consumibles.Supernave;
 import com.mygdx.game.consumibles.VidaExtra;
@@ -15,7 +17,7 @@ public class ColeccionConsumibles extends ColeccionMovil {
 	private final static int CONSUMIBLE_SUPERNAVE = 2;
 	
 	public void generar(float x, float y, float velX, float velY) {
-		int p = Util.generateRandomInt(0, 9);
+		int p = Util.generateRandomInt(0, 7);
 		if(p != 0)
 			return;	
 		
@@ -44,29 +46,14 @@ public class ColeccionConsumibles extends ColeccionMovil {
 	}
 	
 	@Override
-	public void actualizar() {
+	public void eliminarDestruidos() {
 		Iterator<Movil> consumibles = getObjetos(); 
 		while(consumibles.hasNext()) {
-			Consumible consumible = (Consumible) consumibles.next();
-			
-			if (consumible.noUsado()) {
+			Consumible consumible = (Consumible) consumibles.next();			
+			if (consumible.noUsado() || consumible.estaDestruida()) {
 				consumibles.remove();
 				eliminar(consumible);
-			}	
-		}
-		
-		super.actualizar();
-	}
-	
-	public void verificarColisiones(Nave nave) {
-		Iterator<Movil> consumibles = getObjetos(); 
-		while(consumibles.hasNext()) {
-			Consumible consumible = (Consumible) consumibles.next();
-			
-			if (consumible.verificarColision(nave)) {
-				consumible.agregarEfecto(nave);
-				consumibles.remove();
-				eliminar(consumible);
+				b2Modelo.getModelo().eliminarCuerpo((Figura) consumible);
 			}	
 		}
 	}
