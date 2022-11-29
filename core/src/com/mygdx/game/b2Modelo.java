@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
@@ -11,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 
 public class b2Modelo {
 	private World mundo;
@@ -83,6 +86,15 @@ public class b2Modelo {
 
 	public void eliminarCuerpo(Figura f) {
 		mundo.destroyBody(f.getCuerpo());
+	}
+	
+	public void vaciar() {
+		Array<Body> bodies = new Array<Body>();
+		mundo.getBodies(bodies);
+		
+		for (int i = 0; i < bodies.size; i++) {
+			mundo.destroyBody(bodies.get(i));
+		}
 	}
 
 }

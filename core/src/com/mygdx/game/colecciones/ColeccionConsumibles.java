@@ -53,7 +53,6 @@ public class ColeccionConsumibles extends ColeccionMovil {
 			if (consumible.noUsado() || consumible.estaDestruida()) {
 				consumibles.remove();
 				eliminar(consumible);
-				b2Modelo.getModelo().eliminarCuerpo((Figura) consumible);
 			}	
 		}
 	}

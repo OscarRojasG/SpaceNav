@@ -19,9 +19,10 @@ public class SpaceNav extends Game {
 		highScore = 0;
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
+		shapeRenderer.setProjectionMatrix(b2Modelo.getModelo().getProjection());
+		
 		font = new BitmapFont();
 		font.getData().setScale(2f);
-		
 
 		ScreenUtils.clear((float)0x10/0xff, (float)0x10/0xff, (float)0x10/0xff, 1);
 		Screen screen = new PantallaMenu(this);

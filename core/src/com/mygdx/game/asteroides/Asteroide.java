@@ -47,6 +47,7 @@ public class Asteroide extends Enemigo {
 	@Override
 	public void enColisionNave(Nave nave) {
 		setDestruida(true);
+		setPuntaje(0);
 		explotar();
 		nave.herir();
 	}

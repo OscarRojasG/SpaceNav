@@ -75,18 +75,22 @@ public class ColeccionAsteroides extends ColeccionMovil {
         this.agregar(asteroide);
     }
     
-    public void eliminarDestruidos(ColeccionConsumibles consumibles) {
+    public int eliminarDestruidos(ColeccionConsumibles consumibles) {
+    	int puntaje = 0;
+    	
 		Iterator<Movil> asteroides = getObjetos(); 
 		while(asteroides.hasNext()) {
 			Asteroide asteroide = (Asteroide) asteroides.next();			
 			if (asteroide.estaDestruida()) {
 				asteroides.remove();
 				eliminar(asteroide);
-				b2Modelo.getModelo().eliminarCuerpo((Figura) asteroide);
 				consumibles.generar(asteroide.getX(), asteroide.getY(), 
 									asteroide.getVelocidadX(), asteroide.getVelocidadY());
+				puntaje += asteroide.getPuntaje();
 			}	
 		}
+		
+		return puntaje;
     }
 
     public void dibujar(ShapeRenderer sp) { 

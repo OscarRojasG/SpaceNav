@@ -22,16 +22,15 @@ public class ColeccionMovil {
 	
 	public void eliminar(Movil movil) {
 		moviles.remove(movil);
+		b2Modelo.getModelo().eliminarCuerpo((Figura) movil);
 	}
 
 	public void eliminarDestruidos() {
 		for (int i = 0; i < moviles.size(); i++) {
 			Movil movil = moviles.get(i);
-			Figura figura = (Figura) movil;
 			
-			if(figura.estaDestruida()) {
+			if(((Figura) movil).estaDestruida()) {
 				eliminar(movil);
-				b2Modelo.getModelo().eliminarCuerpo(figura);
 			}
 		}
 	}

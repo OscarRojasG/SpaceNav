@@ -31,8 +31,7 @@ public class PantallaJuego implements Screen {
 	private ColeccionEnemigos enemigos;
 
 	private b2Modelo modelo;
-    private boolean debugEnabled = false;
-    private BordePantalla borde;
+    private boolean debugEnabled = true;
 
 	public PantallaJuego(SpaceNav game) {
 		this(game, 1, 0); // iniciar por defecto en la primera ronda y sin puntaje
@@ -47,12 +46,8 @@ public class PantallaJuego implements Screen {
 		this.batch = game.getBatch();
 
 		this.modelo =  b2Modelo.getModelo();
-		borde = new BordePantalla();
+		new BordePantalla();
 		
-		this.shapeRenderer.setProjectionMatrix(modelo.getProjection());
-		this.font = game.getFont();
-		this.batch = game.getBatch();
-		this.game = game;
 		this.font = game.getFont();
 		
 //		musica.setLooping(true);
@@ -102,71 +97,29 @@ public class PantallaJuego implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.TAB))
             debugEnabled = !debugEnabled;
         
-        asteroides.eliminarDestruidos(consumibles);
+        puntaje += asteroides.eliminarDestruidos(consumibles);
         balas.eliminarDestruidos();
         consumibles.eliminarDestruidos();
         
 		batch.begin();
 		dibujarEncabezado();
 		consumibles.dibujar(batch);
-//		
-//		if (nave.estaDestruida()) {
-//			finalizarJuego();
-//		}
-//		
-//		if (asteroides.isEmpty() && enemigos.isEmpty()) {
-//			avanzarRonda();
-//		}
-//		
-//	    if (!nave.estaHerida()) {
-//	    	Iterator<Movil> iteratorAsteroides = asteroides.getObjetos();
-//	    	while(iteratorAsteroides.hasNext()) {
-//	    		Asteroide asteroide = (Asteroide) iteratorAsteroides.next();
-//	    		
-//	    		if(balas.verificarColisiones(asteroide)) {
-//	    			iteratorAsteroides.remove();
-//	    			asteroides.eliminar(asteroide);
-//	    			asteroide.explotar();
-//	    			
-//	    			consumibles.generar(asteroide.getX(), asteroide.getY(), 
-//	    					asteroide.getVelocidadX(), asteroide.getVelocidadY());
-//
-//	    			agregarPuntaje(asteroide.getPuntaje());
-//	    		}
-//	    	}
-//	    	
-//	    	Iterator<Movil> iteratorEnemigos = enemigos.getObjetos();
-//	    	while(iteratorEnemigos.hasNext()) {
-//	    		Enemigo enemigo = (Enemigo) iteratorEnemigos.next();
-//	    		
-//	    		if(balas.verificarColisiones(enemigo)) {
-//	    			iteratorEnemigos.remove();
-//	    			enemigos.eliminar(enemigo);
-//	    			enemigo.explotar();
-//	    			
-//	    			agregarPuntaje(enemigo.getPuntaje());
-//	    		}
-//	    	}
-//	    	
-//	    	if (asteroides.getCantidad() < 10 && enemigos.isEmpty())
-//				enemigos.generar();
-//	    	
-//	    	consumibles.verificarColisiones(nave);
-//		    enemigos.verificarColisiones(nave);
-//	    	asteroides.verificarColisiones();
-//	    	enemigos.verificarColisiones();
-//	    	
-//	    	
-//		    asteroides.actualizar();
-//		    enemigos.actualizar();
-//		    consumibles.actualizar();
-//		  
-//	    }
-//	    
-//	    
-//	    enemigos.dibujar(batch);
-//	    consumibles.dibujar(batch);
 	    batch.end();
+	    
+		if (asteroides.isEmpty() && enemigos.isEmpty()) {
+			avanzarRonda();
+		}
+		
+		if (nave.estaDestruida()) {
+			finalizarJuego();
+		}
+		
+		/*
+	    if (asteroides.getCantidad() < 10 && enemigos.isEmpty()) {
+			enemigos.generar();		  
+	    }
+	    */
+		
 	}
 	
 	@Override
@@ -196,7 +149,8 @@ public class PantallaJuego implements Screen {
 
 	@Override
 	public void dispose() {
-		
+		b2Modelo.getModelo().eliminarCuerpo(nave);
+		b2Modelo.getModelo().vaciar();
 	}
 	
 	/** Dibuja en la parte inferior de la pantalla los datos del jugador. */
@@ -210,19 +164,19 @@ public class PantallaJuego implements Screen {
 	
 	/** Se encarga de que PantallaJuego cambie a PantallaGameOver*/
 	public void finalizarJuego() {
+		dispose();
 		game.setScreen(new PantallaGameOver(game));		
 		if (puntaje > game.getHighScore()) {
 			game.setHighScore(puntaje);
 		}
-		
 //		musica.stop();
 	}
 	
 	/** Se encarga de iniciar la PantallaJuego en la siguiente ronda */
 	public void avanzarRonda() {
+		dispose();
 		Screen screen = new PantallaJuego(game, ronda + 1, puntaje);
 		game.setScreen(screen);
-		dispose();
 	}
 	
 	/** Aumenta el puntaje guardado en la PantallaJuego */
