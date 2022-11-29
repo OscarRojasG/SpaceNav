@@ -17,6 +17,4 @@ public class ColeccionBalas extends ColeccionMovil {
         }
 	}
 
-    @Override
-	public void actualizar() {}
 }

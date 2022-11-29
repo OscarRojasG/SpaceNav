@@ -64,7 +64,6 @@ public class PantallaJuego implements Screen {
 		
 	    nave = new Nave(navePosX, navePosY);
                
-        // asteroides = new ColeccionAsteroides();
         // consumibles = new ColeccionConsumibles();
         // enemigos = new ColeccionEnemigos();
         balas = new ColeccionBalas();
@@ -82,17 +81,16 @@ public class PantallaJuego implements Screen {
 	public void render(float delta) {
 	    nave.actualizar();
 		modelo.actualizar();
+	    
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if (debugEnabled) {
             modelo.render();
         }
 
-
         asteroides.dibujar(shapeRenderer);
         balas.dibujar(shapeRenderer);
 	    nave.dibujar(shapeRenderer);
-
 
     	if (nave.disparar()) {
     		Bala bala = nave.generarBala();
@@ -102,6 +100,9 @@ public class PantallaJuego implements Screen {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.TAB))
             debugEnabled = !debugEnabled;
+        
+        asteroides.eliminarDestruidos();
+        balas.eliminarDestruidos();
         
 //		batch.begin();
 //		dibujarEncabezado();
@@ -148,7 +149,6 @@ public class PantallaJuego implements Screen {
 //				enemigos.generar();
 //	    	
 //	    	consumibles.verificarColisiones(nave);
-//		    asteroides.verificarColisiones(nave);
 //		    enemigos.verificarColisiones(nave);
 //	    	asteroides.verificarColisiones();
 //	    	enemigos.verificarColisiones();
@@ -157,7 +157,7 @@ public class PantallaJuego implements Screen {
 //		    asteroides.actualizar();
 //		    enemigos.actualizar();
 //		    consumibles.actualizar();
-//		    balas.actualizar();
+//		  
 //	    }
 //	    
 //	    

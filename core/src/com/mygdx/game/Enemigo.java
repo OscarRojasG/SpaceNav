@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
-public abstract class Enemigo extends FiguraForma implements Movil {
+public abstract class Enemigo extends FiguraForma implements Movil, NaveColisionable, BalaColisionable {
 	private int puntaje;
 //	private final static Sound sonidoExplosion = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
     public Enemigo(float x, float y, float ancho, float alto, float accX, float accY, int puntaje) {
@@ -17,12 +17,9 @@ public abstract class Enemigo extends FiguraForma implements Movil {
         this.getCuerpo().applyForceToCenter(this.getCuerpo().getMass() * accX, this.getCuerpo().getMass()*accY, true);
         this.getCuerpo().setLinearDamping(0);
         this.getCuerpo().setAngularDamping(0);
-        this.setCollisionData(FiguraBits.ENEMIGO.bit, (short) (FiguraBits.BALA.bit | FiguraBits.NAVE.bit | FiguraBits.BORDE.bit | FiguraBits.ENEMIGO.bit));
     	setPuntaje(puntaje);
 //    	sonidoExplosion.setVolume(1, 0.5f);
     }
-    
-    public abstract void agregarEfecto(Nave nave);
 
     @Override
     public void dibujar(ShapeRenderer sr) {

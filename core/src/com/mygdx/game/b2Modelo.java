@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -28,6 +29,7 @@ public class b2Modelo {
 
     private b2Modelo() {
 		mundo = new World(new Vector2(0.f, 0.f), false); // mundo sin gravedad
+		mundo.setContactListener(new b2ContactListener());
 		debugRenderer = new Box2DDebugRenderer(true,true,true,true,true,true); // camara debug
 		cam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
@@ -60,22 +62,27 @@ public class b2Modelo {
     }
 
     public Body crearCuerpo(Figura f)  {
-		Body bodyd = mundo.createBody(f.getBodyDef());
+		Body body = mundo.createBody(f.getBodyDef());
 
-		bodyd.setFixedRotation(false);
-		bodyd.setLinearDamping(1.f);
-		bodyd.setAngularDamping(9.f);
+		body.setFixedRotation(false);
+		body.setLinearDamping(1.f);
+		body.setAngularDamping(9.f);
 
-		f.setCuerpo(bodyd);
+		f.setCuerpo(body);
+		body.setUserData(f);
  
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(f.getAncho(), f.getAlto());
  
-		Fixture fixture = bodyd.createFixture(shape, 5.f);
+		Fixture fixture = body.createFixture(shape, 5.f);
 		fixture.setRestitution(1);
 
 		shape.dispose();
-        return bodyd;
+        return body;
     }
+
+	public void eliminarCuerpo(Figura f) {
+		mundo.destroyBody(f.getCuerpo());
+	}
 
 }

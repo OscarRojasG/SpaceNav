@@ -1,15 +1,12 @@
 package com.mygdx.game.asteroides;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Polygon;
+import com.mygdx.game.Bala;
 import com.mygdx.game.Enemigo;
+import com.mygdx.game.FiguraBits;
 import com.mygdx.game.Nave;
 import com.mygdx.game.Util;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.mygdx.game.b2Modelo;
 
 public class Asteroide extends Enemigo {
 
@@ -20,6 +17,7 @@ public class Asteroide extends Enemigo {
         float r = Util.generateRandomFloat(0, 1);
         this.getCuerpo().setAngularVelocity(r);
         this.tipo = tipo;
+        this.setCollisionData(FiguraBits.ASTEROIDE.bit, (short) (FiguraBits.BALA.bit | FiguraBits.NAVE.bit | FiguraBits.BORDE.bit | FiguraBits.ASTEROIDE.bit));
         System.out.println("R:" + r);
 
     }
@@ -48,8 +46,17 @@ public class Asteroide extends Enemigo {
     }
 
 	@Override
-	public void agregarEfecto(Nave nave) {
+	public void enColisionNave(Nave nave) {
+		setDestruida(true);
+		explotar();
 		nave.herir();
+	}
+	
+	@Override
+	public void enColisionBala(Bala bala) {
+		setDestruida(true);
+		bala.setDestruida(true);
+		explotar();
 	}
 	
 }

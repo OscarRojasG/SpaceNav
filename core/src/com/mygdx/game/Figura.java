@@ -21,8 +21,11 @@ public abstract class Figura {
 	private float alto;
 	private float angulo;
 
-	private Body cuerpo = null;
-	private BodyDef body_def = null;
+	private Body cuerpo;
+	private BodyDef bodyDef;
+	private short categoryBits;
+	
+	private boolean destruida = false;
 	
 	public Figura(float x, float y, float ancho, float alto, BodyType type) {
 		this.ancho = ancho;
@@ -45,12 +48,6 @@ public abstract class Figura {
 	 * @return boolean: Retorna false si la Figura permanece en pantalla, true en caso contrario
 	 * */
 	public boolean isOffscreen() {
-        if (getX() < 0 || getX() + getAncho() > Gdx.graphics.getWidth()) 
-            return true;
-        
-        if (getY() < 0 || getY() + getAlto() > Gdx.graphics.getHeight())
-        	return true;
-        
         return false;
     }
 	
@@ -106,14 +103,14 @@ public abstract class Figura {
 	 * @param float: Nueva posición para la Figura respecto al eje x.
 	 * */
     public void setX(float x) {
-    	this.posicion.x = x;
+    	this.cuerpo.getPosition().set(x, getY());
     }
     
     /** Sobrescribe la posición de la Figura en el eje y por el parametro recibido.
 	 * @param float: Nueva posición para la Figura respecto al eje y.
 	 * */
     public void setY(float y) {
-    	this.posicion.y = y;
+    	this.cuerpo.getPosition().set(getX(), y);
     }
     
     /** Sobrescribe la velocidad de la Figura respecto al eje x.
@@ -241,7 +238,7 @@ public abstract class Figura {
 
 	public void crearCuerpo(World w) {
 		try {
-			w.createBody(this.body_def);
+			w.createBody(this.bodyDef);
 		} catch(NullPointerException e) {
 			throw new RuntimeException("Cuerpo sin definir");
 		}
@@ -253,6 +250,7 @@ public abstract class Figura {
 		filter.maskBits = maskBits;
 		filter.categoryBits = categoryBits;
 		fixture.setFilterData(filter);
+		this.categoryBits = categoryBits;
 	}
 	
 	public Fixture getFixture() {
@@ -263,21 +261,31 @@ public abstract class Figura {
 
 	}
 
-
     public void setBodyDef(BodyDef bodyDef) {
-    	this.body_def = bodyDef;
+    	this.bodyDef = bodyDef;
 		
 	}
 
     public BodyDef getBodyDef() {
-    	return this.body_def;
+    	return this.bodyDef;
 		
 	}
 
     public void init(BodyType type) {
+    	
     }
-
-		
+    
+    public short getCategoryBits() {
+    	return categoryBits;
+    }
+    
+    public boolean estaDestruida() {
+    	return destruida;
+    }
+    
+    public void setDestruida(boolean b) {
+    	destruida = b;
+    }
 
 }
 

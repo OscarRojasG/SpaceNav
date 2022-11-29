@@ -5,6 +5,9 @@ import java.util.Iterator;
 
 import com.mygdx.game.Figura;
 import com.mygdx.game.Movil;
+import com.mygdx.game.Nave;
+import com.mygdx.game.b2Modelo;
+import com.mygdx.game.asteroides.Asteroide;
 
 public class ColeccionMovil {
 	private ArrayList<Movil> moviles;
@@ -20,14 +23,15 @@ public class ColeccionMovil {
 	public void eliminar(Movil movil) {
 		moviles.remove(movil);
 	}
-	
-	public void actualizar() {
+
+	public void eliminarDestruidos() {
 		for (int i = 0; i < moviles.size(); i++) {
 			Movil movil = moviles.get(i);
-			movil.actualizar();
+			Figura figura = (Figura) movil;
 			
-			if(((Figura)movil).isOffscreen()) {
+			if(figura.estaDestruida()) {
 				eliminar(movil);
+				b2Modelo.getModelo().eliminarCuerpo(figura);
 			}
 		}
 	}

@@ -46,7 +46,7 @@ public class Nave extends FiguraForma implements Movil{
     	super(x, y, anchoNave, altoNave, BodyType.DynamicBody);
 		this.getCuerpo().setLinearDamping(1.f);
 		this.getCuerpo().setAngularDamping(9.f);
-		this.setCollisionData(FiguraBits.NAVE.bit, (short) (FiguraBits.BORDE.bit | FiguraBits.ENEMIGO.bit));
+		this.setCollisionData(FiguraBits.NAVE.bit, (short) (FiguraBits.BORDE.bit | FiguraBits.ASTEROIDE.bit));
     }
     
 
@@ -104,10 +104,6 @@ public class Nave extends FiguraForma implements Movil{
 			sr.triangle(fx1, fy1, fx2, fy2, fx3, fy3);
 			sr.end();
 		}
-
-        if (this.getXEscala() < -Gdx.graphics.getWidth()/2) {
-            System.out.println("out left\n");
-        }
 	}
 
     /** Genera una animación donde el Sprite Nave simula temblar en pantalla. */
@@ -126,7 +122,6 @@ public class Nave extends FiguraForma implements Movil{
     		}
     		return false;
     	}
-    	
         return Gdx.input.isKeyJustPressed(Input.Keys.Z) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
     }
     
@@ -160,7 +155,7 @@ public class Nave extends FiguraForma implements Movil{
     
     /** Cambia el tiempo a permanecer herido de la nave, quita vida al herirse y reproduce el sonido de Nave herida. */
     public void herir() {
-    	tiempoHerido = tiempoHeridoMax;
+    	// tiempoHerido = tiempoHeridoMax;
     	sonidoHerido.play();
     	quitarVida();
     }

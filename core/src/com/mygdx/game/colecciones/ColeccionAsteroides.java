@@ -97,18 +97,6 @@ public class ColeccionAsteroides extends ColeccionMovil {
         }
     }
 
-    public void verificarColisiones(Nave nave) {
-        Iterator<Movil> asteroides = getObjetos(); 
-        while(asteroides.hasNext()) {
-            Asteroide asteroide = (Asteroide) asteroides.next();
-            if (asteroide.verificarColision(nave)) {
-                asteroide.agregarEfecto(nave);
-                asteroides.remove();
-                eliminar(asteroide);
-            }
-        }
-    }
-
     private int generarAsteroideAleatorio(int nivel) {
         if(nivel > 20) return ASTEROID_SIZE_SMALL;
         if(nivel > 10) return Util.generateRandomInt(ASTEROID_SIZE_SMALL, ASTEROID_SIZE_MEDIUM);
