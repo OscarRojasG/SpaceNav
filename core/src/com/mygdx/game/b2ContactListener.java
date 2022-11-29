@@ -23,11 +23,17 @@ public class b2ContactListener implements ContactListener {
 			((Asteroide) figuraA).enColisionNave((Nave) figuraB);
 		}
 		
-		if (categoryA == FiguraBits.ASTEROIDE.bit && categoryB == FiguraBits.BALA.bit ) {
-			((Asteroide) figuraA).enColisionBala((Bala) figuraB);
+		if (
+                ((categoryA == FiguraBits.ASTEROIDE.bit) || categoryA == FiguraBits.ENEMIGO.bit) &&
+                categoryB == FiguraBits.BALA.bit
+        ) {
+			((Enemigo) figuraA).enColisionBala((Bala) figuraB);
 		}
-		if (categoryA == FiguraBits.BALA.bit && categoryB == FiguraBits.ASTEROIDE.bit ) {
-			((Asteroide) figuraB).enColisionBala((Bala) figuraA);
+		if (
+                categoryA == FiguraBits.BALA.bit &&
+                (categoryB == FiguraBits.ASTEROIDE.bit || categoryB == FiguraBits.ENEMIGO.bit )
+        ) {
+			((Enemigo) figuraB).enColisionBala((Bala) figuraA);
 		}
 		
 		if (categoryA == FiguraBits.NAVE.bit && categoryB == FiguraBits.CONSUMIBLE.bit) {

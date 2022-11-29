@@ -25,5 +25,12 @@ public class BasuraEspacial extends Enemigo {
 		bala.setDestruida(true);
 		explotar();
 	}
+
+    @Override
+    public void actualizar() {
+        // TODO Auto-generated method stub
+        
+    }
+
 	
 }

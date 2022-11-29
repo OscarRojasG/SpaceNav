@@ -107,34 +107,6 @@ public class ColeccionBasuraEspacial extends ColeccionMovil {
         }
 	}
 	
-	public void verificarColisiones() {
-		Iterator<Movil> enemigos = getObjetos(); 
-		while(enemigos.hasNext()) {
-			Enemigo enemigo = (Enemigo) enemigos.next();
-			Iterator<Movil> enemigos2 = getObjetos();
-			
-			while(enemigos2.hasNext()) {
-				Enemigo enemigo2 = (Enemigo) enemigos2.next();
-				
-				if(enemigo != enemigo2) {
-					enemigo.verificarColision(enemigo2);
-				}
-			}
-		}
-	}
-	
-	public void verificarColisiones(Nave nave) {
-		Iterator<Movil> enemigos = getObjetos(); 
-		while(enemigos.hasNext()) {
-			Enemigo enemigo = (Enemigo) enemigos.next();
-	    	if (enemigo.verificarColision(nave)) {
-	    		nave.herir();
-	    		enemigos.remove();
-	    		eliminar(enemigo);
-	    	}
-	    }
-	}
-	
 	private int generarEnemigoAleatorio() {
 		return Util.generateRandomInt(1, 2);
 	}
