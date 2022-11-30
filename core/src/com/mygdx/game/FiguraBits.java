@@ -7,8 +7,8 @@ public enum FiguraBits {
 	NAVE       		((short) 0x0002),
 	BALA	   		((short) 0x0004),
 	ASTEROIDE  		((short) 0x0008),
-	BASURA_ESPACIAL ((short) 0x0016),
-	CONSUMIBLE 		((short) 0x0032);
+	BASURA_ESPACIAL ((short) 0x0010),
+	CONSUMIBLE 		((short) 0x0020);
 
     public final short bit;
 
