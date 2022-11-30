@@ -81,9 +81,12 @@ public class ColeccionAsteroides extends ColeccionFiguras {
 			if (asteroide.estaDestruida()) {
 				asteroides.remove();
 				eliminar(asteroide);
-				consumibles.generar(asteroide.getX(), asteroide.getY(), 
-									asteroide.getVelocidadX(), asteroide.getVelocidadY());
 				puntaje += asteroide.getPuntaje();
+				
+				if (asteroide.getGeneraConsumible()) {
+					consumibles.generar(asteroide.getX(), asteroide.getY(), 
+										asteroide.getVelocidadX(), asteroide.getVelocidadY());
+				}
 			}	
 		}
 		

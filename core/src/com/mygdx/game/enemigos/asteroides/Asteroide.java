@@ -1,17 +1,12 @@
 package com.mygdx.game.enemigos.asteroides;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Polygon;
-import com.mygdx.game.Bala;
 import com.mygdx.game.Enemigo;
 import com.mygdx.game.FiguraBits;
 import com.mygdx.game.Util;
 import com.mygdx.game.naves.Nave;
 
 public class Asteroide extends Enemigo {
+	private boolean generaConsumible = true;
 	
     public Asteroide(float x, float y, float ancho, float alto, float velX, float velY, int puntaje) {
     	super(x, y, ancho, alto, velX, velY, puntaje);
@@ -20,5 +15,19 @@ public class Asteroide extends Enemigo {
         this.setCollisionData(FiguraBits.ASTEROIDE.bit, (short) (FiguraBits.BALA.bit | FiguraBits.NAVE.bit | FiguraBits.BORDE.bit | 
         														 FiguraBits.ASTEROIDE.bit));
     }
+    
+    public void setGeneraConsumible(boolean b) {
+    	this.generaConsumible = b;
+    }
+    
+    public boolean getGeneraConsumible() {
+    	return generaConsumible;
+    }
+    
+    @Override
+	public void enColisionNave(Nave nave) {
+		generaConsumible = false;
+    	super.enColisionNave(nave);
+	}
 	
 }

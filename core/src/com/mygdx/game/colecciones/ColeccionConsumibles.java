@@ -14,7 +14,7 @@ public class ColeccionConsumibles extends ColeccionFiguras {
 	private final static int CONSUMIBLE_SUPERNAVE = 2;
 	
 	public void generar(float x, float y, float velX, float velY) {
-		int p = Util.generateRandomInt(0, 7);
+		int p = Util.generateRandomInt(0, 0);
 		if(p != 0)
 			return;	
 		
