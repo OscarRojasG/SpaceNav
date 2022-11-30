@@ -18,7 +18,7 @@ public class Asteroide extends Enemigo {
         float r = Util.generateRandomFloat(0, 1);
         this.getCuerpo().setAngularVelocity(r);
         this.setCollisionData(FiguraBits.ASTEROIDE.bit, (short) (FiguraBits.BALA.bit | FiguraBits.NAVE.bit | FiguraBits.BORDE.bit | 
-        														 FiguraBits.ASTEROIDE.bit | FiguraBits.BASURA_ESPACIAL.bit));
+        														 FiguraBits.ASTEROIDE.bit));
     }
     
 	@Override
