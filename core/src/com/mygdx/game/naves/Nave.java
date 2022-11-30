@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.naves;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -6,8 +6,13 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.mygdx.game.Bala;
+import com.mygdx.game.FiguraBits;
+import com.mygdx.game.FiguraForma;
+import com.mygdx.game.Movil;
+import com.mygdx.game.Util;
 
-public class Nave extends FiguraForma implements Movil{
+public class Nave extends FiguraForma implements Movil {
 	private static final float anchoNave = .9f;
 	private static final float altoNave = 1.3f;
 
@@ -19,35 +24,31 @@ public class Nave extends FiguraForma implements Movil{
 	
 	private final float velNave = 60.f;
 	private final float tiempoHeridoMax = 0.8f;
-	
-	private final float anchoBala = 0.1f;
-	private final float altoBala = 0.1f;
-	private final float velDisparoSupernave = 8.5f;
-	private final float anchoBalaSupernave = 0.2f;
-	private final float altoBalaSupernave = 0.2f;
 
-	int x1 = -20; int y1 = -30;
-	int x2 = 0; int y2 = 30;
-	int x3 = 20; int y3 = -30;
-	int x4 = 0; int y4 = -20;
+	private int x1 = -20, y1 = -30;
+	private int x2 =   0, y2 =  30;
+	private int x3 =  20, y3 = -30;
+	private int x4 =   0, y4 = -20;
 
-	int fx1 = -10; int fy1 = -25;
-	int fx2 = 10; int fy2 = -25;
-	int fx3 = 0; int fy3 = -40;
-
+	private int fx1 = -10, fy1 = -25;
+	private int fx2 =  10, fy2 = -25;
+	private int fx3 =   0, fy3 = -40;
 	
     private int vidas = 3;
     private float tiempoHerido;
     
-    private float tiempoSupernave;
-    private float tiempoUltimoDisparo;
+    private DisparoNave disparoNave;
+    private float tiempoMejorada;
+    private boolean mejorada;
     
-    public Nave(int x, int y) {
+    public Nave(float x, float y) {
     	super(x, y, anchoNave, altoNave, BodyType.DynamicBody);
 		this.getCuerpo().setLinearDamping(1.f);
 		this.getCuerpo().setAngularDamping(9.f);
 		this.setCollisionData(FiguraBits.NAVE.bit, (short) (FiguraBits.BORDE.bit | FiguraBits.ASTEROIDE.bit | 
 				FiguraBits.CONSUMIBLE.bit | FiguraBits.BASURA_ESPACIAL.bit));
+		
+		disparoNave = new DisparoNaveComun(this);
     }
     
 
@@ -58,11 +59,15 @@ public class Nave extends FiguraForma implements Movil{
     		animarNaveHerida();
     		return;
     	}
-
     	
-        
-    	if (esSupernave())
-    		tiempoSupernave -= Gdx.graphics.getDeltaTime();
+    	if (mejorada) {
+    		tiempoMejorada -= Gdx.graphics.getDeltaTime();
+    		if (tiempoMejorada < 0) {
+    			disparoNave = new DisparoNaveComun(this);
+    			tiempoMejorada = 0;
+    			mejorada = false;
+    		}
+    	}
     	
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
         	float fx = this.getCuerpo().getMass() * ACELERACION * (float)-Math.sin(getCuerpo().getAngle());
@@ -112,34 +117,12 @@ public class Nave extends FiguraForma implements Movil{
     	setX(getX() + Util.generateRandomInt(-2, 2));
     }
     
-    /**
-     * @return boolean: Retorna true si la Nave debe disparar
-     * */
-    public boolean disparar() {
-    	if(esSupernave()) {
-    		if ((tiempoUltimoDisparo - tiempoSupernave) > (1 / velDisparoSupernave)) {
-    			tiempoUltimoDisparo = tiempoSupernave;
-    			return true;
-    		}
-    		return false;
+    public Bala disparar() {
+    	if (disparoNave.puedeDisparar()) {
+    		disparoNave.reproducirSonidoDisparo();
+    		return disparoNave.generarBala();
     	}
-        return Gdx.input.isKeyJustPressed(Input.Keys.Z) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
-    }
-    
-    /**
-     * @return Bala: Genera la clase Bala (Sprite) de forma que "sale" de la nave en pantalla.
-     * */
-    public Bala generarBala() {
-    	sonidoDisparo.play(0.01f);
-    	
-    	// Ubicación de la bala en el ángulo 0
-        float x = getX() - getAlto() * (float)Math.sin(this.getAngulo()); 
-        float y = getY() + getAlto() * (float)Math.cos(this.getAngulo()); 
-
-    	if (esSupernave())
-    		return new Bala(x, y, anchoBalaSupernave, altoBalaSupernave, 70f, getAngulo());
-    	
-    	return new Bala(x, y, anchoBala, altoBala, 50f, getAngulo());
+    	return null;
     }
     
     /** Cambia el tiempo a permanecer herido de la nave, quita vida al herirse y reproduce el sonido de Nave herida. */
@@ -147,12 +130,6 @@ public class Nave extends FiguraForma implements Movil{
     	// tiempoHerido = tiempoHeridoMax;
     	sonidoHerido.play();
     	quitarVida();
-    }
-    
-    /** Maneja el tiempo que ha estado en accion el consumible Supernave. */
-    public void mejorar(float tiempo) {
-    	tiempoSupernave = tiempo;
-    	tiempoUltimoDisparo = tiempo;
     }
     
     /** Verifica si al ser herida, la nave perdio su ultima vida.
@@ -171,17 +148,6 @@ public class Nave extends FiguraForma implements Movil{
  	   
  	   tiempoHerido = 0;
  	   return false;
-    }
-    
-    /** Verifica si lel consumible de Supernave continua o termino.
-     * @return boolean: true si el tiempo del consumible Supernave no ha acabado. Si ya acabo retorna false.
-     * */
-    public boolean esSupernave() {
-  	   if (tiempoSupernave > 0)
- 		   return true;
- 	   
- 	   tiempoSupernave = 0;
- 	   return false;    	
     }
     
     /** Aumenta la cantidad de vidas de la Nave en 1. */
@@ -208,6 +174,16 @@ public class Nave extends FiguraForma implements Movil{
 		// }
 		// setVelocidadX(getVelocidadX() - 1);
 		// setVelocidadY(getVelocidadY() - 1);
+	}
+	
+	public Sound getSonidoDisparo() {
+		return sonidoDisparo;
+	}
+	
+	public void mejorar(float tiempo) {
+		disparoNave = new DisparoNaveMejorada(this);
+		this.tiempoMejorada = tiempo;
+		this.mejorada = true;
 	}
 	
 }

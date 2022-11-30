@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.mygdx.game.enemigos.asteroides.Asteroide;
+import com.mygdx.game.naves.Nave;
 import com.mygdx.game.consumibles.Consumible;
 
 public class b2ContactListener implements ContactListener {

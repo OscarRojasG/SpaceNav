@@ -196,6 +196,10 @@ public abstract class Figura {
 		this.categoryBits = categoryBits;
 	}
 	
+	public void setAngulo(float angulo) {
+		this.cuerpo.setAngularVelocity(angulo);
+	}
+	
     public float getAngulo() {
         return this.cuerpo.getAngle();
     }

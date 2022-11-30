@@ -9,12 +9,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Enemigo;
 import com.mygdx.game.Movil;
-import com.mygdx.game.Nave;
 import com.mygdx.game.Util;
 import com.mygdx.game.b2Modelo;
 import com.mygdx.game.consumibles.Consumible;
 import com.mygdx.game.enemigos.basuraEspacial.BasuraBuilder;
 import com.mygdx.game.enemigos.basuraEspacial.BasuraEspacial;
+import com.mygdx.game.naves.Nave;
 
 public class ColeccionBasuraEspacial extends ColeccionMovil {
 	private final static int HIRIENTE_DESECHO_COHETE = 1;

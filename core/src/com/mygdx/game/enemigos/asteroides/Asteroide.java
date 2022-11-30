@@ -8,8 +8,8 @@ import com.badlogic.gdx.math.Polygon;
 import com.mygdx.game.Bala;
 import com.mygdx.game.Enemigo;
 import com.mygdx.game.FiguraBits;
-import com.mygdx.game.Nave;
 import com.mygdx.game.Util;
+import com.mygdx.game.naves.Nave;
 
 public class Asteroide extends Enemigo {
 	
