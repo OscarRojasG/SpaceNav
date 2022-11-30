@@ -10,9 +10,10 @@ import com.mygdx.game.Bala;
 import com.mygdx.game.FiguraBits;
 import com.mygdx.game.FiguraForma;
 import com.mygdx.game.Util;
+import com.mygdx.game.b2Modelo;
 
 public class Nave extends FiguraForma {
-	private static final float anchoNave = .9f;
+	private static final float anchoNave = 0.9f;
 	private static final float altoNave = 1.3f;
 
 	private static final Sound sonidoHerido = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
@@ -20,9 +21,8 @@ public class Nave extends FiguraForma {
 
     private static final float ROTACION = 18f;
     private static final float ACELERACION = 45.f;
-	
-	private final float velNave = 60.f;
-	private final float tiempoHeridoMax = 0.8f;
+    
+    private static final float tiempoHeridoMax = 0.5f;
 
 	private int x1 = -20, y1 = -30;
 	private int x2 =   0, y2 =  30;
@@ -86,11 +86,7 @@ public class Nave extends FiguraForma {
     }
     
     public void actualizar() {
-    	if (estaHerida()) {
-    		tiempoHerido -= Gdx.graphics.getDeltaTime();
-    		animarNaveHerida();
-    		return;
-    	}
+    	if (verificarNaveHerida()) return;
     	
     	if (mejorada) {
     		tiempoMejorada -= Gdx.graphics.getDeltaTime();
@@ -117,13 +113,8 @@ public class Nave extends FiguraForma {
         }
     }
 
-    /** Genera una animación donde el Sprite Nave simula temblar en pantalla. */
-    private void animarNaveHerida() {
-    	setX(getX() + Util.generateRandomInt(-2, 2));
-    }
-    
     public Bala disparar() {
-    	if (disparoNave.puedeDisparar()) {
+    	if (disparoNave.puedeDisparar() && !estaHerida()) {
     		disparoNave.reproducirSonidoDisparo();
     		return disparoNave.generarBala();
     	}
@@ -132,20 +123,38 @@ public class Nave extends FiguraForma {
     
     /** Cambia el tiempo a permanecer herido de la nave, quita vida al herirse y reproduce el sonido de Nave herida. */
     public void herir() {
-    	// tiempoHerido = tiempoHeridoMax;
+    	tiempoHerido = tiempoHeridoMax;
     	sonidoHerido.play();
     	quitarVida();
+    }
+    
+    public boolean verificarNaveHerida() {
+    	b2Modelo modelo = b2Modelo.getModelo();
+    	
+    	if (estaHerida()) {
+        	if(!modelo.estaCongelado()) {
+        		b2Modelo.getModelo().setCongelado(true);
+        		this.congelar(false);
+        		this.setVelocidad(0, 0);
+        		this.setAngulo(0);
+        	}
+        	
+    		tiempoHerido -= Gdx.graphics.getDeltaTime();
+    		setX(getX() + Util.generateRandomInt(-100, 100)/1000f);
+    		return true;
+    	}
+    	
+    	if(modelo.estaCongelado()) {
+    		b2Modelo.getModelo().setCongelado(false);
+    	}
+    	return false;
     }
     
     /** Verifica si la animación de Nave herida continua o termino.
      * @return boolean: true si el tiempo de animación de Nave herida no ha acabado. Si ya acabo retorna false.
      * */
     public boolean estaHerida() {
- 	   if (tiempoHerido > 0)
- 		   return true;
- 	   
- 	   tiempoHerido = 0;
- 	   return false;
+ 	   return tiempoHerido > 0;
     }
     
     /** Aumenta la cantidad de vidas de la Nave en 1. */

@@ -1,15 +1,11 @@
 package com.mygdx.game;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -22,6 +18,8 @@ public class b2Modelo{
     private static Matrix4 scaled_camera = null;
 	private float fraccion_frame = 0;
     private static final float SCALE = 25.f;
+    
+    private boolean congelado = false;
 
     private static b2Modelo ref = null;
 
@@ -94,6 +92,21 @@ public class b2Modelo{
 		for (int i = 0; i < bodies.size; i++) {
 			mundo.destroyBody(bodies.get(i));
 		}
+	}
+	
+	public void setCongelado(boolean b) {
+		Array<Body> bodies = new Array<Body>();
+		mundo.getBodies(bodies);
+		
+		for (int i = 0; i < bodies.size; i++) {
+			bodies.get(i).setActive(!b);
+		}
+		
+		this.congelado = b;
+	}
+
+	public boolean estaCongelado() {
+		return congelado;
 	}
 
 }

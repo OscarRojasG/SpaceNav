@@ -80,14 +80,19 @@ public abstract class Figura {
 	 * @param float: Nueva posición para la Figura respecto al eje x.
 	 * */
     public void setX(float x) {
-    	this.cuerpo.getPosition().set(x, getY());
+    	this.cuerpo.setTransform(x, getY(), getAngulo());
     }
     
     /** Sobrescribe la posición de la Figura en el eje y por el parametro recibido.
 	 * @param float: Nueva posición para la Figura respecto al eje y.
 	 * */
     public void setY(float y) {
-    	this.cuerpo.getPosition().set(getX(), y);
+    	this.cuerpo.setTransform(getX(), y, getAngulo());
+    }
+    
+    public void setPosicion(float x, float y) {
+    	setX(x);
+    	setY(y);
     }
     
     /** Sobrescribe la velocidad de la Figura respecto al eje x.
@@ -102,6 +107,11 @@ public abstract class Figura {
 	 * */
 	public void setVelocidadY(float velY) {
 		this.cuerpo.setLinearVelocity(getVelocidadX(), velY);
+	}
+	
+	public void setVelocidad(float velX, float velY) {
+		setVelocidadX(velX);
+		setVelocidadY(velY);
 	}
     
     /** Sobrescribe el tamaño de la Figura por los parametros recibidos.
@@ -225,6 +235,10 @@ public abstract class Figura {
     
     public void setDestruida(boolean b) {
     	destruida = b;
+    }
+    
+    public void congelar(boolean b) {
+    	this.cuerpo.setActive(!b);
     }
 
 }

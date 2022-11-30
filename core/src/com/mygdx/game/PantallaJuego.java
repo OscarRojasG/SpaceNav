@@ -11,8 +11,6 @@ import com.mygdx.game.colecciones.ColeccionAsteroides;
 import com.mygdx.game.colecciones.ColeccionBalas;
 import com.mygdx.game.colecciones.ColeccionConsumibles;
 import com.mygdx.game.naves.Nave;
-import com.mygdx.game.naves.DisparoNaveComun;
-import com.mygdx.game.naves.DisparoNaveMejorada;
 import com.mygdx.game.colecciones.ColeccionBasuraEspacial;
 
 public class PantallaJuego implements Screen {
@@ -77,7 +75,7 @@ public class PantallaJuego implements Screen {
 	
 	@Override
 	public void render(float delta) {
-	    nave.actualizar();
+		nave.actualizar();
 		modelo.actualizar();
 	    
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

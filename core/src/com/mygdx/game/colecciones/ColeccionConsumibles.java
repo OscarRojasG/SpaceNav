@@ -27,6 +27,7 @@ public class ColeccionConsumibles extends ColeccionFiguras {
 	
 	public void generar(float x, float y, float velX, float velY) {
 		int p = Util.generateRandomInt(0, 10);
+		
 		if(p != 0)
 			return;	
 		
