@@ -4,19 +4,16 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Enemigo;
-import com.mygdx.game.Movil;
+import com.mygdx.game.Figura;
 import com.mygdx.game.Util;
 import com.mygdx.game.b2Modelo;
-import com.mygdx.game.consumibles.Consumible;
 import com.mygdx.game.enemigos.basuraEspacial.BasuraBuilder;
 import com.mygdx.game.enemigos.basuraEspacial.BasuraEspacial;
-import com.mygdx.game.naves.Nave;
 
-public class ColeccionBasuraEspacial extends ColeccionMovil {
+public class ColeccionBasuraEspacial extends ColeccionFiguras {
 	private final static int HIRIENTE_DESECHO_COHETE = 1;
 	private final static int HIRIENTE_SATELITE = 2;
 	
@@ -35,7 +32,7 @@ public class ColeccionBasuraEspacial extends ColeccionMovil {
 	
 	@Override
 	public void eliminarDestruidos() {
-		Iterator<Movil> enemigos = getObjetos(); 
+		Iterator<Figura> enemigos = getObjetos(); 
 		while(enemigos.hasNext()) {
 			Enemigo enemigo = (Enemigo) enemigos.next();			
 			if (enemigo.estaDestruida() || enemigo.isOffscreen()) {
@@ -109,7 +106,7 @@ public class ColeccionBasuraEspacial extends ColeccionMovil {
 	}
 	
 	public void dibujar(ShapeRenderer sp) {
-		Iterator<Movil> enemigos = getObjetos();
+		Iterator<Figura> enemigos = getObjetos();
 		BasuraEspacial enemigo;
 		try {
 			while(enemigos.hasNext()) {

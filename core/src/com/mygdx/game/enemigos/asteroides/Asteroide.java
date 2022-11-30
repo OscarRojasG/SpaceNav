@@ -20,11 +20,5 @@ public class Asteroide extends Enemigo {
         this.setCollisionData(FiguraBits.ASTEROIDE.bit, (short) (FiguraBits.BALA.bit | FiguraBits.NAVE.bit | FiguraBits.BORDE.bit | 
         														 FiguraBits.ASTEROIDE.bit));
     }
-    
-	@Override
-	public void actualizar() {
-		// TODO Auto-generated method stub
-		
-	}
 	
 }

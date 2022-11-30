@@ -9,10 +9,9 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.mygdx.game.Bala;
 import com.mygdx.game.FiguraBits;
 import com.mygdx.game.FiguraForma;
-import com.mygdx.game.Movil;
 import com.mygdx.game.Util;
 
-public class Nave extends FiguraForma implements Movil {
+public class Nave extends FiguraForma {
 	private static final float anchoNave = .9f;
 	private static final float altoNave = 1.3f;
 
@@ -51,8 +50,6 @@ public class Nave extends FiguraForma implements Movil {
 		disparoNave = new DisparoNaveComun(this);
     }
     
-
-	@Override
     public void actualizar() {
     	if (estaHerida()) {
     		tiempoHerido -= Gdx.graphics.getDeltaTime();
@@ -165,15 +162,6 @@ public class Nave extends FiguraForma implements Movil {
 	 * */
 	public int getVidas() {
 		return vidas;
-	}
-	
-	/** Clase que se encarga de disminuir la velocidad general en 1 si que la Nave quede estatica. */
-	public void desacelerar() {
-		// if(getVelocidadX() < 3) {
-		// 	return;
-		// }
-		// setVelocidadX(getVelocidadX() - 1);
-		// setVelocidadY(getVelocidadY() - 1);
 	}
 	
 	public Sound getSonidoDisparo() {

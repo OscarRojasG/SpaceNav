@@ -1,9 +1,7 @@
 package com.mygdx.game.enemigos.basuraEspacial;
 
-import com.mygdx.game.Bala;
 import com.mygdx.game.Enemigo;
 import com.mygdx.game.FiguraBits;
-import com.mygdx.game.naves.Nave;
 
 public class BasuraEspacial extends Enemigo {
 	
@@ -12,12 +10,5 @@ public class BasuraEspacial extends Enemigo {
         this.getCuerpo().setAngularVelocity(0.0f);
         this.setCollisionData(FiguraBits.BASURA_ESPACIAL.bit, (short) (FiguraBits.BALA.bit | FiguraBits.NAVE.bit));
     }
-
-    @Override
-    public void actualizar() {
-        // TODO Auto-generated method stub
-        
-    }
-
 	
 }

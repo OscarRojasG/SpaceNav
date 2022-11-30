@@ -5,18 +5,13 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
-public class Bala extends FiguraForma implements Movil {
+public class Bala extends FiguraForma {
 	
     public Bala(float x, float y, float ancho, float alto, float vel, float angulo) {
     	super(x, y, ancho, alto, BodyType.DynamicBody);
         this.getCuerpo().setLinearVelocity(vel * (float)-Math.sin(angulo), vel * (float)Math.cos(angulo));
         this.setCollisionData(FiguraBits.BALA.bit, (short) (FiguraBits.ASTEROIDE.bit | FiguraBits.BASURA_ESPACIAL.bit));
     }
-    
-	@Override
-	public void actualizar() {
-        System.out.println(this.getCuerpo().getLinearVelocity().dst(0, 0));
-	}
 
 	@Override
 	public void dibujar(ShapeRenderer sr) {
@@ -24,7 +19,6 @@ public class Bala extends FiguraForma implements Movil {
         sr.begin(ShapeType.Line);
         sr.setColor(0xff, 0xff, 0xff, 1);
         sr.identity();
-		// sr.translate(getOrigenX(), getOrigenY(), 0);
         sr.polygon(p.getTransformedVertices());
         sr.end();	
 	}

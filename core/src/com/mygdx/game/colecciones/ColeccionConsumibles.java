@@ -4,20 +4,17 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Figura;
-import com.mygdx.game.Movil;
 import com.mygdx.game.Util;
-import com.mygdx.game.b2Modelo;
 import com.mygdx.game.consumibles.Consumible;
 import com.mygdx.game.consumibles.Supernave;
 import com.mygdx.game.consumibles.VidaExtra;
-import com.mygdx.game.naves.Nave;
 
-public class ColeccionConsumibles extends ColeccionMovil {
+public class ColeccionConsumibles extends ColeccionFiguras {
 	private final static int CONSUMIBLE_VIDA = 1;
 	private final static int CONSUMIBLE_SUPERNAVE = 2;
 	
 	public void generar(float x, float y, float velX, float velY) {
-		int p = Util.generateRandomInt(0, 0);
+		int p = Util.generateRandomInt(0, 7);
 		if(p != 0)
 			return;	
 		
@@ -38,7 +35,7 @@ public class ColeccionConsumibles extends ColeccionMovil {
 	}
 	
 	public void dibujar(SpriteBatch batch) {
-		Iterator<Movil> consumibles = getObjetos(); 
+		Iterator<Figura> consumibles = getObjetos(); 
 		while(consumibles.hasNext()) {
 			Consumible consumible = (Consumible) consumibles.next();
 			consumible.dibujar(batch);
@@ -47,7 +44,7 @@ public class ColeccionConsumibles extends ColeccionMovil {
 	
 	@Override
 	public void eliminarDestruidos() {
-		Iterator<Movil> consumibles = getObjetos(); 
+		Iterator<Figura> consumibles = getObjetos(); 
 		while(consumibles.hasNext()) {
 			Consumible consumible = (Consumible) consumibles.next();			
 			if (consumible.noUsado() || consumible.estaDestruida()) {
@@ -57,7 +54,7 @@ public class ColeccionConsumibles extends ColeccionMovil {
 		}
 	}
 	
-	private  int generarConsumibleAleatorio() {
+	private int generarConsumibleAleatorio() {
 		return Util.generateRandomInt(1, 2);
 	}
 	

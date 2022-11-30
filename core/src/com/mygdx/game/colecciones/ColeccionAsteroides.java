@@ -6,13 +6,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.Movil;
+import com.mygdx.game.Figura;
 import com.mygdx.game.Util;
 import com.mygdx.game.b2Modelo;
 import com.mygdx.game.enemigos.asteroides.Asteroide;
 import com.mygdx.game.enemigos.asteroides.AsteroideBuilder;
 
-public class ColeccionAsteroides extends ColeccionMovil {
+public class ColeccionAsteroides extends ColeccionFiguras {
     private final int ASTEROID_MIN_ANGLE = -90;
     private final int ASTEROID_MAX_ANGLE = 90;
     private final int ASTEROID_SIZE_SMALL = 1;
@@ -75,7 +75,7 @@ public class ColeccionAsteroides extends ColeccionMovil {
     public int eliminarDestruidos(ColeccionConsumibles consumibles) {
     	int puntaje = 0;
     	
-		Iterator<Movil> asteroides = getObjetos(); 
+		Iterator<Figura> asteroides = getObjetos(); 
 		while(asteroides.hasNext()) {
 			Asteroide asteroide = (Asteroide) asteroides.next();			
 			if (asteroide.estaDestruida()) {
@@ -91,7 +91,7 @@ public class ColeccionAsteroides extends ColeccionMovil {
     }
 
     public void dibujar(ShapeRenderer sp) { 
-        Iterator<Movil> asteroides = getObjetos(); 
+        Iterator<Figura> asteroides = getObjetos(); 
         while(asteroides.hasNext()) {
         	Asteroide asteroide = (Asteroide) asteroides.next();
         	asteroide.dibujar(sp);

@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.mygdx.game.naves.Nave;
 
-public abstract class Enemigo extends FiguraForma implements Movil, NaveColisionable, BalaColisionable {
+public abstract class Enemigo extends FiguraForma implements NaveColisionable, BalaColisionable {
 	
 	private int puntaje;
 	private Color color;
