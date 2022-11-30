@@ -3,7 +3,7 @@ package com.mygdx.game.enemigos.basuraEspacial;
 import com.mygdx.game.Bala;
 import com.mygdx.game.Enemigo;
 import com.mygdx.game.FiguraBits;
-import com.mygdx.game.Nave;
+import com.mygdx.game.naves.Nave;
 
 public class BasuraEspacial extends Enemigo {
 	

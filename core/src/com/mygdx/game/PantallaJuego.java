@@ -10,6 +10,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.colecciones.ColeccionAsteroides;
 import com.mygdx.game.colecciones.ColeccionBalas;
 import com.mygdx.game.colecciones.ColeccionConsumibles;
+import com.mygdx.game.naves.Nave;
+import com.mygdx.game.naves.DisparoNaveComun;
+import com.mygdx.game.naves.DisparoNaveMejorada;
 import com.mygdx.game.colecciones.ColeccionBasuraEspacial;
 
 public class PantallaJuego implements Screen {
@@ -93,10 +96,9 @@ public class PantallaJuego implements Screen {
 	    }
 	    basura.dibujar(shapeRenderer);
 
-    	if (nave.disparar()) {
-    		Bala bala = nave.generarBala();
+    	Bala bala = nave.disparar();
+    	if(bala != null)
     		balas.agregar(bala);
-    	}
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.TAB))
             debugEnabled = !debugEnabled;

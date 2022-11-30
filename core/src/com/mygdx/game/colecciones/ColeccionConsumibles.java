@@ -5,19 +5,19 @@ import java.util.Iterator;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Figura;
 import com.mygdx.game.Movil;
-import com.mygdx.game.Nave;
 import com.mygdx.game.Util;
 import com.mygdx.game.b2Modelo;
 import com.mygdx.game.consumibles.Consumible;
 import com.mygdx.game.consumibles.Supernave;
 import com.mygdx.game.consumibles.VidaExtra;
+import com.mygdx.game.naves.Nave;
 
 public class ColeccionConsumibles extends ColeccionMovil {
 	private final static int CONSUMIBLE_VIDA = 1;
 	private final static int CONSUMIBLE_SUPERNAVE = 2;
 	
 	public void generar(float x, float y, float velX, float velY) {
-		int p = Util.generateRandomInt(0, 7);
+		int p = Util.generateRandomInt(0, 0);
 		if(p != 0)
 			return;	
 		

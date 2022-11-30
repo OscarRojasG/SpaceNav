@@ -2,7 +2,7 @@ package com.mygdx.game.consumibles;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.Nave;
+import com.mygdx.game.naves.Nave;
 
 public class VidaExtra extends Consumible {
 	private final static float ancho = 0.7f;
