@@ -16,6 +16,12 @@ public class Asteroide extends Enemigo {
         														 FiguraBits.ASTEROIDE.bit));
     }
     
+    @Override
+	public void enColisionNave(Nave nave) {
+		generaConsumible = false;
+    	super.enColisionNave(nave);
+	}
+    
     public void setGeneraConsumible(boolean b) {
     	this.generaConsumible = b;
     }
@@ -23,11 +29,5 @@ public class Asteroide extends Enemigo {
     public boolean getGeneraConsumible() {
     	return generaConsumible;
     }
-    
-    @Override
-	public void enColisionNave(Nave nave) {
-		generaConsumible = false;
-    	super.enColisionNave(nave);
-	}
 	
 }
