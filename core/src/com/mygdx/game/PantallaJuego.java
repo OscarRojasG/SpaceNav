@@ -89,7 +89,7 @@ public class PantallaJuego implements Screen {
 	    basura.dibujar(shapeRenderer);
 	    
 	    if (basura.isEmpty()){
-	    	basura.generar(200 + (ronda - 1) * 20, ronda);
+	    	basura.generar(400 + (ronda - 1) * 20, ronda);
 	    }
 	    basura.dibujar(shapeRenderer);
 
@@ -97,7 +97,6 @@ public class PantallaJuego implements Screen {
     		Bala bala = nave.generarBala();
     		balas.agregar(bala);
     	}
-
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.TAB))
             debugEnabled = !debugEnabled;

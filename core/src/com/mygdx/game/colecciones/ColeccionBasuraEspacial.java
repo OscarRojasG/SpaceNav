@@ -3,6 +3,7 @@ package com.mygdx.game.colecciones;
 import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -31,6 +32,18 @@ public class ColeccionBasuraEspacial extends ColeccionMovil {
 	private final static int INICIO_SALIDA = 10;
 	private final static int FINAL_SALIDA_VERTICAL = Gdx.graphics.getHeight()-10;
 	private final static int FINAL_SALIDA_HORIZONTAL = Gdx.graphics.getWidth()-10;
+	
+	@Override
+	public void eliminarDestruidos() {
+		Iterator<Movil> enemigos = getObjetos(); 
+		while(enemigos.hasNext()) {
+			Enemigo enemigo = (Enemigo) enemigos.next();			
+			if (enemigo.estaDestruida() || enemigo.isOffscreen()) {
+				enemigos.remove();
+				eliminar(enemigo);
+			}	
+		}
+	}
 	
 	public void generar(int velocidad, int ronda) {
 		int p = Util.generateRandomInt(1, 20);
@@ -76,18 +89,22 @@ public class ColeccionBasuraEspacial extends ColeccionMovil {
         Vector2 pos = new Vector2(x, y);
         builder.setPosicion(pos);
 		
+        Color color = null;
 		switch(n) {
 			case HIRIENTE_DESECHO_COHETE:
 				builder.setPorte(35/b2Modelo.getScale());
 				builder.setPuntaje(30);
+				color = Color.GREEN;
 				break;
 			case HIRIENTE_SATELITE:
 				builder.setPorte(25/b2Modelo.getScale());
 				builder.setPuntaje(25);
+				color = Color.BLUE;
 				break;
 		}
 		
 		BasuraEspacial enemigo = builder.build();
+		enemigo.setColor(color);
 		agregar(enemigo);
 	}
 	
@@ -102,18 +119,6 @@ public class ColeccionBasuraEspacial extends ColeccionMovil {
 		} catch(Exception e) {
             return;
         }
-	}
-	
-	@Override
-	public void eliminarDestruidos() {
-		Iterator<Movil> enemigos = getObjetos(); 
-		while(enemigos.hasNext()) {
-			Enemigo enemigo = (Enemigo) enemigos.next();			
-			if (enemigo.estaDestruida() || enemigo.isOffscreen()) {
-				enemigos.remove();
-				eliminar(enemigo);
-			}	
-		}
 	}
 	
 	private int generarEnemigoAleatorio() {
