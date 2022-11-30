@@ -16,24 +16,18 @@ public class b2ContactListener implements ContactListener {
 		short categoryA = figuraA.getCategoryBits();
 		short categoryB = figuraB.getCategoryBits();
 		
-		if (categoryA == FiguraBits.NAVE.bit && categoryB == FiguraBits.ASTEROIDE.bit) {
-			((Asteroide) figuraB).enColisionNave((Nave) figuraA);
+		if (categoryA == FiguraBits.NAVE.bit && (categoryB == FiguraBits.ASTEROIDE.bit || categoryB == FiguraBits.BASURA_ESPACIAL.bit)) {
+			((Enemigo) figuraB).enColisionNave((Nave) figuraA);
 		}
-		if (categoryA == FiguraBits.ASTEROIDE.bit && categoryB == FiguraBits.NAVE.bit) {
-			((Asteroide) figuraA).enColisionNave((Nave) figuraB);
+		if ((categoryA == FiguraBits.ASTEROIDE.bit || categoryA == FiguraBits.BASURA_ESPACIAL.bit) && categoryB == FiguraBits.NAVE.bit) {
+			((Enemigo) figuraA).enColisionNave((Nave) figuraB);
 		}
 		
-		if (
-                ((categoryA == FiguraBits.ASTEROIDE.bit) || categoryA == FiguraBits.ENEMIGO.bit) &&
-                categoryB == FiguraBits.BALA.bit
-        ) {
-			((Enemigo) figuraA).enColisionBala((Bala) figuraB);
-		}
-		if (
-                categoryA == FiguraBits.BALA.bit &&
-                (categoryB == FiguraBits.ASTEROIDE.bit || categoryB == FiguraBits.ENEMIGO.bit )
-        ) {
+		if (categoryA == FiguraBits.BALA.bit && (categoryB == FiguraBits.ASTEROIDE.bit || categoryB == FiguraBits.BASURA_ESPACIAL.bit)) {
 			((Enemigo) figuraB).enColisionBala((Bala) figuraA);
+		}
+		if ((categoryA == FiguraBits.ASTEROIDE.bit || categoryA == FiguraBits.BASURA_ESPACIAL.bit) && categoryB == FiguraBits.BALA.bit) {
+			((Enemigo) figuraA).enColisionBala((Bala) figuraB);
 		}
 		
 		if (categoryA == FiguraBits.NAVE.bit && categoryB == FiguraBits.CONSUMIBLE.bit) {

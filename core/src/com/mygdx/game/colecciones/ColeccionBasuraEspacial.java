@@ -11,6 +11,7 @@ import com.mygdx.game.Movil;
 import com.mygdx.game.Nave;
 import com.mygdx.game.Util;
 import com.mygdx.game.b2Modelo;
+import com.mygdx.game.consumibles.Consumible;
 import com.mygdx.game.enemigos.basuraEspacial.BasuraBuilder;
 import com.mygdx.game.enemigos.basuraEspacial.BasuraEspacial;
 
@@ -29,13 +30,12 @@ public class ColeccionBasuraEspacial extends ColeccionMovil {
 	// Limites donde puede aparecer el objeto espacial hiriente.
 	private final static int INICIO_SALIDA = 10;
 	private final static int FINAL_SALIDA_VERTICAL = Gdx.graphics.getHeight()-10;
-	private final static int FINAL_SALIDA_HORIZONTAL = Gdx.graphics.getWidth()-10;;
+	private final static int FINAL_SALIDA_HORIZONTAL = Gdx.graphics.getWidth()-10;
 	
 	public void generar(int velocidad, int ronda) {
 		int p = Util.generateRandomInt(1, 20);
 		if(p != 1) return;
 		
-		System.out.println("Creo Basura Nueva");
 		BasuraBuilder builder = new BasuraBuilder();
 		
 		int n = generarEnemigoAleatorio();
@@ -65,18 +65,15 @@ public class ColeccionBasuraEspacial extends ColeccionMovil {
 			velX = 0;
 		}
 		
-		
-		// Posicion inicial
-		Vector2 vel = new Vector2(
-                velX, 
-                velY
-                );
+		// Velocidad inicial
+		Vector2 vel = new Vector2(velX, velY);
         builder.setVelocidad(vel);
+        
+        x = (x - Gdx.graphics.getWidth()/2)  / (b2Modelo.getScale());
+        y = (y - Gdx.graphics.getHeight()/2) / (b2Modelo.getScale());
+        
         // Posicion inicial
-        Vector2 pos = new Vector2(
-        		x/(2*b2Modelo.getScale()),
-        		y/(2*b2Modelo.getScale())
-                );
+        Vector2 pos = new Vector2(x, y);
         builder.setPosicion(pos);
 		
 		switch(n) {
@@ -105,6 +102,18 @@ public class ColeccionBasuraEspacial extends ColeccionMovil {
 		} catch(Exception e) {
             return;
         }
+	}
+	
+	@Override
+	public void eliminarDestruidos() {
+		Iterator<Movil> enemigos = getObjetos(); 
+		while(enemigos.hasNext()) {
+			Enemigo enemigo = (Enemigo) enemigos.next();			
+			if (enemigo.estaDestruida() || enemigo.isOffscreen()) {
+				enemigos.remove();
+				eliminar(enemigo);
+			}	
+		}
 	}
 	
 	private int generarEnemigoAleatorio() {

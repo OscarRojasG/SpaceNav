@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -10,8 +11,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Fixture;
 
 public abstract class Figura {
-	private Vector2 origen;
-
 	private float ancho;
 	private float alto;
 
@@ -24,11 +23,11 @@ public abstract class Figura {
 	public Figura(float x, float y, float ancho, float alto, BodyType type) {
 		this.ancho = ancho;
 		this.alto = alto;
-        this.origen = new Vector2(0, 0);
 
     	BodyDef bd = new BodyDef();
     	bd.type = type;
     	bd.position.set(x, y);
+    	bd.bullet = true;
     	this.setBodyDef(bd);
     	
         setCuerpo(b2Modelo.getModelo().crearCuerpo(this));
@@ -42,7 +41,17 @@ public abstract class Figura {
 	 * @return boolean: Retorna false si la Figura permanece en pantalla, true en caso contrario
 	 * */
 	public boolean isOffscreen() {
-        return false;
+		float x = getXEscala() + Gdx.graphics.getWidth()/2;
+		float y = getYEscala() + Gdx.graphics.getHeight()/2;
+		
+		if (x + getAnchoEscala()/2 < 0 || x - getAnchoEscala()/2 > Gdx.graphics.getWidth()) {
+			return true;
+		}
+		if (y + getAltoEscala()/2 < 0 || y - getAltoEscala()/2 > Gdx.graphics.getHeight()) {
+			return true;
+		}
+		
+		return false;
     }
 	
 	/** Método utilizado para generar un objeto Polygon con los atributos de la clase
@@ -55,7 +64,6 @@ public abstract class Figura {
             getAnchoEscala(),getAltoEscala(),
             getAnchoEscala(),-getAltoEscala()});
 
-		polygon.setOrigin(getOrigenX(), getOrigenY());
 		polygon.setPosition(getXEscala(), getYEscala());
 		polygon.setRotation((float)Math.toDegrees(getAngulo()));
 		return polygon;
@@ -104,11 +112,6 @@ public abstract class Figura {
     public void setTamaño(float ancho, float alto) {
     	this.ancho = ancho; 
     	this.alto = alto;
-    }
-    
-    public void setOrigen(float x, float y) {
-    	this.origen.x = x;
-    	this.origen.y = y;
     }
 	
     /** 
@@ -165,14 +168,6 @@ public abstract class Figura {
 	 * */
 	public float getAlto() {
 		return this.alto;
-	}
-	
-	public float getOrigenX() {
-		return this.origen.x;
-	}
-	
-	public float getOrigenY() {
-		return this.origen.y;
 	}
 
 	public Body getCuerpo() {

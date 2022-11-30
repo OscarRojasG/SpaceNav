@@ -17,21 +17,6 @@ public class Asteroide extends Enemigo {
     }
 
 	@Override
-	public void enColisionNave(Nave nave) {
-		setDestruida(true);
-		setPuntaje(0);
-		explotar();
-		nave.herir();
-	}
-	
-	@Override
-	public void enColisionBala(Bala bala) {
-		setDestruida(true);
-		bala.setDestruida(true);
-		explotar();
-	}
-
-	@Override
 	public void actualizar() {
 		// TODO Auto-generated method stub
 		
