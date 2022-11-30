@@ -50,6 +50,41 @@ public class Nave extends FiguraForma {
 		disparoNave = new DisparoNaveComun(this);
     }
     
+    @Override
+ 	public void dibujar(ShapeRenderer sr) {
+ 		 sr.begin(ShapeType.Line);
+ 		 sr.setColor(0xff, 0xff, 0xff, 1);
+
+ 		 sr.identity();
+ 		 sr.translate(getXEscala(), getYEscala(), 0);
+ 		 sr.rotate(0.0f, 0.0f, 1.0f, (float)Math.toDegrees(getCuerpo().getAngle()));
+ 		 
+ 		 sr.line(x1,y1,x2,y2);
+ 		 sr.line(x2, y2, x3, y3);
+ 		 sr.line(x3, y3, x4, y4);
+ 		 sr.line(x4, y4, x1, y1);
+ 		 sr.identity();
+
+ 		 sr.end();	
+
+ 		if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+ 			sr.begin(ShapeType.Filled);
+ 			sr.translate(getXEscala(), getYEscala(), 0);
+ 			sr.rotate(0.0f, 0.0f, 1.0f, (float)Math.toDegrees(getCuerpo().getAngle()));
+ 			sr.triangle(fx1, fy1, fx2, fy2, x4, y4);
+ 			sr.triangle(fx1, fy1, fx2, fy2, fx3, fy3);
+ 			sr.end();
+ 		}
+ 	}
+    
+    /** Verifica si al ser herida, la nave perdio su ultima vida.
+     * @return boolean: true si la nave quedo con 0 vidas y su animacion herida acabo. En caso contrario false.
+     * */
+    @Override
+    public boolean estaDestruida() {
+        return !estaHerida() && vidas == 0;
+    }
+    
     public void actualizar() {
     	if (estaHerida()) {
     		tiempoHerido -= Gdx.graphics.getDeltaTime();
@@ -81,33 +116,6 @@ public class Nave extends FiguraForma {
             this.getCuerpo().applyAngularImpulse(-ROTACION, true);
         }
     }
-    
-    @Override
-	public void dibujar(ShapeRenderer sr) {
-		 sr.begin(ShapeType.Line);
-		 sr.setColor(0xff, 0xff, 0xff, 1);
-
-		 sr.identity();
-		 sr.translate(getXEscala(), getYEscala(), 0);
-		 sr.rotate(0.0f, 0.0f, 1.0f, (float)Math.toDegrees(getCuerpo().getAngle()));
-		 
-		 sr.line(x1,y1,x2,y2);
-		 sr.line(x2, y2, x3, y3);
-		 sr.line(x3, y3, x4, y4);
-		 sr.line(x4, y4, x1, y1);
-		 sr.identity();
-
-		 sr.end();	
-
-		if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-			sr.begin(ShapeType.Filled);
-			sr.translate(getXEscala(), getYEscala(), 0);
-			sr.rotate(0.0f, 0.0f, 1.0f, (float)Math.toDegrees(getCuerpo().getAngle()));
-			sr.triangle(fx1, fy1, fx2, fy2, x4, y4);
-			sr.triangle(fx1, fy1, fx2, fy2, fx3, fy3);
-			sr.end();
-		}
-	}
 
     /** Genera una animación donde el Sprite Nave simula temblar en pantalla. */
     private void animarNaveHerida() {
@@ -127,13 +135,6 @@ public class Nave extends FiguraForma {
     	// tiempoHerido = tiempoHeridoMax;
     	sonidoHerido.play();
     	quitarVida();
-    }
-    
-    /** Verifica si al ser herida, la nave perdio su ultima vida.
-     * @return boolean: true si la nave quedo con 0 vidas y su animacion herida acabo. En caso contrario false.
-     * */
-    public boolean estaDestruida() {
-        return !estaHerida() && vidas == 0;
     }
     
     /** Verifica si la animación de Nave herida continua o termino.

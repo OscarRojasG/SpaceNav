@@ -17,7 +17,7 @@ public class BordePantalla {
         b4 = new BordeLateral(-Gdx.graphics.getWidth()/(2*s), Gdx.graphics.getHeight()/(2*s),
         				 Gdx.graphics.getWidth() * s, 0);
     }
-
+    
 	public void eliminar() {
 		b2Modelo.getModelo().eliminarCuerpo(b1);
 		b2Modelo.getModelo().eliminarCuerpo(b2);

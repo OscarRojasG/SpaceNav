@@ -13,6 +13,18 @@ public class ColeccionConsumibles extends ColeccionFiguras {
 	private final static int CONSUMIBLE_VIDA = 1;
 	private final static int CONSUMIBLE_SUPERNAVE = 2;
 	
+	@Override
+	public void eliminarDestruidos() {
+		Iterator<Figura> consumibles = getObjetos(); 
+		while(consumibles.hasNext()) {
+			Consumible consumible = (Consumible) consumibles.next();			
+			if (consumible.noUsado() || consumible.estaDestruida()) {
+				consumibles.remove();
+				eliminar(consumible);
+			}	
+		}
+	}
+	
 	public void generar(float x, float y, float velX, float velY) {
 		int p = Util.generateRandomInt(0, 0);
 		if(p != 0)
@@ -39,18 +51,6 @@ public class ColeccionConsumibles extends ColeccionFiguras {
 		while(consumibles.hasNext()) {
 			Consumible consumible = (Consumible) consumibles.next();
 			consumible.dibujar(batch);
-		}
-	}
-	
-	@Override
-	public void eliminarDestruidos() {
-		Iterator<Figura> consumibles = getObjetos(); 
-		while(consumibles.hasNext()) {
-			Consumible consumible = (Consumible) consumibles.next();			
-			if (consumible.noUsado() || consumible.estaDestruida()) {
-				consumibles.remove();
-				eliminar(consumible);
-			}	
 		}
 	}
 	

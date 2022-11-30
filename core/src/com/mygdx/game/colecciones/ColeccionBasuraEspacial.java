@@ -108,14 +108,10 @@ public class ColeccionBasuraEspacial extends ColeccionFiguras {
 	public void dibujar(ShapeRenderer sp) {
 		Iterator<Figura> enemigos = getObjetos();
 		BasuraEspacial enemigo;
-		try {
-			while(enemigos.hasNext()) {
-				enemigo = (BasuraEspacial) enemigos.next();
-				enemigo.dibujar(sp);
-			}
-		} catch(Exception e) {
-            return;
-        }
+		while(enemigos.hasNext()) {
+			enemigo = (BasuraEspacial) enemigos.next();
+			enemigo.dibujar(sp);
+		}
 	}
 	
 	private int generarEnemigoAleatorio() {

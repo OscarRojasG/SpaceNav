@@ -3,10 +3,11 @@ package com.mygdx.game.colecciones;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.Figura;
 import com.mygdx.game.b2Modelo;
 
-public class ColeccionFiguras {
+public abstract class ColeccionFiguras {
 	private ArrayList<Figura> figuras;
 	
 	public ColeccionFiguras() {
