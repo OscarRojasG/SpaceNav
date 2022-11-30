@@ -99,7 +99,7 @@ public class ColeccionBasuraEspacial extends ColeccionMovil {
 			case HIRIENTE_SATELITE:
 				builder.setPorte(25/b2Modelo.getScale());
 				builder.setPuntaje(25);
-				color = Color.BLUE;
+				color = Color.ORANGE;
 				break;
 		}
 		
