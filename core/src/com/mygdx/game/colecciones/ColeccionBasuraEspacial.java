@@ -50,7 +50,9 @@ public class ColeccionBasuraEspacial extends ColeccionFiguras {
 		
 		int n = generarEnemigoAleatorio();
 		
-		int option = Util.generateRandomBetween(SALIDA_HORIZONTAL, SALIDA_VERTICAL);
+		int option = Util.generateRandomBetween(
+                SALIDA_HORIZONTAL, SALIDA_VERTICAL);
+
 		float x;
 		float y;
 		float velX = velocidad;
@@ -58,7 +60,8 @@ public class ColeccionBasuraEspacial extends ColeccionFiguras {
 		
 		if (option == SALIDA_HORIZONTAL) {
 			// Se decide desde que lado aparece
-			x = Util.generateRandomBetween(INICIO_PANTALLA, FINAL_PANTALLA_HORIZONTAL);
+			x = Util.generateRandomBetween(
+                    INICIO_PANTALLA, FINAL_PANTALLA_HORIZONTAL);
 			if(x != 0) velX *= -1;
 			
 			// Se decide en que parte del lado
@@ -67,7 +70,8 @@ public class ColeccionBasuraEspacial extends ColeccionFiguras {
 		}
 		else {
 			// Se decide desde que lado aparece
-			y = Util.generateRandomBetween(INICIO_PANTALLA, FINAL_PANTALLA_VERTICAL);
+			y = Util.generateRandomBetween(
+                    INICIO_PANTALLA, FINAL_PANTALLA_VERTICAL);
 			if(y != 0) velY *= -1;
 			
 			// Se decide en que parte del lado

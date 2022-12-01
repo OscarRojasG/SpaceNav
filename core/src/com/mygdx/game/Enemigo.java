@@ -7,19 +7,32 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.mygdx.game.nave.Nave;
 
-public abstract class Enemigo extends FiguraForma implements NaveColisionable, BalaColisionable {
+public abstract class Enemigo
+    extends FiguraForma
+    implements NaveColisionable, BalaColisionable {
 	
 	private int puntaje;
 	private Color color;
-	private final static Sound sonidoExplosion = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
+	private final static Sound sonidoExplosion = Gdx.audio.newSound(
+            Gdx.files.internal("explosion.ogg"));
 	
-    public Enemigo(float x, float y, float ancho, float alto, float accX, float accY, int puntaje) {
+    public Enemigo(
+            float x, float y,
+            float ancho, float alto,
+            float accX, float accY,
+            int puntaje) {
+
     	super(x, y, ancho, alto, BodyType.DynamicBody);
-        this.getCuerpo().applyForceToCenter(this.getCuerpo().getMass() * accX, this.getCuerpo().getMass()*accY, true);
+
+        this.getCuerpo().applyForceToCenter(
+                this.getCuerpo().getMass() * accX,
+                this.getCuerpo().getMass()*accY,
+                true);
+
         this.getCuerpo().setLinearDamping(0);
         this.getCuerpo().setAngularDamping(0);
+
     	setPuntaje(puntaje);
     }
 

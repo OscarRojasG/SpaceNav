@@ -85,7 +85,8 @@ public class ColeccionAsteroides extends ColeccionFiguras {
 				
 				if (asteroide.getGeneraConsumible()) {
 					consumibles.generar(asteroide.getX(), asteroide.getY(), 
-										asteroide.getVelocidadX(), asteroide.getVelocidadY());
+										asteroide.getVelocidadX(),
+                                        asteroide.getVelocidadY());
 				}
 			}	
 		}
@@ -103,7 +104,8 @@ public class ColeccionAsteroides extends ColeccionFiguras {
 
     private int generarAsteroideAleatorio(int nivel) {
         if(nivel > 20) return ASTEROID_SIZE_SMALL;
-        if(nivel > 10) return Util.generateRandomInt(ASTEROID_SIZE_SMALL, ASTEROID_SIZE_MEDIUM);
+        if(nivel > 10) return Util.generateRandomInt(
+                ASTEROID_SIZE_SMALL, ASTEROID_SIZE_MEDIUM);
 
         return Util.generateRandomInt(ASTEROID_SIZE_SMALL, ASTEROID_SIZE_BIG);
     }

@@ -11,8 +11,10 @@ public class Nave extends FiguraForma {
 	private static final float anchoNave = .9f;
 	private static final float altoNave = 1.3f;
 
-	private static final Sound sonidoHerido = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
-	private static final Sound sonidoDisparo = Gdx.audio.newSound(Gdx.files.internal("disparoNave.mp3"));
+	private static final Sound sonidoHerido = Gdx.audio.newSound(
+            Gdx.files.internal("hurt.ogg"));
+	private static final Sound sonidoDisparo = Gdx.audio.newSound(
+            Gdx.files.internal("disparoNave.mp3"));
 
     private static final float ROTACION = 18f;
     private static final float ACELERACION = 45.f;
@@ -44,8 +46,14 @@ public class Nave extends FiguraForma {
     	super(x, y, anchoNave, altoNave, BodyType.DynamicBody);
 		this.getCuerpo().setLinearDamping(1.f);
 		this.getCuerpo().setAngularDamping(9.f);
-		this.setCollisionData(FiguraBits.NAVE.bit, (short) (FiguraBits.BORDE.bit | FiguraBits.ASTEROIDE.bit | 
-				FiguraBits.CONSUMIBLE.bit | FiguraBits.BASURA_ESPACIAL.bit));
+		this.setCollisionData(
+                FiguraBits.NAVE.bit,
+                (short) (
+                        FiguraBits.BORDE.bit |
+                        FiguraBits.ASTEROIDE.bit |
+                        FiguraBits.CONSUMIBLE.bit |
+                        FiguraBits.BASURA_ESPACIAL.bit)
+                );
     }
     
 
@@ -62,8 +70,14 @@ public class Nave extends FiguraForma {
     		tiempoSupernave -= Gdx.graphics.getDeltaTime();
     	
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-        	float fx = this.getCuerpo().getMass() * ACELERACION * (float)-Math.sin(getCuerpo().getAngle());
-        	float fy = this.getCuerpo().getMass() * ACELERACION * (float)Math.cos(getCuerpo().getAngle());
+        	float fx = this.getCuerpo().getMass() *
+                ACELERACION *
+                (float)-Math.sin(getCuerpo().getAngle());
+
+        	float fy = this.getCuerpo().getMass() *
+                ACELERACION *
+                (float)Math.cos(getCuerpo().getAngle());
+
         	this.getCuerpo().applyForceToCenter(fx, fy, true);
 
 
@@ -84,7 +98,9 @@ public class Nave extends FiguraForma {
 
 		 sr.identity();
 		 sr.translate(getXEscala(), getYEscala(), 0);
-		 sr.rotate(0.0f, 0.0f, 1.0f, (float)Math.toDegrees(getCuerpo().getAngle()));
+
+		 sr.rotate(0.0f, 0.0f, 1.0f,
+                 (float)Math.toDegrees(getCuerpo().getAngle()));
 
          sr.line(
                  naveVertices[0][0], // x1
@@ -164,12 +180,15 @@ public class Nave extends FiguraForma {
     		}
     		return false;
     	}
-        return Gdx.input.isKeyJustPressed(Input.Keys.Z) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
+
+        return Gdx.input.isKeyJustPressed(Input.Keys.Z) ||
+            Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
     }
     
     /**
-     * @return Bala: Genera la clase Bala (Sprite) de forma que "sale" de la nave en pantalla.
-     * */
+     * @return Bala: Genera la clase Bala (Sprite) de forma que "sale"
+     * de la nave en pantalla.
+     */
     public Bala generarBala() {
     	sonidoDisparo.play(0.01f);
     	
@@ -178,12 +197,15 @@ public class Nave extends FiguraForma {
         float y = getY() + getAlto() * (float)Math.cos(this.getAngulo()); 
 
     	if (esSupernave())
-    		return new Bala(x, y, anchoBalaSupernave, altoBalaSupernave, 70f, getAngulo());
+    		return new Bala(x, y,
+                    anchoBalaSupernave, altoBalaSupernave,
+                    70f, getAngulo());
     	
     	return new Bala(x, y, anchoBala, altoBala, 50f, getAngulo());
     }
     
-    /** Cambia el tiempo a permanecer herido de la nave, quita vida al herirse y reproduce el sonido de Nave herida. */
+    /** Cambia el tiempo a permanecer herido de la nave, quita vida al herirse
+     * y reproduce el sonido de Nave herida. */
     public void herir() {
     	// tiempoHerido = tiempoHeridoMax;
     	sonidoHerido.play();
@@ -197,14 +219,16 @@ public class Nave extends FiguraForma {
     }
     
     /** Verifica si al ser herida, la nave perdio su ultima vida.
-     * @return boolean: true si la nave quedo con 0 vidas y su animacion herida acabo. En caso contrario false.
+     * @return boolean: true si la nave quedo con 0 vidas y su animacion herida
+     * acabo. En caso contrario false.
      * */
     public boolean estaDestruida() {
         return !estaHerida() && vidas == 0;
     }
     
     /** Verifica si la animación de Nave herida continua o termino.
-     * @return boolean: true si el tiempo de animación de Nave herida no ha acabado. Si ya acabo retorna false.
+     * @return boolean: true si el tiempo de animación de Nave herida no ha
+     * acabado. Si ya acabo retorna false.
      * */
     public boolean estaHerida() {
  	   if (tiempoHerido > 0)
@@ -215,7 +239,8 @@ public class Nave extends FiguraForma {
     }
     
     /** Verifica si lel consumible de Supernave continua o termino.
-     * @return boolean: true si el tiempo del consumible Supernave no ha acabado. Si ya acabo retorna false.
+     * @return boolean: true si el tiempo del consumible Supernave no ha
+     * acabado. Si ya acabo retorna false.
      * */
     public boolean esSupernave() {
   	   if (tiempoSupernave > 0)
@@ -242,7 +267,8 @@ public class Nave extends FiguraForma {
 		return vidas;
 	}
 	
-	/** Clase que se encarga de disminuir la velocidad general en 1 si que la Nave quede estatica. */
+	/** Clase que se encarga de disminuir la velocidad general en 1 si que la
+     * Nave quede estatica. */
 	public void desacelerar() {
 		// if(getVelocidadX() < 3) {
 		// 	return;
