@@ -35,7 +35,7 @@ public class BasuraBuilder implements EnemigoBuilder {
         return new BasuraEspacial(
                 this.posicion.x,
                 this.posicion.y,
-                this.porte - (10.0f/b2Modelo.getScale()), //Ancho
+                this.porte, //Ancho
                 this.porte,
                 this.velocidad.x,
                 this.velocidad.y,

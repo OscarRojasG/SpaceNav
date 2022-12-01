@@ -17,7 +17,8 @@ public abstract class Enemigo
 	
 	private int puntaje;
 	private Color color;
-	private final static Sound sonidoExplosion = Gdx.audio.newSound(
+
+    private final static Sound sonidoExplosion = Gdx.audio.newSound(
             Gdx.files.internal("explosion.ogg"));
 	
     public Enemigo(
@@ -82,6 +83,10 @@ public abstract class Enemigo
     /** @return puntaje Retorna el puntaje que otorga el Enemigo  */
     public int getPuntaje() {
     	return puntaje;
+    }
+
+	public Color getColor() {
+        return color;
     }
     
 }
