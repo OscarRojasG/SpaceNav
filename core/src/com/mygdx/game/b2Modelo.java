@@ -22,24 +22,25 @@ public class b2Modelo{
     private boolean congelado = false;
 
     private static b2Modelo ref = null;
-
+    
+    /** @return ref Atributo de la clase */
     public static b2Modelo getModelo() {
         if (ref == null)  ref = new b2Modelo();
         return ref;
     }
-
+    
+    /** Construye el mundo del juego */
     private b2Modelo() {
 		mundo = new World(new Vector2(0.f, 0.f), false); // mundo sin gravedad
 		mundo.setContactListener(new b2ContactListener());
 		debugRenderer = new Box2DDebugRenderer(true,true,true,true,true,true); // camara debug
 		cam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
-
+    
+    /** Actualiza los frame por segundo */
 	public void actualizar() {
 		float dt = Gdx.graphics.getDeltaTime();
 	    float frameTime = Math.min(dt, 0.25f);
-        // System.out.println(1/dt);
-        // System.out.println(dt);
 
 	    fraccion_frame += frameTime;
 	    while (fraccion_frame >= 1/60f) {
@@ -47,20 +48,24 @@ public class b2Modelo{
 	        fraccion_frame -= 1/60f;
 	    }
 	}
-
+	
+	/** Ajusta la camara en el mundo */
 	public void render() {
         if (scaled_camera == null) scaled_camera = cam.combined.scale(SCALE, SCALE, 1.f);
 		debugRenderer.render(mundo, scaled_camera);
 	}
-
+	
+	/** Obtiene la proyeccion de la camara */
 	public Matrix4 getProjection() {
 		return this.cam.combined;
 	}
-
+	
+	/** @return SCALE Escala del b2Modelo*/
 	public static float getScale() {
         return SCALE;
     }
-
+	
+	/** Crea y retorna un cuerpo para la Figura recibida */
     public Body crearCuerpo(Figura f)  {
 		Body body = mundo.createBody(f.getBodyDef());
 
@@ -78,11 +83,13 @@ public class b2Modelo{
 		shape.dispose();
         return body;
     }
-
+    
+    /** Destruye el Body de la Figura recibida */
 	public void eliminarCuerpo(Figura f) {
 		mundo.destroyBody(f.getCuerpo());
 	}
 	
+	/** Destruye todos los Body en el World */
 	public void vaciar() {
 		Array<Body> bodies = new Array<Body>();
 		mundo.getBodies(bodies);
@@ -92,6 +99,7 @@ public class b2Modelo{
 		}
 	}
 	
+	/** */
 	public void setCongelado(boolean b) {
 		Array<Body> bodies = new Array<Body>();
 		mundo.getBodies(bodies);
@@ -102,7 +110,8 @@ public class b2Modelo{
 		
 		this.congelado = b;
 	}
-
+	
+	/** @return congelado */
 	public boolean estaCongelado() {
 		return congelado;
 	}
