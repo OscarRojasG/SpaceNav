@@ -43,7 +43,8 @@ public class ColeccionBasuraEspacial extends ColeccionFiguras {
 	}
 	
 	public void generar(int velocidad, int ronda) {
-		int p = Util.generateRandomInt(1, 20);
+		int p = Util.generateRandomInt(1, 100);
+		
 		if(p != 1) return;
 		
 		BasuraBuilder builder = new BasuraBuilder();
