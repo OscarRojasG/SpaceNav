@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
-public class Nave extends FiguraForma implements Movil{
+public class Nave extends FiguraForma {
 	private static final float anchoNave = .9f;
 	private static final float altoNave = 1.3f;
 
@@ -16,9 +16,6 @@ public class Nave extends FiguraForma implements Movil{
 
     private static final float ROTACION = 18f;
     private static final float ACELERACION = 45.f;
-	
-	private final float velNave = 60.f;
-	private final float tiempoHeridoMax = 0.8f;
 	
 	private final float anchoBala = 0.1f;
 	private final float altoBala = 0.1f;
@@ -52,7 +49,6 @@ public class Nave extends FiguraForma implements Movil{
     }
     
 
-	@Override
     public void actualizar() {
     	if (estaHerida()) {
     		tiempoHerido -= Gdx.graphics.getDeltaTime();
