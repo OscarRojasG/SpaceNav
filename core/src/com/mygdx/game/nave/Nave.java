@@ -76,14 +76,12 @@ public class Nave extends FiguraForma {
  		}
  	}
     
-    /** Verifica si al ser herida, la nave perdio su ultima vida.
-     * @return boolean: true si la nave quedo con 0 vidas y su animacion herida acabo. En caso contrario false.
-     * */
     @Override
     public boolean estaDestruida() {
         return !estaHerida() && vidas == 0;
     }
     
+    /** Se asegura de que Nave se mueva y cambie entre DisparoNaveComun y DisparoNaveMejorada */
     public void actualizar() {
     	if (verificarNaveHerida()) return;
     	
@@ -112,6 +110,7 @@ public class Nave extends FiguraForma {
         }
     }
     
+    /** @retur Bala Es el tipo de Bala que la nave debe disparar */
     public Bala disparar() {
     	return disparoNave.disparar();
     }
@@ -123,6 +122,7 @@ public class Nave extends FiguraForma {
     	quitarVida();
     }
     
+    /** Verifica si Nave esta herida o congelada, y actua en consecuencia*/
     public boolean verificarNaveHerida() {
     	b2Modelo modelo = b2Modelo.getModelo();
     	
@@ -169,6 +169,7 @@ public class Nave extends FiguraForma {
 		return vidas;
 	}
 	
+	/** Cambia el dispare de la Nave DisparoNaveMejorada por el tiempo recibido. */
 	public void mejorar(float tiempo) {
 		disparoNave = new DisparoNaveMejorada(this);
 		this.tiempoMejorada = tiempo;
