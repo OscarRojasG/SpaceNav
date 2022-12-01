@@ -4,7 +4,6 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Enemigo;
 import com.mygdx.game.Figura;
@@ -13,7 +12,7 @@ import com.mygdx.game.b2Modelo;
 import com.mygdx.game.enemigos.basuraEspacial.BasuraBuilder;
 import com.mygdx.game.enemigos.basuraEspacial.BasuraEspacial;
 
-public class ColeccionBasuraEspacial extends ColeccionFiguras {
+public class ColeccionBasuraEspacial extends ColeccionFiguraForma {
 	private final static int HIRIENTE_DESECHO_COHETE = 1;
 	private final static int HIRIENTE_SATELITE = 2;
 	
@@ -42,6 +41,9 @@ public class ColeccionBasuraEspacial extends ColeccionFiguras {
 		}
 	}
 	
+	/** Genera un elemento BasuraEspacial con lo recibido
+	 * @param velocidad Es la magnitud de la velocidad que tendra BasuraEspacial
+	 * */
 	public void generar(int velocidad)
 	{
 		int p = Util.generateRandomInt(1, 100);
@@ -109,15 +111,6 @@ public class ColeccionBasuraEspacial extends ColeccionFiguras {
 		BasuraEspacial enemigo = builder.build();
 		enemigo.setColor(color);
 		agregar(enemigo);
-	}
-	
-	public void dibujar(ShapeRenderer sp) {
-		Iterator<Figura> enemigos = getObjetos();
-		BasuraEspacial enemigo;
-		while(enemigos.hasNext()) {
-			enemigo = (BasuraEspacial) enemigos.next();
-			enemigo.dibujar(sp);
-		}
 	}
 	
 	private int generarEnemigoAleatorio() {

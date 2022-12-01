@@ -4,7 +4,6 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Figura;
 import com.mygdx.game.Util;
@@ -12,7 +11,7 @@ import com.mygdx.game.b2Modelo;
 import com.mygdx.game.enemigos.asteroides.Asteroide;
 import com.mygdx.game.enemigos.asteroides.AsteroideBuilder;
 
-public class ColeccionAsteroides extends ColeccionFiguras{
+public class ColeccionAsteroides extends ColeccionFiguraForma {
     private final int ASTEROID_MIN_ANGLE = -90;
     private final int ASTEROID_MAX_ANGLE = 90;
     private final int ASTEROID_SIZE_SMALL = 1;
@@ -24,8 +23,13 @@ public class ColeccionAsteroides extends ColeccionFiguras{
             generar(velocidad, ronda);
     }
     
+    /** Genera un elemento Asteroide con los parametros recibidos.
+	 * @param velocidad Es la magnitud de la velocidad que tendra Asteroide.
+	 * @param ronda Es la ronda en que esta el jugador.
+	 * */
     public void generar(int velocidad, int ronda) {
         AsteroideBuilder builder = new AsteroideBuilder();
+        
         // Velocidad inicial
         float angle = Util.generateRandomInt(ASTEROID_MIN_ANGLE, ASTEROID_MAX_ANGLE);
         angle = (float)Math.toRadians(angle);
@@ -92,14 +96,6 @@ public class ColeccionAsteroides extends ColeccionFiguras{
 		}
 		
 		return puntaje;
-    }
-
-    public void dibujar(ShapeRenderer sp) { 
-        Iterator<Figura> asteroides = getObjetos(); 
-        while(asteroides.hasNext()) {
-        	Asteroide asteroide = (Asteroide) asteroides.next();
-        	asteroide.dibujar(sp);
-        }
     }
 
     private int generarAsteroideAleatorio(int nivel) {
