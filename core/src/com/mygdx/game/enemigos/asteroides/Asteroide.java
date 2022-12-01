@@ -22,10 +22,12 @@ public class Asteroide extends Enemigo {
     	super.enColisionNave(nave);
 	}
     
+    /** Guarda boolean recibido
+     * @param b Es un Boolean que decide si se genera o no Consumible */
     public void setGeneraConsumible(boolean b) {
     	this.generaConsumible = b;
     }
-    
+    /** @return generarConsumible Es un Boolean que decide si se genera o no Consumible */
     public boolean getGeneraConsumible() {
     	return generaConsumible;
     }

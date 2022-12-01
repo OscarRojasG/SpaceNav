@@ -30,6 +30,7 @@ public class BasuraBuilder implements EnemigoBuilder {
     	this.puntaje = puntaje;
     }
     
+    /** @return BasuraEspacial Retorna un BasuraEspacial construido con los datos del Builder */
     public BasuraEspacial build() {
         return new BasuraEspacial(
                 this.posicion.x,
