@@ -17,8 +17,8 @@ public class ColeccionConsumibles extends ColeccionFiguraSprite {
 	public void eliminarDestruidos() {
 		Iterator<Figura> consumibles = getObjetos(); 
 		while(consumibles.hasNext()) {
-			Consumible consumible = (Consumible) consumibles.next();			
-			if (consumible.noUsado() || consumible.estaDestruida()) {
+			Figura consumible = consumibles.next();			
+			if (((Consumible) consumible).noUsado() || consumible.estaDestruida()) {
 				consumibles.remove();
 				eliminar(consumible);
 			}	
@@ -41,7 +41,7 @@ public class ColeccionConsumibles extends ColeccionFiguraSprite {
 		
 		int n = generarConsumibleAleatorio();
 		
-		Consumible consumible = null;
+		Figura consumible = null;
 		
 		switch(n) {
 			case CONSUMIBLE_VIDA:

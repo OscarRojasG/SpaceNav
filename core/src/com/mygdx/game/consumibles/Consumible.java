@@ -1,38 +1,7 @@
 package com.mygdx.game.consumibles;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.TimeUtils;
-import com.mygdx.game.FiguraBits;
-import com.mygdx.game.FiguraSprite;
 import com.mygdx.game.NaveColisionable;
-import com.mygdx.game.nave.Nave;
 
-public abstract class Consumible extends FiguraSprite implements NaveColisionable {
-	private long tiempoInicio;
-	private float tiempoMaximo;
-	
-	public Consumible(float x, float y, float ancho, float alto, float tiempoMaximo, Texture tx) {
-		super(x, y, ancho, alto, tx);
-		this.tiempoMaximo = tiempoMaximo;
-		this.tiempoInicio = TimeUtils.millis();
-		this.setCollisionData(FiguraBits.CONSUMIBLE.bit, (short) (FiguraBits.NAVE.bit));
-	}
-
-	/** Clase usada para aplicar un efecto al colicionar con la nave
-	 * @param nave: Recibe atributo de clase Nave para manipularlo
-	 * */
-	public abstract void agregarEfecto(Nave nave);
-	
-	public boolean noUsado() {
-		float tiempo = TimeUtils.timeSinceMillis(tiempoInicio);
-		tiempo = tiempo / 1000; // Consiguiendolo en segundos
-		
-		return (tiempo > tiempoMaximo);
-	}
-	
-	public void enColisionNave(Nave nave) {
-		setDestruida(true);
-		agregarEfecto(nave);
-	}
-	
+public interface Consumible extends NaveColisionable {
+	public boolean noUsado();
 }
