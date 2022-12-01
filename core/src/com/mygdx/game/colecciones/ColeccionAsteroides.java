@@ -12,7 +12,7 @@ import com.mygdx.game.b2Modelo;
 import com.mygdx.game.enemigos.asteroides.Asteroide;
 import com.mygdx.game.enemigos.asteroides.AsteroideBuilder;
 
-public class ColeccionAsteroides extends ColeccionFiguras {
+public class ColeccionAsteroides extends ColeccionFiguras{
     private final int ASTEROID_MIN_ANGLE = -90;
     private final int ASTEROID_MAX_ANGLE = 90;
     private final int ASTEROID_SIZE_SMALL = 1;
@@ -21,10 +21,10 @@ public class ColeccionAsteroides extends ColeccionFiguras {
 
     public void crear(int cantidad, int velocidad, int ronda) {
         for (int i = 0; i < cantidad; i++)
-            crear(velocidad, ronda);
+            generar(velocidad, ronda);
     }
-
-    public void crear(int velocidad, int ronda) {
+    
+    public void generar(int velocidad, int ronda) {
         AsteroideBuilder builder = new AsteroideBuilder();
         // Velocidad inicial
         float angle = Util.generateRandomInt(ASTEROID_MIN_ANGLE, ASTEROID_MAX_ANGLE);

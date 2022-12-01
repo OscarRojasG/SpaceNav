@@ -9,7 +9,7 @@ import com.mygdx.game.consumibles.Consumible;
 import com.mygdx.game.consumibles.Supernave;
 import com.mygdx.game.consumibles.VidaExtra;
 
-public class ColeccionConsumibles extends ColeccionFiguras {
+public class ColeccionConsumibles extends ColeccionFiguras{
 	private final static int CONSUMIBLE_VIDA = 1;
 	private final static int CONSUMIBLE_SUPERNAVE = 2;
 	
@@ -25,7 +25,9 @@ public class ColeccionConsumibles extends ColeccionFiguras {
 		}
 	}
 	
-	public void generar(float x, float y, float velX, float velY) {
+	public void generar(float x, float y,
+						float velX, float velY) {
+		
 		int p = Util.generateRandomInt(0, 9);
 		
 		if(p != 0)

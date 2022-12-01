@@ -91,7 +91,7 @@ public class PantallaJuego implements Screen {
 	    basura.dibujar(shapeRenderer);
 	    
 	    if (basura.isEmpty()){
-	    	basura.generar(400 + (ronda - 1) * 20, ronda);
+	    	basura.generar(400 + (ronda - 1) * 20);
 	    }
 	    basura.dibujar(shapeRenderer);
 
