@@ -13,7 +13,12 @@ public class Util {
 	public static int generateRandomInt(int min, int max) {
 		return r.nextInt(max - min + 1) + min;
 	}
-
+	
+	/**
+	 * @param float min: Número mínimo a seleccionar.
+	 * @param float max: Número máximo a seleccionar.
+	 * @return float : Número aleatorio seleccionado entre el mínimo y máximo incluyendo dichos números.
+	 * */
 	public static float generateRandomFloat(float min, float max) {
 		return min + (float)Math.random() * (max - min);	
     }
