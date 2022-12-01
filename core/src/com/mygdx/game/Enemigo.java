@@ -49,31 +49,37 @@ public abstract class Enemigo
         sr.end();	
     }
     
+    @Override
 	public void enColisionNave(Nave nave) {
 		nave.herir();
 		setPuntaje(0);
 		setDestruida(true);
 		explotar();
 	}
-
+	
+    @Override
 	public void enColisionBala(Bala bala) {
 		setDestruida(true);
 		bala.setDestruida(true);
 		explotar();
 	}
     
+    /** Reproduce sonido de explosión */
     public void explotar() {
     	sonidoExplosion.play(0.02f);
     }
     
+    /** Guarda el color que le corresponde al Enemigo */
     public void setColor(Color color) {
     	this.color = color;
     }
     
+    /** Guarda el puntaje que otorga el Enemigo */
     public void setPuntaje(int puntaje) {
     	this.puntaje = puntaje;
     }
     
+    /** @return puntaje Retorna el puntaje que otorga el Enemigo  */
     public int getPuntaje() {
     	return puntaje;
     }
