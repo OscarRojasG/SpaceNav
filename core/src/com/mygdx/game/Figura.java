@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Filter;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Fixture;
 
@@ -36,166 +35,178 @@ public abstract class Figura {
 		this(x, y, ancho, alto, BodyType.StaticBody);
 	}
 	
-	/** Verifica si Figura ha salido de la pantalla
-	 * @return boolean: Retorna false si la Figura permanece en pantalla, true en caso contrario
-	 * */
+	/** Verifica si Figura ha salido de la pantalla */
 	public boolean isOffscreen() {
-		float x = getXEscala() + Gdx.graphics.getWidth()/2;
-		float y = getYEscala() + Gdx.graphics.getHeight()/2;
+		float offset = 50;
+		float x = getXReal();
+		float y = getYReal();
 		
-		if (x + getAnchoEscala()/2 < 0 || x - getAnchoEscala()/2 > Gdx.graphics.getWidth()) {
+		if (x + offset < 0 || x + getAnchoEscala() - offset > Gdx.graphics.getWidth()) {
 			return true;
 		}
-		if (y + getAltoEscala()/2 < 0 || y - getAltoEscala()/2 > Gdx.graphics.getHeight()) {
+		if (y + offset < 0 || y + getAltoEscala() - offset > Gdx.graphics.getHeight()) {
 			return true;
 		}
 		
 		return false;
     }
 	
-	/** Método utilizado para generar un objeto Polygon con los atributos de la clase
-	 * @return Polygon
-	 */
+	/** Método utilizado para generar un objeto Polygon con los atributos de la clase */
 	public Polygon getPoligono() {
-		Polygon polygon = new Polygon(new float[]{
-            -getAnchoEscala(),-getAltoEscala(),
-            -getAnchoEscala(),getAltoEscala(),
-            getAnchoEscala(),getAltoEscala(),
-            getAnchoEscala(),-getAltoEscala()});
+		Polygon polygon = new Polygon(new float[] {
+            -getAnchoEscala()/2, -getAltoEscala()/2,
+            -getAnchoEscala()/2,  getAltoEscala()/2,
+             getAnchoEscala()/2,  getAltoEscala()/2,
+             getAnchoEscala()/2, -getAltoEscala()/2
+        });
 
 		polygon.setPosition(getXEscala(), getYEscala());
 		polygon.setRotation((float)Math.toDegrees(getAngulo()));
 		return polygon;
 	}
 	
+	/** Obtiene el ancho del objeto en pixeles */
 	public float getAnchoEscala() {
         return getAncho() * b2Modelo.getScale();
     }
 
+	/** Obtiene el alto del objeto en pixeles */
 	public float getAltoEscala() {
         return getAlto() * b2Modelo.getScale();
     }
     
-    /** Sobrescribe la posición de la Figura en el eje x por el parametro recibido.
-	 * @param float: Nueva posición para la Figura respecto al eje x.
-	 * */
+    /** Establece la posición de la figura en el eje X */
     public void setX(float x) {
     	this.cuerpo.setTransform(x, getY(), getAngulo());
     }
     
-    /** Sobrescribe la posición de la Figura en el eje y por el parametro recibido.
-	 * @param float: Nueva posición para la Figura respecto al eje y.
-	 * */
+    /** Establece la posición de la figura en el eje Y */
     public void setY(float y) {
     	this.cuerpo.setTransform(getX(), y, getAngulo());
     }
     
+    /** Establece la posición de la figura */
     public void setPosicion(float x, float y) {
     	setX(x);
     	setY(y);
     }
     
-    /** Sobrescribe la velocidad de la Figura respecto al eje x.
-	 * @param float: Nueva velocidad de la Figura en el eje x.
-	 * */
+    /** Establece la velocidad de la figura en el eje X */
 	public void setVelocidadX(float velX) {
 		this.cuerpo.setLinearVelocity(velX, getVelocidadY());
 	}
 	
-	/** Sobrescribe la velocidad de la Figura respecto al eje y.
-	 * @param float: Nueva velocidad de la Figura en el eje y.
-	 * */
+	/** Establece la velocidad de la figura en el eje Y */
 	public void setVelocidadY(float velY) {
 		this.cuerpo.setLinearVelocity(getVelocidadX(), velY);
 	}
 	
+	/** Establece la velocidad de la figura */
 	public void setVelocidad(float velX, float velY) {
 		setVelocidadX(velX);
 		setVelocidadY(velY);
 	}
     
-    /** Sobrescribe el tamaño de la Figura por los parametros recibidos.
-	 * @param float ancho: Nuevo ancho para el tamaño de la Figura.
-	 * @param float alto: Nueva altura para el tamaño de la Figura.
-	 * */
+    /** Establece el tamaño de la figura */
     public void setTamaño(float ancho, float alto) {
     	this.ancho = ancho; 
     	this.alto = alto;
     }
 	
     /** 
-	 * @return float: Posición de la Figura respecto al eje x.
+	 * @return float: Posición de la figura respecto al eje X
+	 * con origen en el centro de la pantalla.
 	 * */
 	public float getX() {
 		return this.cuerpo.getPosition().x;
 	}
 	
 	/** 
-	 * @return float: Posición de la Figura respecto al eje y.
+	 * @return float: Posición de la figura respecto al eje Y
+	 * con origen en el centro de la pantalla.
 	 * */
 	public float getY() {
 		return this.cuerpo.getPosition().y;
 	}
-
+	
     /** 
-	 * @return float: Posición de la Figura respecto al eje x.
+	 * @return float: Posición de la figura en pixeles respecto
+	 * al eje X con origen en el centro de la pantalla.
 	 * */
 	public float getXEscala() {
-		return this.cuerpo.getPosition().x * b2Modelo.getScale();
+		return getX() * b2Modelo.getScale();
 	}
 	
-	/** 
-	 * @return float: Posición de la Figura respecto al eje y.
+    /** 
+	 * @return float: Posición de la figura en pixeles respecto
+	 * al eje Y con origen en el centro de la pantalla.
 	 * */
 	public float getYEscala() {
-		return this.cuerpo.getPosition().y * b2Modelo.getScale();
+		return getY() * b2Modelo.getScale();
+	}
+	
+    /** 
+	 * @return float: Posición de la figura en pixeles respecto
+	 * al eje X con origen en el borde inferior izquierdo.
+	 * */
+	public float getXReal() {
+		return getXEscala() + Gdx.graphics.getWidth()/2 - getAnchoEscala()/2;
+	}
+	
+    /** 
+	 * @return float: Posición de la figura en pixeles respecto
+	 * al eje Y con origen en el borde inferior izquierdo.
+	 * */
+	public float getYReal() {
+		return getYEscala() + Gdx.graphics.getHeight()/2 - getAltoEscala()/2;
 	}
 	
 	/** 
-	 * @return float: Velocidad de la Figura en el eje x.
+	 * @return float: Velocidad de la figura en el eje x.
 	 * */
 	public float getVelocidadX() {
 		return this.cuerpo.getLinearVelocity().x;
 	}
 	
 	/** 
-	 * @return float: Velocidad de la Figura en el eje y.
+	 * @return float: Velocidad de la figura en el eje y.
 	 * */
 	public float getVelocidadY() {
 		return this.cuerpo.getLinearVelocity().y;
 	}
 	
 	/** 
-	 * @return float: Ancho del tamaño de la Figura.
+	 * @return float: Ancho de la figura.
 	 * */
 	public float getAncho() {
 		return this.ancho;
 	}
 	
 	/** 
-	 * @return float: Alto del tamaño de la Figura.
+	 * @return float: Alto de la Figura.
 	 * */
 	public float getAlto() {
 		return this.alto;
 	}
 
+	/**
+	 * @return Body: Cuerpo de la figura usado por box2d.
+	 */
 	public Body getCuerpo() {
 		return cuerpo;
 	}
-
+	
+	/** Establece el cuerpo de la figura */
 	public void setCuerpo(Body cuerpo) {
 		this.cuerpo = cuerpo;
 		cuerpo.setUserData(this);
 	}
-
-	public void crearCuerpo(World w) {
-		try {
-			w.createBody(this.bodyDef);
-		} catch(NullPointerException e) {
-			throw new RuntimeException("Cuerpo sin definir");
-		}
-	}
 	
+	/**
+	 * Establece los datos necesarios para el manejo de colisiones.
+	 * @param categoryBits: Bits asociados a esta figura.
+	 * @param maskBits: Bits asociados a la figura colisionable.
+	 */
 	public void setCollisionData(short categoryBits, short maskBits) {
 		Fixture fixture = getFixture();
 		Filter filter = new Filter();
@@ -205,38 +216,57 @@ public abstract class Figura {
 		this.categoryBits = categoryBits;
 	}
 	
+	/** Establece el ángulo de la figura */
 	public void setAngulo(float angulo) {
 		this.cuerpo.setAngularVelocity(angulo);
 	}
 	
+	/**
+	 * @return float: Ángulo de la figura.
+	 */
     public float getAngulo() {
         return this.cuerpo.getAngle();
     }
 	
+    /**
+     * @return Fixture: Fixture de la figura.
+     */
 	public Fixture getFixture() {
 		return cuerpo.getFixtureList().get(0);
 	}
 
+	/** Establece la definición del cuerpo de la figura */
     public void setBodyDef(BodyDef bodyDef) {
     	this.bodyDef = bodyDef;	
 	}
 
+    /**
+     * @return BodyDef: Definición del cuerpo de la figura.
+     */
     public BodyDef getBodyDef() {
     	return this.bodyDef;
 	}
     
+    /**
+     * @return short: Bits de la figura.
+     */
     public short getCategoryBits() {
     	return categoryBits;
     }
     
+    /**
+     * @return boolean: indica si la figura debe ser eliminada
+     */
     public boolean estaDestruida() {
     	return destruida;
     }
     
+    /** Establece si el cuerpoo está destruido o no */
     public void setDestruida(boolean b) {
     	destruida = b;
     }
     
+    /** Congela el movimiento del cuerpo */
     public void congelar(boolean b) {
     	this.cuerpo.setActive(!b);
     }

@@ -89,12 +89,12 @@ public class ColeccionBasuraEspacial extends ColeccionFiguras {
         Color color = null;
 		switch(n) {
 			case HIRIENTE_DESECHO_COHETE:
-				builder.setPorte(35/b2Modelo.getScale());
+				builder.setPorte(60/b2Modelo.getScale());
 				builder.setPuntaje(30);
 				color = Color.GREEN;
 				break;
 			case HIRIENTE_SATELITE:
-				builder.setPorte(25/b2Modelo.getScale());
+				builder.setPorte(50/b2Modelo.getScale());
 				builder.setPuntaje(25);
 				color = Color.ORANGE;
 				break;

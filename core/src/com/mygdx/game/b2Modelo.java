@@ -65,14 +65,12 @@ public class b2Modelo{
 		Body body = mundo.createBody(f.getBodyDef());
 
 		body.setFixedRotation(false);
-		body.setLinearDamping(1.f);
-		body.setAngularDamping(9.f);
 
 		f.setCuerpo(body);
 		body.setUserData(f);
  
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(f.getAncho(), f.getAlto());
+		shape.setAsBox(f.getAncho()/2, f.getAlto()/2);
  
 		Fixture fixture = body.createFixture(shape, 5.f);
 		fixture.setRestitution(1);

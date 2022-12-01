@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.FiguraBits;
 import com.mygdx.game.FiguraSprite;
 import com.mygdx.game.NaveColisionable;
-import com.mygdx.game.naves.Nave;
+import com.mygdx.game.nave.Nave;
 
 public abstract class Consumible extends FiguraSprite implements NaveColisionable {
 	private long tiempoInicio;

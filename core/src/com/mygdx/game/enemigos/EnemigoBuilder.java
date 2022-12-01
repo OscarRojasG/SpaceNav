@@ -1,7 +1,6 @@
 package com.mygdx.game.enemigos;
 
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.enemigos.asteroides.Asteroide;
 
 public interface EnemigoBuilder
 {

@@ -54,15 +54,15 @@ public class ColeccionAsteroides extends ColeccionFiguras {
 
         switch(size) {
             case ASTEROID_SIZE_SMALL:
-                builder.setPorte( 20/b2Modelo.getScale());
+                builder.setPorte( 40/b2Modelo.getScale());
                 builder.setPuntaje(10);
                 break;
             case ASTEROID_SIZE_MEDIUM:
-                builder.setPorte( 40/b2Modelo.getScale());
+                builder.setPorte( 60/b2Modelo.getScale());
                 builder.setPuntaje(20);
                 break;
             case ASTEROID_SIZE_BIG:
-                builder.setPorte( 60/b2Modelo.getScale());
+                builder.setPorte( 120/b2Modelo.getScale());
                 builder.setPuntaje(30);
                 break;
         }

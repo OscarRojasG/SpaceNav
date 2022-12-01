@@ -3,7 +3,7 @@ package com.mygdx.game.enemigos.asteroides;
 import com.mygdx.game.Enemigo;
 import com.mygdx.game.FiguraBits;
 import com.mygdx.game.Util;
-import com.mygdx.game.naves.Nave;
+import com.mygdx.game.nave.Nave;
 
 public class Asteroide extends Enemigo {
 	private boolean generaConsumible = true;

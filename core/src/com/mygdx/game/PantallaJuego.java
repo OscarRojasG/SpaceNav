@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.colecciones.ColeccionAsteroides;
 import com.mygdx.game.colecciones.ColeccionBalas;
 import com.mygdx.game.colecciones.ColeccionConsumibles;
-import com.mygdx.game.naves.Nave;
+import com.mygdx.game.nave.Nave;
 import com.mygdx.game.colecciones.ColeccionBasuraEspacial;
 
 public class PantallaJuego implements Screen {
@@ -30,6 +30,7 @@ public class PantallaJuego implements Screen {
 	private ColeccionBalas balas;
 	private ColeccionConsumibles consumibles;
 	private ColeccionBasuraEspacial basura;
+	private BordePantalla bordePantalla;
 
 	private b2Modelo modelo;
     private boolean debugEnabled = false;
@@ -47,7 +48,7 @@ public class PantallaJuego implements Screen {
 		this.batch = game.getBatch();
 
 		this.modelo =  b2Modelo.getModelo();
-		new BordePantalla();
+		bordePantalla = new BordePantalla();
 		
 		this.font = game.getFont();
 		
@@ -147,6 +148,7 @@ public class PantallaJuego implements Screen {
 
 	@Override
 	public void dispose() {
+		bordePantalla.eliminar();
 		b2Modelo.getModelo().eliminarCuerpo(nave);
 		b2Modelo.getModelo().vaciar();
 	}

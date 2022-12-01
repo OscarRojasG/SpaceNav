@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class SpaceNav extends Game {
-	private final String nombreJuego = "Space Navigation";
 	private SpriteBatch batch;
 	private ShapeRenderer shapeRenderer;
 	private BitmapFont font;

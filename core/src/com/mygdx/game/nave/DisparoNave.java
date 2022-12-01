@@ -1,4 +1,4 @@
-package com.mygdx.game.naves;
+package com.mygdx.game.nave;
 
 import com.mygdx.game.Bala;
 

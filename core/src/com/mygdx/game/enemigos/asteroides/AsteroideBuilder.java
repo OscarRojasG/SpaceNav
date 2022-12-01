@@ -37,7 +37,7 @@ public class AsteroideBuilder implements EnemigoBuilder {
                 this.porte, this.porte,
                 this.velocidad.x,
                 this.velocidad.y,
-                this.puntaje //tmp
+                this.puntaje
                 );
     }
 }

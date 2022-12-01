@@ -2,11 +2,11 @@ package com.mygdx.game.consumibles;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.naves.Nave;
+import com.mygdx.game.nave.Nave;
 
 public class VidaExtra extends Consumible {
-	private final static float ancho = 0.7f;
-	private final static float alto = 0.7f;
+	private final static float ancho = 1.3f;
+	private final static float alto = 1.3f;
 	private final static float tiempoMaximo = 3;
 	private final static Texture image = new Texture(Gdx.files.internal("health.png"));
 	

@@ -1,11 +1,11 @@
-package com.mygdx.game.naves;
+package com.mygdx.game.nave;
 
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.Bala;
 
 public class DisparoNaveMejorada implements DisparoNave {
-	private final static float anchoBala = 0.2f;
-	private final static float altoBala = 0.2f;
+	private final static float anchoBala = 0.4f;
+	private final static float altoBala = 0.4f;
 	private final static float velBala = 70f;
 	private final static float velDisparo = 8.5f;
 	
@@ -30,8 +30,8 @@ public class DisparoNaveMejorada implements DisparoNave {
 	
 	@Override
     public Bala generarBala() {
-        float x = nave.getX() - nave.getAlto() * (float)Math.sin(nave.getAngulo()); 
-        float y = nave.getY() + nave.getAlto() * (float)Math.cos(nave.getAngulo()); 
+        float x = nave.getX() - nave.getAlto()/2 * (float)Math.sin(nave.getAngulo()); 
+        float y = nave.getY() + nave.getAlto()/2 * (float)Math.cos(nave.getAngulo()); 
     	
     	return new Bala(x, y, anchoBala, altoBala, velBala, nave.getAngulo());
     }

@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,11 +13,10 @@ public class FiguraSprite extends Figura {
 		sprite = new Sprite(tx);
 	}
 	
-	/** Dibuja el sprite de la Figura en pantalla sobre su forma .*/
+	/** Dibuja el sprite de la Figura en pantalla sobre su forma */
 	public void dibujar(SpriteBatch batch) {
-		sprite.setPosition(getXEscala() + Gdx.graphics.getWidth()/2, getYEscala() + Gdx.graphics.getHeight()/2);
-		sprite.setSize(getAnchoEscala()*2, getAltoEscala()*2);
-		sprite.setCenter(getXEscala() + Gdx.graphics.getWidth()/2, getYEscala() + Gdx.graphics.getHeight()/2);
+		sprite.setPosition(getXReal(), getYReal());
+		sprite.setSize(getAnchoEscala(), getAltoEscala());
 		sprite.draw(batch);
     }
 	

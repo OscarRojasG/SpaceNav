@@ -1,4 +1,4 @@
-package com.mygdx.game.naves;
+package com.mygdx.game.nave;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -13,8 +13,8 @@ import com.mygdx.game.Util;
 import com.mygdx.game.b2Modelo;
 
 public class Nave extends FiguraForma {
-	private static final float anchoNave = 0.9f;
-	private static final float altoNave = 1.3f;
+	private static final float anchoNave = 1.8f;
+	private static final float altoNave = 2.6f;
 
 	private static final Sound sonidoHerido = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
 	private static final Sound sonidoDisparo = Gdx.audio.newSound(Gdx.files.internal("disparoNave.mp3"));
