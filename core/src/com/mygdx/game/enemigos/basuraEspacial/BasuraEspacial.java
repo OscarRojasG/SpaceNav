@@ -2,7 +2,6 @@ package com.mygdx.game.enemigos.basuraEspacial;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Polygon;
 import com.mygdx.game.Enemigo;
 import com.mygdx.game.FiguraBits;
 

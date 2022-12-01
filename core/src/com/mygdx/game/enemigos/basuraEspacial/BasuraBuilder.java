@@ -1,7 +1,6 @@
 package com.mygdx.game.enemigos.basuraEspacial;
 
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.b2Modelo;
 import com.mygdx.game.enemigos.EnemigoBuilder;
 
 public class BasuraBuilder implements EnemigoBuilder {
