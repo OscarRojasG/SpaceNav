@@ -18,6 +18,7 @@ public class BordePantalla {
         				 Gdx.graphics.getWidth() * s, 0);
     }
     
+    /** Elimina los Body que estan fuera del BordePantalla establecido */
 	public void eliminar() {
 		b2Modelo.getModelo().eliminarCuerpo(b1);
 		b2Modelo.getModelo().eliminarCuerpo(b2);
