@@ -2,11 +2,13 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 
 public abstract class Figura {
 	private float ancho;
@@ -269,6 +271,17 @@ public abstract class Figura {
     /** Congela el movimiento del cuerpo */
     public void congelar(boolean b) {
     	this.cuerpo.setActive(!b);
+    }
+    
+    /** Establece una hitbox triangular para la figura **/
+    public void setFormaTriangular() {
+    	Fixture fixture = getFixture();
+    	PolygonShape shape = (PolygonShape) fixture.getShape();
+    	Vector2 v1 = new Vector2(-getAncho()/2, -getAlto()/3);
+    	Vector2 v2 = new Vector2( getAncho()/2, -getAlto()/3);
+    	Vector2 v3 = new Vector2( 0, 2 * getAlto()/3);
+    	Vector2[] vector = new Vector2[] {v1,v2,v3};
+    	shape.set(vector);
     }
 
 }

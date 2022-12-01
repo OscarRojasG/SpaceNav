@@ -9,7 +9,8 @@ public class BasuraEspacial extends Enemigo {
 	
     public BasuraEspacial(float x, float y, float ancho, float alto, float velX, float velY, int puntaje) {
     	super(x, y, ancho, alto, velX, velY, puntaje);
-        this.getCuerpo().setAngularVelocity(5.0f);
+        this.getCuerpo().setAngularVelocity(4.0f);
+        this.setFormaTriangular();
         this.setCollisionData(FiguraBits.BASURA_ESPACIAL.bit, (short) (FiguraBits.BALA.bit | FiguraBits.NAVE.bit));
     }
 
@@ -21,20 +22,20 @@ public class BasuraEspacial extends Enemigo {
         sr.translate(this.getXEscala(), this.getYEscala(), 0);
  		sr.rotate(0.0f, 0.0f, 1.0f, (float)Math.toDegrees(getCuerpo().getAngle()));
         sr.line(
-                -this.getAnchoEscala()/2, -this.getAltoEscala()/2,
-                 this.getAnchoEscala()/2, -this.getAltoEscala()/2
+                -this.getAnchoEscala()/2, -this.getAltoEscala()/3,
+                 this.getAnchoEscala()/2, -this.getAltoEscala()/3
                 );
 
         sr.line(
-                 -this.getAnchoEscala()/2, -this.getAltoEscala()/2,
-                0, +this.getAltoEscala()/2
+                -this.getAnchoEscala()/2, -this.getAltoEscala()/3,
+                0, 2f/3 * this.getAltoEscala()
                 );
 
         sr.line(
-                0, +this.getAltoEscala()/2,
-                +this.getAnchoEscala()/2, -this.getAltoEscala()/2
+                0, 2f/3 * this.getAltoEscala(),
+                +this.getAnchoEscala()/2, -this.getAltoEscala()/3
                 );
-        sr.end();	
+        sr.end();
     }
 	
 }

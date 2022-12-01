@@ -36,7 +36,7 @@ public class BasuraBuilder implements EnemigoBuilder {
                 this.posicion.x,
                 this.posicion.y,
                 this.porte, //Ancho
-                this.porte,
+                this.porte * (float)Math.sqrt(3)/2,
                 this.velocidad.x,
                 this.velocidad.y,
                 this.puntaje //tmp
