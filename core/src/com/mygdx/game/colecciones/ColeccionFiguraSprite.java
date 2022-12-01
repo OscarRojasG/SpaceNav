@@ -8,6 +8,7 @@ import com.mygdx.game.consumibles.Consumible;
 
 public class ColeccionFiguraSprite extends ColeccionFiguras {
 	
+	/** Dibuja el sprite de la clase consumible */
 	public void dibujar(SpriteBatch batch) {
 		Iterator<Figura> consumibles = getObjetos(); 
 		while(consumibles.hasNext()) {

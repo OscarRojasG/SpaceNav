@@ -8,6 +8,7 @@ import com.mygdx.game.FiguraForma;
 
 public class ColeccionFiguraForma extends ColeccionFiguras {
 	
+	/** Dibuja el modelo de cada figura presente en la coleccion */
 	public void dibujar(ShapeRenderer sr) {
         Iterator<Figura> figuras = this.getObjetos();
         while(figuras.hasNext()) {
@@ -15,5 +16,4 @@ public class ColeccionFiguraForma extends ColeccionFiguras {
             ff.dibujar(sr);
         }
 	}
-	
 }
