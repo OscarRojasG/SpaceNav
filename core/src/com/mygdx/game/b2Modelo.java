@@ -99,7 +99,9 @@ public class b2Modelo{
 		}
 	}
 	
-	/** */
+	/** Dependiendo del booleano recibido, congela todos los Bodys de la pantalla
+	 * @param b Es un booleano que decide si congelar. 
+	 * */
 	public void setCongelado(boolean b) {
 		Array<Body> bodies = new Array<Body>();
 		mundo.getBodies(bodies);
@@ -111,7 +113,7 @@ public class b2Modelo{
 		this.congelado = b;
 	}
 	
-	/** @return congelado */
+	/** @return congelado Es un booleano que indica si b2Modelo esta congelado(estatico) */
 	public boolean estaCongelado() {
 		return congelado;
 	}
