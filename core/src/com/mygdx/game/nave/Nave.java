@@ -17,7 +17,6 @@ public class Nave extends FiguraForma {
 	private static final float altoNave = 2.6f;
 
 	private static final Sound sonidoHerido = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
-	private static final Sound sonidoDisparo = Gdx.audio.newSound(Gdx.files.internal("disparoNave.mp3"));
 
     private static final float ROTACION = 18f;
     private static final float ACELERACION = 45.f;
@@ -112,13 +111,9 @@ public class Nave extends FiguraForma {
             this.getCuerpo().applyAngularImpulse(-ROTACION, true);
         }
     }
-
+    
     public Bala disparar() {
-    	if (disparoNave.puedeDisparar() && !estaHerida()) {
-    		disparoNave.reproducirSonidoDisparo();
-    		return disparoNave.generarBala();
-    	}
-    	return null;
+    	return disparoNave.disparar();
     }
     
     /** Cambia el tiempo a permanecer herido de la nave, quita vida al herirse y reproduce el sonido de Nave herida. */
@@ -172,10 +167,6 @@ public class Nave extends FiguraForma {
 	 * */
 	public int getVidas() {
 		return vidas;
-	}
-	
-	public Sound getSonidoDisparo() {
-		return sonidoDisparo;
 	}
 	
 	public void mejorar(float tiempo) {
