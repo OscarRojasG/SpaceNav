@@ -2,14 +2,13 @@ package com.mygdx.game.colecciones;
 
 import java.util.Iterator;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Figura;
 import com.mygdx.game.Util;
 import com.mygdx.game.consumibles.Consumible;
 import com.mygdx.game.consumibles.Supernave;
 import com.mygdx.game.consumibles.VidaExtra;
 
-public class ColeccionConsumibles extends ColeccionFiguras {
+public class ColeccionConsumibles extends ColeccionFiguraSprite {
 	private final static int CONSUMIBLE_VIDA = 1;
 	private final static int CONSUMIBLE_SUPERNAVE = 2;
 	
@@ -45,14 +44,6 @@ public class ColeccionConsumibles extends ColeccionFiguras {
 		}
 		
 		this.agregar(consumible);
-	}
-	
-	public void dibujar(SpriteBatch batch) {
-		Iterator<Figura> consumibles = getObjetos(); 
-		while(consumibles.hasNext()) {
-			Consumible consumible = (Consumible) consumibles.next();
-			consumible.dibujar(batch);
-		}
 	}
 	
 	private int generarConsumibleAleatorio() {
