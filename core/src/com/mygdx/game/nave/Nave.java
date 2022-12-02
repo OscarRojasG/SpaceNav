@@ -17,12 +17,13 @@ public class Nave extends FiguraForma {
 	private static final float altoNave = 2.6f;
 
 	private static final Sound sonidoHerido = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
+	private static final Sound sonidoDisparo = Gdx.audio.newSound(Gdx.files.internal("disparoNave.mp3"));
 
-    private static final float ROTACION = 18f;
     private static final float ACELERACION = 45.f;
     
     private static final float tiempoHeridoMax = 0.5f;
-
+    private static final float tiempoInestableMax = 1f;
+    
 	private int x1 = -20, y1 = -30;
 	private int x2 =   0, y2 =  30;
 	private int x3 =  20, y3 = -30;
@@ -34,6 +35,8 @@ public class Nave extends FiguraForma {
 	
     private int vidas = 3;
     private float tiempoHerido;
+    private float tiempoInestable;
+    private float rotacion = 18f;
     
     private DisparoNave disparoNave;
     private float tiempoMejorada;
@@ -84,6 +87,7 @@ public class Nave extends FiguraForma {
     /** Se asegura de que Nave se mueva y cambie entre DisparoNaveComun y DisparoNaveMejorada */
     public void actualizar() {
     	if (verificarNaveHerida()) return;
+    	verificarNaveInestable();
     	
     	if (mejorada) {
     		tiempoMejorada -= Gdx.graphics.getDeltaTime();
@@ -102,15 +106,15 @@ public class Nave extends FiguraForma {
 
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            this.getCuerpo().applyAngularImpulse(ROTACION, true);
+            this.getCuerpo().applyAngularImpulse(rotacion, true);
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            this.getCuerpo().applyAngularImpulse(-ROTACION, true);
+            this.getCuerpo().applyAngularImpulse(-rotacion, true);
         }
     }
     
-    /** @retur Bala Es el tipo de Bala que la nave debe disparar */
+    /** @return Bala Es el tipo de Bala que la nave debe disparar */
     public Bala disparar() {
     	return disparoNave.disparar();
     }
@@ -174,6 +178,32 @@ public class Nave extends FiguraForma {
 		disparoNave = new DisparoNaveMejorada(this);
 		this.tiempoMejorada = tiempo;
 		this.mejorada = true;
+	}
+	
+	public boolean verificarNaveInestable() {
+		if (estaInestable()) {
+			this.getCuerpo().setAngularDamping(1f);
+			tiempoInestable -= Gdx.graphics.getDeltaTime();
+			rotacion = 0.5f;
+			return true;
+		}
+		tiempoInestable = 0;
+		rotacion = 18f;
+		this.getCuerpo().setAngularDamping(9.f);
+		return false;
+	}
+
+	public void desestabilizar() {
+    	tiempoInestable = tiempoInestableMax;
+    	this.getCuerpo().setAngularVelocity(20);
+	}
+	
+	public boolean estaInestable() {
+		return tiempoInestable > 0;
+	}
+	
+	public Sound getSonidoDisparo() {
+		return sonidoDisparo;
 	}
 	
 }

@@ -25,7 +25,7 @@ public class Supernave extends FiguraSprite implements Consumible {
 	
 	@Override
 	public void enColisionNave(Nave nave) {
-		nave.mejorar(5);
+		nave.mejorar(4);
 		setDestruida(true);
 	}
 

@@ -1,7 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -9,17 +7,9 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.mygdx.game.nave.Nave;
 
-
-
-public abstract class Enemigo
-    extends FiguraForma
-    implements NaveColisionable, BalaColisionable {
-	
+public abstract class Enemigo extends FiguraForma implements NaveColisionable, BalaColisionable {	
 	private int puntaje;
 	private Color color;
-
-    private final static Sound sonidoExplosion = Gdx.audio.newSound(
-            Gdx.files.internal("explosion.ogg"));
 	
     public Enemigo(
             float x, float y,
@@ -52,10 +42,10 @@ public abstract class Enemigo
     
     @Override
 	public void enColisionNave(Nave nave) {
-		nave.herir();
+		agregarEfecto(nave);
+		explotar();
 		setPuntaje(0);
 		setDestruida(true);
-		explotar();
 	}
 	
     @Override
@@ -64,11 +54,6 @@ public abstract class Enemigo
 		bala.setDestruida(true);
 		explotar();
 	}
-    
-    /** Reproduce sonido de explosión */
-    public void explotar() {
-    	sonidoExplosion.play(0.02f);
-    }
     
     /** Guarda el color que le corresponde al Enemigo */
     public void setColor(Color color) {
@@ -88,5 +73,9 @@ public abstract class Enemigo
 	public Color getColor() {
         return color;
     }
+	
+	public abstract void agregarEfecto(Nave nave);
+	
+	public abstract void explotar();
     
 }

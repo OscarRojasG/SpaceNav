@@ -1,11 +1,16 @@
 package com.mygdx.game.enemigos.basuraEspacial;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.mygdx.game.Enemigo;
 import com.mygdx.game.FiguraBits;
+import com.mygdx.game.nave.Nave;
 
 public class BasuraEspacial extends Enemigo {
+	private static final Sound sonidoExplosion = Gdx.audio.newSound(
+			Gdx.files.internal("explosionBasura.ogg"));
 	
     public BasuraEspacial(float x, float y, float ancho, float alto, float velX, float velY, int puntaje) {
     	super(x, y, ancho, alto, velX, velY, puntaje);
@@ -37,5 +42,15 @@ public class BasuraEspacial extends Enemigo {
                 );
         sr.end();
     }
+
+	@Override
+	public void agregarEfecto(Nave nave) {
+		nave.desestabilizar();
+	}
+
+	@Override
+	public void explotar() {
+		sonidoExplosion.play(0.06f);
+	}
 	
 }
