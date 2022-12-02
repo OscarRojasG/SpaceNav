@@ -183,5 +183,4 @@ public class PantallaJuego implements Screen {
 	public void agregarPuntaje(int puntaje) {
 		this.puntaje += puntaje;
 	}
-   
 }
