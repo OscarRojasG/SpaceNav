@@ -30,7 +30,7 @@ public class AsteroideBuilder implements EnemigoBuilder {
     	this.puntaje = puntaje;
     }
     
-    /** @return BasuraEspacial Retorna un Asteroide construido con los datos del Builder */
+    @Override
     public Asteroide build() {
         return new Asteroide(
                 this.posicion.x,
