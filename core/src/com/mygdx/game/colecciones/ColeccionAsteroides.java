@@ -72,7 +72,7 @@ public class ColeccionAsteroides extends ColeccionFiguraForma {
         }
 
         asteroide = builder.build();
-        asteroide.setColor(Color.GRAY);
+        asteroide.setColor(new Color(180/255f, 180/255f, 180/255f, 0));
         this.agregar(asteroide);
     }
     
