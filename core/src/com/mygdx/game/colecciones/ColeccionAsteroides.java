@@ -8,8 +8,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Figura;
 import com.mygdx.game.Util;
 import com.mygdx.game.b2Modelo;
+import com.mygdx.game.enemigos.EnemigoBuilder;
 import com.mygdx.game.enemigos.asteroides.Asteroide;
-import com.mygdx.game.enemigos.asteroides.AsteroideBuilder;
+import com.mygdx.game.enemigos.asteroides.AsteroideChicoBuilder;
+import com.mygdx.game.enemigos.asteroides.AsteroideGrandeBuilder;
+import com.mygdx.game.enemigos.asteroides.AsteroideMedioBuilder;
 
 public class ColeccionAsteroides extends ColeccionFiguraForma {
     private final int ASTEROID_MIN_ANGLE = -90;
@@ -28,7 +31,7 @@ public class ColeccionAsteroides extends ColeccionFiguraForma {
 	 * @param ronda Es la ronda en que esta el jugador.
 	 * */
     public void generar(int velocidad, int ronda) {
-        AsteroideBuilder builder = new AsteroideBuilder();
+        EnemigoBuilder builder = null;
         
         // Velocidad inicial
         float angle = Util.generateRandomInt(ASTEROID_MIN_ANGLE, ASTEROID_MAX_ANGLE);
@@ -37,7 +40,6 @@ public class ColeccionAsteroides extends ColeccionFiguraForma {
                 velocidad * (float)Math.sin(angle), 
                 velocidad * (float)Math.cos(angle)
                 );
-        builder.setVelocidad(vel);
 
         // Posicion inicial
         Vector2 pos = new Vector2(
@@ -51,28 +53,29 @@ public class ColeccionAsteroides extends ColeccionFiguraForma {
                     )
                 );
 
-        builder.setPosicion(pos);
 
         int size = generarAsteroideAleatorio(ronda);
         Asteroide asteroide = null;
 
         switch(size) {
             case ASTEROID_SIZE_SMALL:
-                builder.setPorte( 40/b2Modelo.getScale());
-                builder.setPuntaje(10);
+                builder = new AsteroideChicoBuilder();
                 break;
             case ASTEROID_SIZE_MEDIUM:
-                builder.setPorte( 60/b2Modelo.getScale());
-                builder.setPuntaje(20);
+                builder = new AsteroideMedioBuilder();
                 break;
             case ASTEROID_SIZE_BIG:
-                builder.setPorte( 120/b2Modelo.getScale());
-                builder.setPuntaje(30);
+                builder = new AsteroideGrandeBuilder();
                 break;
         }
 
-        asteroide = builder.build();
-        asteroide.setColor(new Color(180/255f, 180/255f, 180/255f, 0));
+
+        builder.setColor();
+        builder.setPorte();
+        builder.setPuntaje();
+        builder.setVelocidad(vel);
+        builder.setPosicion(pos);
+        asteroide = (Asteroide)builder.build();
         this.agregar(asteroide);
     }
     

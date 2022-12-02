@@ -1,22 +1,36 @@
 package com.mygdx.game.enemigos;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.Enemigo;
 
-public interface EnemigoBuilder
-{
-	/** Recibe y guarda Vector2 de posición del Enemigo */
-    public void setPosicion(Vector2 pos);
-    
-    /** Recibe y guarda Vector2 de velocidad del Enemigo */
-    public void setVelocidad(Vector2 vel);
-    
-    /** Recibe y guarda porte del modelo que pertenece a Enemigo */
-    public void setPorte(float porte);
-    
-    /** Recibe y guarda puntaje que otroga el Enemigo */
-    public void setPuntaje(int puntaje);
-    
-    /** Retorna el enemigo construido */
-    public Enemigo build();
+public abstract class EnemigoBuilder implements IEnemigoBuilder {
+    private Vector2 velocidad; 
+    private Vector2 posicion;
+    private Color color;
+
+
+    public void setPosicion(Vector2 posicion) {
+        this.posicion = posicion;
+    } 
+
+    public void setVelocidad(Vector2 velocidad) {
+        this.velocidad = velocidad;
+    }
+
+    public void setColor() {
+        this.color = new Color(180/255f, 180/255f, 180/255f, 0);
+    }
+
+    public Vector2 getPosicion() {
+        return this.posicion;
+    }
+
+    public Vector2 getVelocidad() {
+        return this.velocidad;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
 }

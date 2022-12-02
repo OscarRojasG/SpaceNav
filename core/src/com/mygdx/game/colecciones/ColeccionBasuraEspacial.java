@@ -9,8 +9,9 @@ import com.mygdx.game.Enemigo;
 import com.mygdx.game.Figura;
 import com.mygdx.game.Util;
 import com.mygdx.game.b2Modelo;
-import com.mygdx.game.enemigos.basuraEspacial.BasuraBuilder;
-import com.mygdx.game.enemigos.basuraEspacial.BasuraEspacial;
+import com.mygdx.game.enemigos.CoheteBuilder;
+import com.mygdx.game.enemigos.EnemigoBuilder;
+import com.mygdx.game.enemigos.SateliteBuilder;
 
 public class ColeccionBasuraEspacial extends ColeccionFiguraForma {
 	private final static int HIRIENTE_DESECHO_COHETE = 1;
@@ -50,7 +51,7 @@ public class ColeccionBasuraEspacial extends ColeccionFiguraForma {
 		
 		if(p != 1) return;
 		
-		BasuraBuilder builder = new BasuraBuilder();
+		EnemigoBuilder builder = null;
 		
 		int n = generarEnemigoAleatorio();
 		
@@ -85,31 +86,30 @@ public class ColeccionBasuraEspacial extends ColeccionFiguraForma {
 		
 		// Velocidad inicial
 		Vector2 vel = new Vector2(velX, velY);
-        builder.setVelocidad(vel);
         
         x = (x - Gdx.graphics.getWidth()/2)  / (b2Modelo.getScale());
         y = (y - Gdx.graphics.getHeight()/2) / (b2Modelo.getScale());
         
         // Posicion inicial
         Vector2 pos = new Vector2(x, y);
-        builder.setPosicion(pos);
 		
         Color color = null;
 		switch(n) {
 			case HIRIENTE_DESECHO_COHETE:
-				builder.setPorte(60/b2Modelo.getScale());
-				builder.setPuntaje(30);
-				color = Color.GREEN;
+                builder = new CoheteBuilder();
 				break;
 			case HIRIENTE_SATELITE:
-				builder.setPorte(50/b2Modelo.getScale());
-				builder.setPuntaje(25);
-				color = Color.ORANGE;
+                builder = new SateliteBuilder();
 				break;
 		}
+
+        builder.setColor();
+        builder.setPorte();
+        builder.setPuntaje();
+        builder.setPosicion(pos);
+        builder.setVelocidad(vel);
 		
-		BasuraEspacial enemigo = builder.build();
-		enemigo.setColor(color);
+		Enemigo enemigo = builder.build();
 		agregar(enemigo);
 	}
 	
