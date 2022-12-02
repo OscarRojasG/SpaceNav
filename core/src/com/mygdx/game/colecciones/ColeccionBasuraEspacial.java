@@ -2,8 +2,15 @@ package com.mygdx.game.colecciones;
 
 import java.util.Iterator;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Enemigo;
 import com.mygdx.game.Figura;
+import com.mygdx.game.Util;
+import com.mygdx.game.b2Modelo;
+import com.mygdx.game.enemigos.basuraEspacial.BasuraBuilder;
+import com.mygdx.game.enemigos.basuraEspacial.BasuraEspacial;
 
 public class ColeccionBasuraEspacial extends ColeccionFiguraForma {
 	private final static int HIRIENTE_DESECHO_COHETE = 1;
