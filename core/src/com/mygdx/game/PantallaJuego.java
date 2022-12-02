@@ -73,8 +73,8 @@ public class PantallaJuego implements Screen {
 
 		asteroides.crear(cantAsteroides, velAsteroides, ronda);
 	}
-	
-	@Override
+
+    @Override
 	public void render(float delta) {
 		nave.actualizar();
 		modelo.actualizar();
