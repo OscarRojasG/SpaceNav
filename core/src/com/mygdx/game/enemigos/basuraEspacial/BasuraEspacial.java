@@ -16,7 +16,7 @@ public class BasuraEspacial extends Enemigo {
     	super(x, y, ancho, alto, velX, velY, puntaje);
         this.getCuerpo().setAngularVelocity(4.0f);
         this.setFormaTriangular();
-        this.setCollisionData(FiguraBits.BASURA_ESPACIAL.bit, (short) (FiguraBits.BALA.bit | FiguraBits.NAVE.bit));
+        this.setCollisionData(FiguraBits.BASURA_ESPACIAL.getBit(), (short) (FiguraBits.BALA.getBit() | FiguraBits.NAVE.getBit()));
     }
 
     @Override

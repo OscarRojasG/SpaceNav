@@ -16,25 +16,25 @@ public class b2ContactListener implements ContactListener {
 		short categoryA = figuraA.getCategoryBits();
 		short categoryB = figuraB.getCategoryBits();
 		
-		if (categoryA == FiguraBits.NAVE.bit && (categoryB == FiguraBits.ASTEROIDE.bit || categoryB == FiguraBits.BASURA_ESPACIAL.bit)) {
+		if (categoryA == FiguraBits.NAVE.getBit() && (categoryB == FiguraBits.ASTEROIDE.getBit() || categoryB == FiguraBits.BASURA_ESPACIAL.getBit())) {
 			((Enemigo) figuraB).enColisionNave((Nave) figuraA);
 		}
-		if ((categoryA == FiguraBits.ASTEROIDE.bit || categoryA == FiguraBits.BASURA_ESPACIAL.bit) && categoryB == FiguraBits.NAVE.bit) {
+		if ((categoryA == FiguraBits.ASTEROIDE.getBit() || categoryA == FiguraBits.BASURA_ESPACIAL.getBit()) && categoryB == FiguraBits.NAVE.getBit()) {
 			((Enemigo) figuraA).enColisionNave((Nave) figuraB);
 		}
 		
-		if (categoryA == FiguraBits.BALA.bit && (categoryB == FiguraBits.ASTEROIDE.bit || categoryB == FiguraBits.BASURA_ESPACIAL.bit)) {
+		if (categoryA == FiguraBits.BALA.getBit() && (categoryB == FiguraBits.ASTEROIDE.getBit() || categoryB == FiguraBits.BASURA_ESPACIAL.getBit())) {
 			((Enemigo) figuraB).enColisionBala((Bala) figuraA);
 		}
-		if ((categoryA == FiguraBits.ASTEROIDE.bit || categoryA == FiguraBits.BASURA_ESPACIAL.bit) && categoryB == FiguraBits.BALA.bit) {
+		if ((categoryA == FiguraBits.ASTEROIDE.getBit() || categoryA == FiguraBits.BASURA_ESPACIAL.getBit()) && categoryB == FiguraBits.BALA.getBit()) {
 			((Enemigo) figuraA).enColisionBala((Bala) figuraB);
 		}
 		
-		if (categoryA == FiguraBits.NAVE.bit && categoryB == FiguraBits.CONSUMIBLE.bit) {
+		if (categoryA == FiguraBits.NAVE.getBit() && categoryB == FiguraBits.CONSUMIBLE.getBit()) {
 			((Consumible) figuraB).enColisionNave((Nave) figuraA);
 			contact.setEnabled(false);
 		}
-		if (categoryA == FiguraBits.CONSUMIBLE.bit && categoryB == FiguraBits.NAVE.bit) {
+		if (categoryA == FiguraBits.CONSUMIBLE.getBit() && categoryB == FiguraBits.NAVE.getBit()) {
 			((Consumible) figuraA).enColisionNave((Nave) figuraB);
 			contact.setEnabled(false);
 		}

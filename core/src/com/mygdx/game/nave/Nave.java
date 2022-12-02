@@ -46,8 +46,8 @@ public class Nave extends FiguraForma {
     	super(x, y, anchoNave, altoNave, BodyType.DynamicBody);
 		this.getCuerpo().setLinearDamping(1.f);
 		this.getCuerpo().setAngularDamping(9.f);
-		this.setCollisionData(FiguraBits.NAVE.bit, (short) (FiguraBits.BORDE.bit | FiguraBits.ASTEROIDE.bit | 
-				FiguraBits.CONSUMIBLE.bit | FiguraBits.BASURA_ESPACIAL.bit));
+		this.setCollisionData(FiguraBits.NAVE.getBit(), (short) (FiguraBits.BORDE.getBit() | FiguraBits.ASTEROIDE.getBit() | 
+				FiguraBits.CONSUMIBLE.getBit() | FiguraBits.BASURA_ESPACIAL.getBit()));
 		
 		disparoNave = new DisparoNaveComun(this);
     }

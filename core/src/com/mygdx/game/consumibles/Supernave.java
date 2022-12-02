@@ -18,7 +18,7 @@ public class Supernave extends FiguraSprite implements Consumible {
 	public Supernave(float x, float y, float velX, float velY) {
 		super(x, y, ancho, alto, image);
 		tiempoInicio = TimeUtils.millis();
-		setCollisionData(FiguraBits.CONSUMIBLE.bit, FiguraBits.NAVE.bit);
+		setCollisionData(FiguraBits.CONSUMIBLE.getBit(), FiguraBits.NAVE.getBit());
 		setVelocidadX(velX);
 		setVelocidadY(velY);
 	}

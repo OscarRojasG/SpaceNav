@@ -10,10 +10,14 @@ public enum FiguraBits {
 	BASURA_ESPACIAL ((short) 0x0010),
 	CONSUMIBLE 		((short) 0x0020);
 
-    public final short bit;
+    private final short bit;
 
     FiguraBits(short bit) {
         this.bit = bit;
+    }
+    
+    public short getBit() {
+    	return bit;
     }
     
 }
