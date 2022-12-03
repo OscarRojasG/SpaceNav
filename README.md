@@ -32,7 +32,7 @@ Si ya tenías un proyecto con el mismo nombre es  necesario eliminarlo.
 
 ![Ejecutar](https://drive.google.com/uc?export=view&id=1ODXQcYKNL7CZe7rwK0hx-SS9mLvYSCm3)
 
-2.4.- Posteriormente se ejecuta el programa con el siguiente runner: 
+2.4.- Posteriormente se ejecuta el programa con el runner de eclipse mientras se tiene seleccionado DesktopLauncher.java 
 
 ![Ejecutar 2](https://drive.google.com/uc?export=view&id=1bJXl_jU6vbCn-7-eyEZlirHhHZ9Oupi0)
 
