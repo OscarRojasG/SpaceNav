@@ -3,7 +3,6 @@ package com.mygdx.game.colecciones;
 import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Enemigo;
 import com.mygdx.game.Figura;
@@ -30,6 +29,8 @@ public class ColeccionBasuraEspacial extends ColeccionFiguraForma {
 	private final static int FINAL_SALIDA_VERTICAL = Gdx.graphics.getHeight()-10;
 	private final static int FINAL_SALIDA_HORIZONTAL = Gdx.graphics.getWidth()-10;
 	
+	private EnemigoBuilder builder;
+	
 	@Override
 	public void eliminarDestruidos() {
 		Iterator<Figura> enemigos = getObjetos(); 
@@ -50,8 +51,6 @@ public class ColeccionBasuraEspacial extends ColeccionFiguraForma {
 		int p = Util.generateRandomInt(1, 100);
 		
 		if(p != 1) return;
-		
-		EnemigoBuilder builder = null;
 		
 		int n = generarEnemigoAleatorio();
 		
@@ -93,7 +92,6 @@ public class ColeccionBasuraEspacial extends ColeccionFiguraForma {
         // Posicion inicial
         Vector2 pos = new Vector2(x, y);
 		
-        Color color = null;
 		switch(n) {
 			case HIRIENTE_DESECHO_COHETE:
                 builder = new CoheteBuilder();

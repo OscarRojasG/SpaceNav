@@ -3,7 +3,6 @@ package com.mygdx.game.colecciones;
 import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Figura;
 import com.mygdx.game.Util;
@@ -20,6 +19,8 @@ public class ColeccionAsteroides extends ColeccionFiguraForma {
     private final int ASTEROID_SIZE_SMALL = 1;
     private final int ASTEROID_SIZE_MEDIUM = 2;
     private final int ASTEROID_SIZE_BIG = 3;
+    
+    private EnemigoBuilder builder;
 
     public void crear(int cantidad, int velocidad, int ronda) {
         for (int i = 0; i < cantidad; i++)
@@ -31,8 +32,6 @@ public class ColeccionAsteroides extends ColeccionFiguraForma {
 	 * @param ronda Es la ronda en que esta el jugador.
 	 * */
     public void generar(int velocidad, int ronda) {
-        EnemigoBuilder builder = null;
-        
         // Velocidad inicial
         float angle = Util.generateRandomInt(ASTEROID_MIN_ANGLE, ASTEROID_MAX_ANGLE);
         angle = (float)Math.toRadians(angle);

@@ -1,6 +1,5 @@
 package com.mygdx.game.enemigos;
 
-import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Enemigo;
 
 public interface IEnemigoBuilder
@@ -13,7 +12,6 @@ public interface IEnemigoBuilder
 
     public void setColor();
 
-    
     /** Retorna el enemigo construido */
     public Enemigo build();
 }

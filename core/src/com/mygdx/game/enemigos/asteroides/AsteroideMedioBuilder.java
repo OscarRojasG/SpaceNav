@@ -1,4 +1,3 @@
-
 package com.mygdx.game.enemigos.asteroides;
 
 import com.badlogic.gdx.math.Vector2;
