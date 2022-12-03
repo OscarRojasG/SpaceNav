@@ -2,12 +2,12 @@ package com.mygdx.game.enemigos;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.Enemigo;
 
-public abstract class EnemigoBuilder implements IEnemigoBuilder {
+public abstract class EnemigoBuilder {
     private Vector2 velocidad; 
     private Vector2 posicion;
     private Color color;
-
 
     public void setPosicion(Vector2 posicion) {
         this.posicion = posicion;
@@ -32,5 +32,11 @@ public abstract class EnemigoBuilder implements IEnemigoBuilder {
     public Color getColor() {
         return color;
     }
+
+	public abstract void setPorte();
+	
+	public abstract void setPuntaje();
+
+	public abstract Enemigo build();
 
 }
