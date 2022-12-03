@@ -32,6 +32,7 @@ public class Asteroide extends Enemigo {
 
 	@Override
 	public void agregarEfecto(Nave nave) {
+        this.generaConsumible = false;
 		nave.herir();
 	}
 
