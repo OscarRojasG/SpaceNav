@@ -6,8 +6,6 @@ Space Nav es un Videojuego infinito sobre una nave espacial que debe destruir to
 
 ![Juego](https://drive.google.com/uc?export=view&id=1uLOz7vLl4-CUIWpdhaOR7SZrd4gahAm7)
 
-![Juego Menu](https://drive.google.com/uc?export=view&id= 
-
 ## Contribuir
 
 ### Eclipse
