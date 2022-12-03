@@ -44,9 +44,3 @@ public class SateliteBuilder extends EnemigoBuilder {
         return e;
     }
 }
-
-/*
- 
-				builder.setPuntaje(25);
-				color = Color.ORANGE;
- */

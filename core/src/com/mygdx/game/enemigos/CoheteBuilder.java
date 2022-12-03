@@ -43,10 +43,3 @@ public class CoheteBuilder extends EnemigoBuilder {
         return e;
     }
 }
-
-/*
- 
-				builder.setPorte(50/b2Modelo.getScale());
-				builder.setPuntaje(25);
-				color = Color.ORANGE;
- */
